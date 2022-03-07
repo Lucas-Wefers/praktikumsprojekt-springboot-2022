@@ -1,0 +1,12 @@
+spring:
+  flyway:
+    schemas: chicken
+    create-schemas: true
+    url: jdbc:mariadb://localhost:3312/
+    user: root
+    password: ${mysqlpassword}
+  datasource:
+    url: jdbc:mariadb://localhost:3312/chicken
+    username: root
+    password: ${mysqlpassword}
+    driver-class-name: org.mariadb.jdbc.Driver
