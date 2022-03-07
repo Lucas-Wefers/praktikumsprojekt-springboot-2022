@@ -12,6 +12,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
+      - name: Give Permission to run gradlew
+        working-directory: ./chicken
+        run: chmod +x ./gradlew
       - name: Run Gradle
         working-directory: ./chicken
         run: ./gradlew check
