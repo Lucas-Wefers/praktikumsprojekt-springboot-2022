@@ -1,109 +1,119 @@
 @startuml
 
 package domain {
-package klausur {
-enum Klausurart {
-ONLINE
-PRAESENZ
-}
+    package klausur {
+        enum Klausurart {
+            ONLINE
+            PRAESENZ
+        }
 
-class VeranstaltungsId {
-@Rules
-String id
-}
+        class VeranstaltungsId {
+            @Rules
+            String id
+        }
 
-class Klausurtermin {
-String fach
-LocalDateTime von
-LocalDateTime bis
-Klausurart klausurart
-VeranstaltungsId veranstaltungsId
-}
-}
+        class Klausurtermin {
+            String fach
+            LocalDateTime von
+            LocalDateTime bis
+            Klausurart klausurart
+            VeranstaltungsId veranstaltungsId
+        }
+    }
 
-package student {
-class Urlaubstermin {
-LocalDate datum
-LocalTime von
-LocalTime bis
-boolean istVielfacheViertelstunde()
-}
-class Student {
-GithubHandle handle
-List<KlausurReferenz> klausurtermine
-List<Urlaubstermin> urlaubstermine
-double berechneResturlaub()
-void fuegeKlausurterminHinzu()
-void fuegeUrlaubsterminHinzu()
-}
+    package student {
+        class Urlaubstermin {
+            LocalDate datum
+            LocalTime von
+            LocalTime bis
+            boolean istVielfacheViertelstunde()
+        }
+        class Student {
+            GithubHandle handle
+            List<KlausurReferenz> klausurtermine
+            List<Urlaubstermin> urlaubstermine
+            double berechneResturlaub()
+            void fuegeKlausurterminHinzu()
+            void fuegeUrlaubsterminHinzu()
+        }
 
-Student --> Urlaubstermin
-}
-student --> klausur
+        Student --> Urlaubstermin
+    }
+    student --> klausur
 
 }
 
 package service {
-package anmeldeservice {
-class StudentService {
-void urlaubAnmelden()
-void klausurAnmelden()
-void urlaubStornieren()
-void klausurStornieren()
-void berechneResturlaub()
-List<Klausurtermin> klausurtermine()
-List<Urlaubstermin> urlaubstermine()
-}
-package klausurenservice {
+    package anmeldeservice {
+        class StudentService {
+            void berechneResturlaub()
+        }
+        class StudentKlausurService {
+            void klausurAnmelden()
+            List<Klausurtermin> klausurtermine()
+            void klausurStornieren()
+        }
+        class StudentUrlaubService {
+            void urlaubAnmelden()
+            List<Urlaubstermin> urlaubstermine()
+            void urlaubStornieren()
+        }
+    }
 
-}
-package repositories {
-interface KlausurterminRepository {}
-interface UrlaubsterminRepository {}
-}
-
-StudentService --> KlausurterminRepository
-StudentService --> UrlaubsterminRepository
+    package klausurenservice {
+        class KlausurenService {
+            void klausurEintragen()
+            List<Klausurtermin> klausurtermine()
+        }
+    }
+    package repositories {
+        interface KlausurterminRepository {}
+        interface StudentRepository {}
+    }
+    KlausurenService --> KlausurterminRepository
+    StudentService --> StudentRepository
+    StudentUrlaubService --> StudentRepository
+    StudentKlausurService --> KlausurterminRepository
 }
 
 package infrastructure {
-class ChickenApplication {}
-package web {
-class KlausurterminController {}
-class UrlaubsterminController {}
-class StartseitenController {}
-}
-package persistenz {
-package dto {
-class KlausurterminDto {
-String fach
-LocalDateTime von
-LocalDateTime bis
-boolean klausurart
-String veranstaltungsId
-}
-class UrlaubsterminDto {
-LocalDate datum
-LocalTime von
-LocalTime bis
-}
-}
-package dao {
-interface KlausurterminDao extends CrudRepository {}
-interface UrlaubsterminDao extends CrudRepository {}
-}
-class KlausurterminRepositoryImpl {
-KlausurterminDao klausurterminDao
-}
-class UrlaubsterminRepositoryImpl {
-UrlaubsterminDao urlaubsterminDao
-}
+    class ChickenApplication {}
+    package web {
+        class KlausurterminController {}
+        class UrlaubsterminController {}
+        class StartseitenController {}
+    }
+    package persistenz {
+        package dto {
+            class KlausurterminDto {
+                String fach
+                LocalDateTime von
+                LocalDateTime bis
+                boolean klausurart
+                String veranstaltungsId
+            }
+            class UrlaubsterminDto {
+                LocalDate datum
+                LocalTime von
+                LocalTime bis
+            }
+        }
+        package dao {
+            interface KlausurterminDao extends CrudRepository {}
+            interface UrlaubsterminDao extends CrudRepository {}
+        }
+        class KlausurterminRepositoryImpl {
+            KlausurterminDao klausurterminDao
+        }
+        class UrlaubsterminRepositoryImpl {
+            UrlaubsterminDao urlaubsterminDao
+        }
 
-UrlaubsterminRepositoryImpl --> UrlaubsterminDao
-KlausurterminRepositoryImpl --> KlausurterminDao
-UrlaubsterminDao --> UrlaubsterminDto
-KlausurterminDao --> KlausurterminDto
-}
+        UrlaubsterminRepositoryImpl --> UrlaubsterminDao
+        KlausurterminRepositoryImpl --> KlausurterminDao
+        UrlaubsterminDao --> UrlaubsterminDto
+        KlausurterminDao --> KlausurterminDto
+    }
 }
 
 service --> domain
