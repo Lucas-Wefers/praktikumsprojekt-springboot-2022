@@ -47,13 +47,9 @@ package service {
     package anmeldeservice {
         class StudentService {
             void berechneResturlaub()
-        }
-        class StudentKlausurService {
             void klausurAnmelden()
             List<Klausurtermin> klausurtermine()
             void klausurStornieren()
-        }
-        class StudentUrlaubService {
             void urlaubAnmelden()
             List<Urlaubstermin> urlaubstermine()
             void urlaubStornieren()
@@ -72,8 +68,8 @@ package service {
     }
     KlausurenService --> KlausurterminRepository
     StudentService --> StudentRepository
-    StudentUrlaubService --> StudentRepository
-    StudentKlausurService --> KlausurterminRepository
+    StudentService --> KlausurterminRepository
+
 }
 
 package infrastructure {
@@ -84,38 +80,25 @@ package infrastructure {
         class StartseitenController {}
     }
     package persistenz {
-        package dto {
-            class KlausurterminDto {
-                String fach
-                LocalDateTime von
-                LocalDateTime bis
-                boolean klausurart
-                String veranstaltungsId
-            }
-            class UrlaubsterminDto {
-                LocalDate datum
-                LocalTime von
-                LocalTime bis
-            }
-        }
+
         package dao {
-            interface KlausurterminDao extends CrudRepository {}
-            interface UrlaubsterminDao extends CrudRepository {}
+            interface KlausurterminDb extends CrudRepository {}
+            interface StudentDb extends CrudRepository {}
         }
         class KlausurterminRepositoryImpl {
-            KlausurterminDao klausurterminDao
+            KlausurterminDb klausurterminDb
         }
-        class UrlaubsterminRepositoryImpl {
-            UrlaubsterminDao urlaubsterminDao
+        class StudentRepositoryImpl {
+            StudentDb studentDb
         }
 
-        UrlaubsterminRepositoryImpl --> UrlaubsterminDao
-        KlausurterminRepositoryImpl --> KlausurterminDao
-        UrlaubsterminDao --> UrlaubsterminDto
-        KlausurterminDao --> KlausurterminDto
+        StudentRepositoryImpl --> StudentDb
+        KlausurterminRepositoryImpl --> KlausurterminDb
     }
 }
 
 service --> domain
 infrastructure --> service
+infrastructure --> domain
+
 @enduml
