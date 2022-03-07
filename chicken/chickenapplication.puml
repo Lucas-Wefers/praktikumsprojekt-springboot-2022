@@ -30,8 +30,8 @@ package domain {
         }
         class Student {
             GithubHandle handle
-            List<KlausurReferenz> klausurtermine
-            List<Urlaubstermin> urlaubstermine
+            Set<KlausurReferenz> klausurtermine
+            Set<Urlaubstermin> urlaubstermine
             double berechneResturlaub()
             void fuegeKlausurterminHinzu()
             void fuegeUrlaubsterminHinzu()
@@ -44,14 +44,14 @@ package domain {
 }
 
 package service {
-    package anmeldeservice {
+    package studentenservice {
         class StudentService {
             void berechneResturlaub()
             void klausurAnmelden()
-            List<Klausurtermin> klausurtermine()
+            Set<Klausurtermin> klausurtermine()
             void klausurStornieren()
             void urlaubAnmelden()
-            List<Urlaubstermin> urlaubstermine()
+            Set<Urlaubstermin> urlaubstermine()
             void urlaubStornieren()
         }
     }
@@ -59,7 +59,7 @@ package service {
     package klausurenservice {
         class KlausurenService {
             void klausurEintragen()
-            List<Klausurtermin> klausurtermine()
+            Set<Klausurtermin> klausurtermine()
         }
     }
     package repositories {
@@ -82,18 +82,39 @@ package infrastructure {
     package persistenz {
 
         package dao {
-            interface KlausurterminDb extends CrudRepository {}
-            interface StudentDb extends CrudRepository {}
+            interface KlausurterminDao extends CrudRepository {}
+            interface StudentDao extends CrudRepository {}
         }
         class KlausurterminRepositoryImpl {
-            KlausurterminDb klausurterminDb
+            KlausurterminDao klausurterminDao
         }
         class StudentRepositoryImpl {
-            StudentDb studentDb
+            StudentDao studentDao
         }
 
-        StudentRepositoryImpl --> StudentDb
-        KlausurterminRepositoryImpl --> KlausurterminDb
+        package dto {
+          class KlausurterminDto {
+            Long id
+            String fach
+            LocalDateTime von
+            LocalDateTime bis
+            boolean klausurart
+            String veranstaltungsId
+          }
+          class StudentDto {
+            Long id
+            String handle
+            Set<KlausurReferenz> klausurtermine
+            Set<Urlaubstermin> urlaubstermine
+          }
+        }
+
+
+
+        StudentRepositoryImpl --> StudentDao
+        KlausurterminRepositoryImpl --> KlausurterminDao
+        StudentDao --> StudentDto
+        KlausurterminDao --> KlausurterminDto
     }
 }
 
