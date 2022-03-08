@@ -28,7 +28,7 @@ public class AuthenticationTemplates {
   }
 
   public static MockHttpSession tutorSession() {
-    return createSession("Loise Leader", "ROLE_LEADER", "ROLE_USER");
+    return createSession("Loise Leader", "ROLE_LEADER");
   }
 
 

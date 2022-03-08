@@ -51,10 +51,10 @@ public class WebSecurityConfigurationTest {
   }
 
   @Test
-  @DisplayName("Tutoren dürfen auf die Studentenseite zugreifen")
+  @DisplayName("Tutoren dürfen nicht auf die Studentenseite zugreifen")
   void test_5() throws Exception {
     mockMvc.perform(get("/").session(tutorSession()))
-        .andExpect(status().isOk());
+        .andExpect(status().isForbidden());
   }
 
   @Test
