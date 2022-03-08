@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class StartseitenController {
 
   @GetMapping("/")
-  @Secured("ROLE_USER")
+  @Secured("ROLE_STUDENT")
   public String index() {
     return "index";
   }

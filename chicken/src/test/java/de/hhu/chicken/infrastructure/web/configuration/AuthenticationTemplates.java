@@ -20,15 +20,15 @@ public class AuthenticationTemplates {
   }
 
   public static MockHttpSession studentSession() {
-    return createSession("SebastianStudent", "ROLE_USER");
+    return createSession("SebastianStudent", "ROLE_STUDENT");
   }
 
   public static MockHttpSession organisatorSession() {
-    return createSession("Adam Admin", "ROLE_ADMIN");
+    return createSession("Adam Admin", "ROLE_ORGANISATOR");
   }
 
   public static MockHttpSession tutorSession() {
-    return createSession("Loise Leader", "ROLE_LEADER");
+    return createSession("Loise Leader", "ROLE_TUTOR");
   }
 
 

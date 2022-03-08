@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class TutorController {
 
   @GetMapping("/tutor")
-  @Secured("ROLE_LEADER")
+  @Secured("ROLE_TUTOR")
   public String index() {
     return "tutorIndex";
   }

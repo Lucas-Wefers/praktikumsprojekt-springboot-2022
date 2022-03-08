@@ -65,14 +65,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
         Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        authorities.add(new SimpleGrantedAuthority("ROLE_STUDENT"));
         String login = attributes.get("login").toString();
 
         if (organisatoren.contains(login)) {
-          authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+          authorities.add(new SimpleGrantedAuthority("ROLE_ORGANISATOR"));
         }
         if (tutoren.contains(login)) {
-          authorities.add(new SimpleGrantedAuthority("ROLE_LEADER"));
+          authorities.add(new SimpleGrantedAuthority("ROLE_TUTOR"));
         }
 
         Map<String, Object> extendedAttributes = new HashMap<>(attributes);

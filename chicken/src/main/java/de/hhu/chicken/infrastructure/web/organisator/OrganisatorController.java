@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class OrganisatorController {
 
   @GetMapping("/organisator")
-  @Secured("ROLE_ADMIN")
+  @Secured("ROLE_ORGANISATOR")
   public String index() {
     return "organisatorIndex";
   }
