@@ -50,5 +50,26 @@ public class WebSecurityConfigurationTest {
         .andExpect(status().isForbidden());
   }
 
+  @Test
+  @DisplayName("Tutoren dürfen auf die Studentenseite zugreifen")
+  void test_5() throws Exception {
+    mockMvc.perform(get("/").session(tutorSession()))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  @DisplayName("Tutoren dürfen auf die Tutorenseite zugreifen")
+  void test_6() throws Exception {
+    mockMvc.perform(get("/tutor").session(tutorSession()))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  @DisplayName("Tutoren dürfen nicht auf die Organisatorenseite zugreifen")
+  void test_7() throws Exception {
+    mockMvc.perform(get("/organisator").session(tutorSession()))
+        .andExpect(status().isForbidden());
+  }
+
 
 }

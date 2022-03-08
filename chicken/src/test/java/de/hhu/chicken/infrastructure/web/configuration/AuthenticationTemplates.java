@@ -28,16 +28,14 @@ public class AuthenticationTemplates {
   }
 
   public static MockHttpSession tutorSession() {
-    return createSession("Loise Leader", "ROLE_LEADER");
+    return createSession("Loise Leader", "ROLE_LEADER", "ROLE_USER");
   }
 
 
   private static List<GrantedAuthority> buildAuthorities(Map<String, Object> attributes,
-      String[] roles) {
-    List<GrantedAuthority> authorities =
-        Arrays.stream(roles).map(r -> new OAuth2UserAuthority(r, attributes))
-            .collect(Collectors.toList());
-    return authorities;
+                                                         String[] roles) {
+    return Arrays.stream(roles).map(r -> new OAuth2UserAuthority(r, attributes))
+        .collect(Collectors.toList());
   }
 
   private static MockHttpSession createSession(String name, String... roles) {
