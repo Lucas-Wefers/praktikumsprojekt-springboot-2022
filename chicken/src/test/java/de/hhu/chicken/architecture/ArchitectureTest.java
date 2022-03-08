@@ -1,6 +1,7 @@
 package de.hhu.chicken.architecture;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
+import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
 import static com.tngtech.archunit.library.Architectures.onionArchitecture;
 import static com.tngtech.archunit.library.plantuml.PlantUmlArchCondition.Configurations.consideringOnlyDependenciesInDiagram;
 import static com.tngtech.archunit.library.plantuml.PlantUmlArchCondition.adhereToPlantUmlDiagram;
@@ -16,5 +17,14 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 @AnalyzeClasses(packagesOf = ChickenApplication.class, importOptions = ImportOption.DoNotIncludeTests.class)
 public class ArchitectureTest {
-  
+
+  @ArchTest
+  static final ArchRule onionArchitectureTest = layeredArchitecture()
+      .layer("domain").definedBy("..domain..")
+      .layer("service").definedBy("..service..")
+      .layer("infrastructure").definedBy("..infrastructure..")
+      .whereLayer("infrastructure").mayNotBeAccessedByAnyLayer()
+      .whereLayer("service").mayOnlyBeAccessedByLayers("infrastructure")
+      .whereLayer("domain").mayOnlyBeAccessedByLayers("infrastructure", "service");
+
 }
