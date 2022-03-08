@@ -1,7 +1,9 @@
 package de.hhu.chicken.infrastructure.web.configuration;
 
+import static de.hhu.chicken.infrastructure.web.configuration.AuthenticationTemplates.organisatorSession;
 import static de.hhu.chicken.infrastructure.web.configuration.AuthenticationTemplates.studentSession;
 import static de.hhu.chicken.infrastructure.web.configuration.AuthenticationTemplates.tutorSession;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.DisplayName;
@@ -11,8 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -71,5 +71,24 @@ public class WebSecurityConfigurationTest {
         .andExpect(status().isForbidden());
   }
 
+  @Test
+  @DisplayName("Organisatoren dürfen nicht auf die Studentenseite zugreifen")
+  void test_8() throws Exception {
+    mockMvc.perform(get("/").session(organisatorSession()))
+        .andExpect(status().isForbidden());
+  }
 
+  @Test
+  @DisplayName("Organisatoren dürfen nicht auf die Tutorenseite zugreifen")
+  void test_9() throws Exception {
+    mockMvc.perform(get("/tutor").session(organisatorSession()))
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  @DisplayName("Organisatoren dürfen auf die Organisatorenseite zugreifen")
+  void test_10() throws Exception {
+    mockMvc.perform(get("/organisator").session(organisatorSession()))
+        .andExpect(status().isOk());
+  }
 }
