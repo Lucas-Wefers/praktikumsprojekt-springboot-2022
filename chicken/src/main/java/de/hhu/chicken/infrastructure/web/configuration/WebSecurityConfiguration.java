@@ -62,11 +62,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         OAuth2User oauth2User = defaultService.loadUser(userRequest);
 
         Map<String, Object> attributes = oauth2User.getAttributes(); //keep existing attributes
-        Map<String, Object> extendedAttributes = new HashMap<>(attributes);
+
 
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-
         String login = attributes.get("login").toString();
 
         if (organisatoren.contains(login)) {
@@ -76,6 +75,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
           authorities.add(new SimpleGrantedAuthority("ROLE_LEADER"));
         }
 
+        Map<String, Object> extendedAttributes = new HashMap<>(attributes);
         return new DefaultOAuth2User(authorities, extendedAttributes, "login");
       }
 

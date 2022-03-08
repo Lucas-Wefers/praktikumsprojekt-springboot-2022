@@ -1,5 +1,6 @@
 package de.hhu.chicken.infrastructure.web.configuration;
 
+import static de.hhu.chicken.infrastructure.web.configuration.AuthenticationTemplates.studentSession;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.DisplayName;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @SpringBootTest
@@ -22,7 +24,23 @@ public class WebSecurityConfigurationTest {
   @Test
   @DisplayName("Uneingeloggter Nutzer wird auf GitHub redirected")
   void test_1() throws Exception {
-    mockMvc.perform(get("/")).andExpect(status().is3xxRedirection());
+    mockMvc.perform(get("/"))
+        .andExpect(status().is3xxRedirection());
   }
+
+  @Test
+  @DisplayName("Studenten dürfen nicht auf die Tutorenseite zugreifen")
+  void test_2() throws Exception {
+    mockMvc.perform(get("/tutor").session(studentSession()))
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  @DisplayName("Studenten dürfen nicht auf die Organisatorenseite zugreifen")
+  void test_3() throws Exception {
+    mockMvc.perform(get("/organisator").session(studentSession()))
+        .andExpect(status().isForbidden());
+  }
+
 
 }
