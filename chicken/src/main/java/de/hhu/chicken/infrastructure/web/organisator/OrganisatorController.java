@@ -1,14 +1,14 @@
 package de.hhu.chicken.infrastructure.web.organisator;
 
-import org.springframework.security.access.annotation.Secured;
+import de.hhu.chicken.infrastructure.web.stereotypes.OrganisatorOnly;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
+@OrganisatorOnly
 public class OrganisatorController {
 
   @GetMapping("/organisator")
-  @Secured("ROLE_ORGANISATOR")
   public String index() {
     return "organisatorIndex";
   }

@@ -63,7 +63,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         Map<String, Object> attributes = oauth2User.getAttributes(); //keep existing attributes
 
-
         Set<GrantedAuthority> authorities = new HashSet<>();
 
         String login = attributes.get("login").toString();

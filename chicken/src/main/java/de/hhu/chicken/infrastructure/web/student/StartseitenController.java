@@ -1,14 +1,14 @@
 package de.hhu.chicken.infrastructure.web.student;
 
-import org.springframework.security.access.annotation.Secured;
+import de.hhu.chicken.infrastructure.web.stereotypes.StudentOnly;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
+@StudentOnly
 public class StartseitenController {
 
   @GetMapping("/")
-  @Secured("ROLE_STUDENT")
   public String index() {
     return "index";
   }

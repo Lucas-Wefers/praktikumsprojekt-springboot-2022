@@ -9,5 +9,4 @@ public class ChickenApplication {
   public static void main(String[] args) {
     SpringApplication.run(ChickenApplication.class, args);
   }
-
 }
