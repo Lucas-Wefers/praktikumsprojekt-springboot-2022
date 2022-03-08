@@ -15,7 +15,8 @@ import de.hhu.chicken.ChickenApplication;
 import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("test")
-@AnalyzeClasses(packagesOf = ChickenApplication.class, importOptions = ImportOption.DoNotIncludeTests.class)
+@AnalyzeClasses(packagesOf = ChickenApplication.class,
+    importOptions = ImportOption.DoNotIncludeTests.class)
 public class ArchitectureTest {
 
   @ArchTest

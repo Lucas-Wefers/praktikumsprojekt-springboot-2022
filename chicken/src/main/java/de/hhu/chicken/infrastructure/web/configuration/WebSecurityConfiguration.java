@@ -1,5 +1,6 @@
 package de.hhu.chicken.infrastructure.web.configuration;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -23,14 +24,14 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  private final List<String> organisatoren;
-  private final List<String> tutoren;
+  private final List<String> organisatoren = new ArrayList<>();
+  private final List<String> tutoren = new ArrayList<>();
 
   public WebSecurityConfiguration(
       @Value("${gruppen.organisatoren}") List<String> organisatoren,
       @Value("${gruppen.tutoren}") List<String> tutoren) {
-    this.organisatoren = organisatoren;
-    this.tutoren = tutoren;
+    this.organisatoren.addAll(organisatoren);
+    this.tutoren.addAll(tutoren);
   }
 
   @Override
@@ -69,10 +70,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         String login = attributes.get("login").toString();
 
         if (organisatoren.contains(login)) {
-          authorities.add(new SimpleGrantedAuthority("ROLE_ORGANISATOR"));
+          authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
         if (tutoren.contains(login)) {
-          authorities.add(new SimpleGrantedAuthority("ROLE_TUTOR"));
+          authorities.add(new SimpleGrantedAuthority("ROLE_LEADER"));
         }
 
         return new DefaultOAuth2User(authorities, extendedAttributes, "login");
