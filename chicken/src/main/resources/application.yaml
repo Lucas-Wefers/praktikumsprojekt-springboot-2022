@@ -10,3 +10,21 @@ spring:
     username: root
     password: ${mysqlpassword}
     driver-class-name: org.mariadb.jdbc.Driver
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${clientid}
+            client-secret: ${clientsecret}
+            authorization-grant-type: authorization_code
+            scope: user
+
+        provider:
+          github:
+            authorization-uri: https://github.com/login/oauth/authorize
+            token-uri: https://github.com/login/oauth/access_token
+
+gruppen:
+  organisatoren:
+  tutoren:
