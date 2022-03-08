@@ -20,21 +20,21 @@ public class RoleArchitectureTest {
   @ArchTest
   static final ArchRule studentControllersAreAnnotatedWithStudentOnly = classes()
       .that()
-      .resideInAPackage("..web.student..")
+      .resideInAPackage("..controllers.student..")
       .should()
       .beAnnotatedWith(StudentOnly.class);
 
   @ArchTest
   static final ArchRule tutorControllersAreAnnotatedWithTutorOnly = classes()
       .that()
-      .resideInAPackage("..web.tutor..")
+      .resideInAPackage("..controllers.tutor..")
       .should()
       .beAnnotatedWith(TutorOnly.class);
 
   @ArchTest
   static final ArchRule organisatorControllersAreAnnotatedWithOrganisatorOnly = classes()
       .that()
-      .resideInAPackage("..web.organisator..")
+      .resideInAPackage("..controllers.organisator..")
       .should()
       .beAnnotatedWith(OrganisatorOnly.class);
 }

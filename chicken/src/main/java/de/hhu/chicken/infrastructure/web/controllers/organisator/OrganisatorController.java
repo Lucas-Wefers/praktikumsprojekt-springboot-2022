@@ -1,4 +1,4 @@
-package de.hhu.chicken.infrastructure.web.organisator;
+package de.hhu.chicken.infrastructure.web.controllers.organisator;
 
 import de.hhu.chicken.infrastructure.web.stereotypes.OrganisatorOnly;
 import org.springframework.stereotype.Controller;

@@ -1,4 +1,4 @@
-package de.hhu.chicken.infrastructure.web.tutor;
+package de.hhu.chicken.infrastructure.web.controllers.tutor;
 
 import de.hhu.chicken.infrastructure.web.stereotypes.TutorOnly;
 import org.springframework.security.access.annotation.Secured;
