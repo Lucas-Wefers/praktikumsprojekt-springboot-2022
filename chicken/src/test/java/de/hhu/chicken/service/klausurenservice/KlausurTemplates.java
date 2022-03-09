@@ -3,33 +3,33 @@ package de.hhu.chicken.service.klausurenservice;
 import static org.mockito.Mockito.mock;
 
 import de.hhu.chicken.domain.klausur.Klausurart;
-import de.hhu.chicken.domain.klausur.Klausurtermin;
+import de.hhu.chicken.domain.klausur.Klausur;
 import de.hhu.chicken.domain.klausur.VeranstaltungsId;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-public class KlausurterminTemplates {
+public class KlausurTemplates {
 
-  static List<Klausurtermin> zweiBeispielklausuren() {
-    Klausurtermin klausurtermin = new Klausurtermin("Programmierung",
+  static List<Klausur> zweiBeispielklausuren() {
+    Klausur klausur = new Klausur("Programmierung",
         LocalDate.of(2022, 3, 17),
         LocalTime.of(8, 30),
         LocalTime.of(9, 30),
         Klausurart.ONLINE,
         mock(VeranstaltungsId.class));
-    Klausurtermin klausurtermin2 = new Klausurtermin("Programmierung",
+    Klausur klausur2 = new Klausur("Programmierung",
         LocalDate.of(2022, 3, 19),
         LocalTime.of(8, 30),
         LocalTime.of(10, 30),
         Klausurart.PRAESENZ,
         mock(VeranstaltungsId.class));
-    return List.of(klausurtermin, klausurtermin2);
+    return List.of(klausur, klausur2);
   }
 
-  static Klausurtermin beispielklausur() {
+  static Klausur beispielklausur() {
     return
-        new Klausurtermin("Programmierung",
+        new Klausur("Programmierung",
             LocalDate.of(2022, 3, 17),
             LocalTime.of(8, 30),
             LocalTime.of(9, 30),

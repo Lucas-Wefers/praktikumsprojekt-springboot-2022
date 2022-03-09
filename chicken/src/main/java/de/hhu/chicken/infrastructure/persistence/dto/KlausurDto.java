@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 
-public class KlausurterminDto {
+public class KlausurDto {
   @Id
   Long id;
 
@@ -27,8 +27,8 @@ public class KlausurterminDto {
   @NotNull
   Long veranstaltungsId;
 
-  public KlausurterminDto(String fach, LocalDate datum, LocalTime von, LocalTime bis,
-      boolean klausurart, Long veranstaltungsId) {
+  public KlausurDto(String fach, LocalDate datum, LocalTime von, LocalTime bis,
+                    boolean klausurart, Long veranstaltungsId) {
     this.fach = fach;
     this.datum = datum;
     this.von = von;

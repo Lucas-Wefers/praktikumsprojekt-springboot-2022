@@ -1,5 +1,5 @@
 package de.hhu.chicken.infrastructure.persistence;
 
-public class KlausurterminRepositoryImpl {
+public class KlausurRepositoryImpl {
 
 }

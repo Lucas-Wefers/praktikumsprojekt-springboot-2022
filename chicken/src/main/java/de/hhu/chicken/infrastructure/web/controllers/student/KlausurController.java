@@ -5,6 +5,6 @@ import org.springframework.stereotype.Controller;
 
 @StudentOnly
 @Controller
-public class KlausurterminController {
+public class KlausurController {
 
 }

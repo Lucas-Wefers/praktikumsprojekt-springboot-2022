@@ -12,7 +12,7 @@ package domain {
             String id
         }
 
-        class Klausurtermin {
+        class Klausur {
             String fach
             LocalDate datum
             LocalTime von
@@ -52,7 +52,7 @@ package service {
         class StudentService {
             void berechneResturlaub()
             void klausurAnmelden()
-            Set<Klausurtermin> klausurtermine()
+            Set<Klausur> klausurtermine()
             void klausurStornieren()
             void urlaubAnmelden()
             Set<Urlaubstermin> urlaubstermine()
@@ -60,12 +60,12 @@ package service {
         }
     }
 
-    package klausurenservice {
-        class KlausurenService {
+    package klausurservice {
+        class KlausurService {
             void klausurSpeichern()
-            Set<Klausurtermin> alleKlausuren()
+            Set<Klausur> alleKlausuren()
         }
-        class KlausurenVerifizierer {
+        class KlausurVerifizierer {
             LocalDateTime praktikumsStart
             LocalDateTime praktikumsEnde
 
@@ -74,37 +74,37 @@ package service {
         }
     }
     package repositories {
-        interface KlausurterminRepository {}
+        interface KlausurRepository {}
         interface StudentRepository {}
     }
-    KlausurenService --> KlausurterminRepository
+    KlausurService --> KlausurRepository
     StudentService --> StudentRepository
-    StudentService --> KlausurterminRepository
+    StudentService --> KlausurRepository
 
 }
 
 package infrastructure {
     class ChickenApplication {}
     package web {
-        class KlausurterminController {}
+        class KlausurController {}
         class UrlaubsterminController {}
         class StartseitenController {}
     }
     package persistenz {
 
         package dao {
-            interface KlausurterminDao extends CrudRepository {}
+            interface KlausurDao extends CrudRepository {}
             interface StudentDao extends CrudRepository {}
         }
-        class KlausurterminRepositoryImpl {
-            KlausurterminDao klausurterminDao
+        class KlausurRepositoryImpl {
+            KlausurDao klausurDao
         }
         class StudentRepositoryImpl {
             StudentDao studentDao
         }
 
         package dto {
-          class KlausurterminDto {
+          class KlausurDto {
             Long id
             String fach
             LocalDate datum
@@ -124,9 +124,9 @@ package infrastructure {
 
 
         StudentRepositoryImpl --> StudentDao
-        KlausurterminRepositoryImpl --> KlausurterminDao
+        KlausurRepositoryImpl --> KlausurDao
         StudentDao --> StudentDto
-        KlausurterminDao --> KlausurterminDto
+        KlausurDao --> KlausurDto
     }
 }
 
