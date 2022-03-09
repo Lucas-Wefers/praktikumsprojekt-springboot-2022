@@ -14,8 +14,9 @@ package domain {
 
         class Klausurtermin {
             String fach
-            LocalDateTime von
-            LocalDateTime bis
+            LocalDate datum
+            LocalTime von
+            LocalTime bis
             Klausurart klausurart
             VeranstaltungsId veranstaltungsId
         }
@@ -103,8 +104,9 @@ package infrastructure {
           class KlausurterminDto {
             Long id
             String fach
-            LocalDateTime von
-            LocalDateTime bis
+            LocalDate datum
+            LocalTime von
+            LocalTime bis
             boolean klausurart
             String veranstaltungsId
           }

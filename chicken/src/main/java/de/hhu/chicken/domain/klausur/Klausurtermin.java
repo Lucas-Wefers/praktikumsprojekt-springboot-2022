@@ -1,8 +1,9 @@
 package de.hhu.chicken.domain.klausur;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-public record Klausurtermin(String fach, LocalDateTime von, LocalDateTime bis,
+public record Klausurtermin(String fach, LocalDate datum, LocalTime von, LocalTime bis,
                             Klausurart klausurart, VeranstaltungsId veranstaltungsId) {
 
 }
