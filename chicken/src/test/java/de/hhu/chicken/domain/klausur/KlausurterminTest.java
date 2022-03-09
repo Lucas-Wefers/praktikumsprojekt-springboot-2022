@@ -1,11 +1,8 @@
-package domain.klausur;
+package de.hhu.chicken.domain.klausur;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-import de.hhu.chicken.domain.klausur.Klausurart;
-import de.hhu.chicken.domain.klausur.Klausurtermin;
-import de.hhu.chicken.domain.klausur.VeranstaltungsId;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import org.junit.jupiter.api.DisplayName;
