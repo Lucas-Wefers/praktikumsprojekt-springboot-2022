@@ -1,6 +1,7 @@
 package de.hhu.chicken.domain.klausur;
 
 import static de.hhu.chicken.domain.klausur.Klausurart.ONLINE;
+import static de.hhu.chicken.domain.klausur.Klausurart.PRAESENZ;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,5 +20,16 @@ public record Klausurtermin(String fach, LocalDate datum, LocalTime von, LocalTi
       startzeitpunkt = LocalTime.of(8, 30);
     }
     return startzeitpunkt;
+  }
+
+  public LocalTime berechneFreistellungsEndzeitpunkt() {
+    LocalTime endzeitpunkt = bis;
+    if (klausurart.equals(PRAESENZ)) {
+      endzeitpunkt = bis.plusHours(2);
+    }
+    if(endzeitpunkt.isAfter(LocalTime.of(13, 30))) {
+      endzeitpunkt = LocalTime.of(13, 30);
+    }
+    return endzeitpunkt;
   }
 }

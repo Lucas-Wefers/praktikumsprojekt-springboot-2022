@@ -72,4 +72,64 @@ public class KlausurterminTest {
 
     assertThat(startzeitpunkt).isEqualTo(LocalTime.of(8, 30));
   }
+
+  @Test
+  @DisplayName("Bei einer Präsenzklausur die um 10:30 endet wird bis 12:30 freigestellt")
+  void test_5() {
+    Klausurtermin klausurtermin = new Klausurtermin("Programmierung",
+        LocalDate.of(2022, 3, 12),
+        LocalTime.of(8, 30),
+        LocalTime.of(10, 30),
+        Klausurart.PRAESENZ,
+        mock(VeranstaltungsId.class));
+
+    LocalTime endzeitpunkt = klausurtermin.berechneFreistellungsEndzeitpunkt();
+
+    assertThat(endzeitpunkt).isEqualTo(LocalTime.of(12, 30));
+  }
+
+  @Test
+  @DisplayName("Bei einer Präsenzklausur die um 12:30 endet wird bis 13:30 freigestellt")
+  void test_6() {
+    Klausurtermin klausurtermin = new Klausurtermin("Programmierung",
+        LocalDate.of(2022, 3, 12),
+        LocalTime.of(8, 30),
+        LocalTime.of(12, 30),
+        Klausurart.PRAESENZ,
+        mock(VeranstaltungsId.class));
+
+    LocalTime endzeitpunkt = klausurtermin.berechneFreistellungsEndzeitpunkt();
+
+    assertThat(endzeitpunkt).isEqualTo(LocalTime.of(13, 30));
+  }
+
+  @Test
+  @DisplayName("Bei einer Onlineklausur die um 12:30 endet wird bis 12:30 freigestellt")
+  void test_7() {
+    Klausurtermin klausurtermin = new Klausurtermin("Programmierung",
+        LocalDate.of(2022, 3, 12),
+        LocalTime.of(8, 30),
+        LocalTime.of(12, 30),
+        Klausurart.ONLINE,
+        mock(VeranstaltungsId.class));
+
+    LocalTime endzeitpunkt = klausurtermin.berechneFreistellungsEndzeitpunkt();
+
+    assertThat(endzeitpunkt).isEqualTo(LocalTime.of(12, 30));
+  }
+
+  @Test
+  @DisplayName("Bei einer Onlineklausur die um 14:30 endet wird bis 13:30 freigestellt")
+  void test_8() {
+    Klausurtermin klausurtermin = new Klausurtermin("Programmierung",
+        LocalDate.of(2022, 3, 12),
+        LocalTime.of(8, 30),
+        LocalTime.of(14, 30),
+        Klausurart.ONLINE,
+        mock(VeranstaltungsId.class));
+
+    LocalTime endzeitpunkt = klausurtermin.berechneFreistellungsEndzeitpunkt();
+
+    assertThat(endzeitpunkt).isEqualTo(LocalTime.of(13, 30));
+  }
 }

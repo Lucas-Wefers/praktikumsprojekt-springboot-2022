@@ -19,8 +19,11 @@ package domain {
             LocalTime bis
             Klausurart klausurart
             VeranstaltungsId veranstaltungsId
+            LocalTime berechneFreistellungsStartzeitpunkt()
+            LocalTime berechneFreistellungsEndzeitpunkt()
         }
     }
+
 
     package student {
         class Urlaubstermin {
