@@ -11,6 +11,7 @@ import de.hhu.chicken.domain.klausur.Klausur;
 import de.hhu.chicken.service.klausurservice.KlausurService;
 import de.hhu.chicken.service.repositories.KlausurRepository;
 import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -40,5 +41,20 @@ public class KlausurServiceTest {
     service.klausurSpeichern(beispielklausur);
 
     verify(repo).klausurSpeichern(beispielklausur);
+  }
+
+  @Test
+  @DisplayName("Der Service ruft das Repository auf und holt eine Klausur nach UUID")
+  void test_3() {
+    KlausurRepository repo = mock(KlausurRepository.class);
+    KlausurService service = new KlausurService(repo);
+    Klausur beispielklausur = beispielklausur();
+    UUID uuid = beispielklausur.getUuid();
+    when(repo.findKlausurByUuid(uuid)).thenReturn(beispielklausur);
+
+    Klausur klausurByUuid = service.findKlausurByUuid(uuid);
+
+    assertThat(klausurByUuid).isEqualTo(beispielklausur);
+    verify(repo).findKlausurByUuid(uuid);
   }
 }

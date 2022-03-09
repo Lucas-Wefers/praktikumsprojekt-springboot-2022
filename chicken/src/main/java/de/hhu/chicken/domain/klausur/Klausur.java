@@ -19,7 +19,7 @@ public class Klausur {
   private final VeranstaltungsId veranstaltungsId;
 
   public Klausur(String fach, LocalDate datum, LocalTime von, LocalTime bis,
-      Klausurart klausurart, VeranstaltungsId veranstaltungsId) {
+                 Klausurart klausurart, VeranstaltungsId veranstaltungsId) {
     this.fach = fach;
     this.datum = datum;
     this.von = von;
