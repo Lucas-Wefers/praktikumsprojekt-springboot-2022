@@ -61,6 +61,13 @@ package service {
             void klausurEintragen()
             Set<Klausurtermin> klausurtermine()
         }
+        class KlausurenVerifizierer {
+            LocalDateTime praktikumsStart
+            LocalDateTime praktikumsEnde
+
+            boolean istValide(Integer veranstaltungsId)
+
+        }
     }
     package repositories {
         interface KlausurterminRepository {}
