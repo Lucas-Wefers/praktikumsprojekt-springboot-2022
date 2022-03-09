@@ -6,11 +6,13 @@ import static de.hhu.chicken.infrastructure.web.configuration.AuthenticationTemp
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import de.hhu.chicken.service.repositories.KlausurRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -21,6 +23,9 @@ public class WebSecurityConfigurationTest {
 
   @Autowired
   MockMvc mockMvc;
+
+  @MockBean
+  KlausurRepository klausurRepository;
 
   @Test
   @DisplayName("Uneingeloggter Nutzer wird auf GitHub redirected")
