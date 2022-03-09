@@ -13,6 +13,7 @@ package domain {
         }
 
         class Klausur {
+            UUID uuid
             String fach
             LocalDate datum
             LocalTime von
