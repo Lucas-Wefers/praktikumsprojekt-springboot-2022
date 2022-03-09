@@ -18,4 +18,8 @@ public class KlausurenService {
   public List<Klausurtermin> alleKlausuren() {
     return repo.alleKlausuren();
   }
+
+  public void klausurSpeichern(Klausurtermin klausurtermin) {
+    repo.klausurSpeichern(klausurtermin);
+  }
 }

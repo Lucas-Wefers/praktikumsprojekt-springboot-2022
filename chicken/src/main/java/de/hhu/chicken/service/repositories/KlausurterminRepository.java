@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface KlausurterminRepository {
 
   List<Klausurtermin> alleKlausuren();
+
+  void klausurSpeichern(Klausurtermin klausurtermin);
 }

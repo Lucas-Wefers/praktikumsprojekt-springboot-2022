@@ -1,5 +1,6 @@
 package de.hhu.chicken.service.klausurenservice;
 
+import static de.hhu.chicken.service.klausurenservice.KlausurterminTemplates.beispielklausur;
 import static de.hhu.chicken.service.klausurenservice.KlausurterminTemplates.zweiBeispielklausuren;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -20,11 +21,24 @@ public class KlausurenServiceTest {
   void test_1() {
     KlausurterminRepository repo = mock(KlausurterminRepository.class);
     KlausurenService service = new KlausurenService(repo);
-    when(repo.alleKlausuren()).thenReturn(zweiBeispielklausuren());
+    List<Klausurtermin> beispielklausuren = zweiBeispielklausuren();
+    when(repo.alleKlausuren()).thenReturn(beispielklausuren);
 
     List<Klausurtermin> klausurtermine = service.alleKlausuren();
 
     verify(repo).alleKlausuren();
-    assertThat(klausurtermine).isEqualTo(zweiBeispielklausuren());
+    assertThat(klausurtermine).isEqualTo(beispielklausuren);
+  }
+
+  @Test
+  @DisplayName("Der Service ruft das Repository auf und speichert eine Klausur")
+  void test_2() {
+    KlausurterminRepository repo = mock(KlausurterminRepository.class);
+    KlausurenService service = new KlausurenService(repo);
+    Klausurtermin beispielklausur = beispielklausur();
+
+    service.klausurSpeichern(beispielklausur);
+
+    verify(repo).klausurSpeichern(beispielklausur);
   }
 }

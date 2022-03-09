@@ -26,4 +26,14 @@ public class KlausurterminTemplates {
         mock(VeranstaltungsId.class));
     return List.of(klausurtermin, klausurtermin2);
   }
+
+  static Klausurtermin beispielklausur() {
+    return
+        new Klausurtermin("Programmierung",
+            LocalDate.of(2022, 3, 17),
+            LocalTime.of(8, 30),
+            LocalTime.of(9, 30),
+            Klausurart.ONLINE,
+            mock(VeranstaltungsId.class));
+  }
 }

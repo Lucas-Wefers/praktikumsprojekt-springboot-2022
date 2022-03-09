@@ -62,8 +62,8 @@ package service {
 
     package klausurenservice {
         class KlausurenService {
-            void klausurEintragen()
-            Set<Klausurtermin> klausurtermine()
+            void klausurSpeichern()
+            Set<Klausurtermin> alleKlausuren()
         }
         class KlausurenVerifizierer {
             LocalDateTime praktikumsStart
