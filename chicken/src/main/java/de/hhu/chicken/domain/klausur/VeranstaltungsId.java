@@ -1,21 +1,14 @@
 package de.hhu.chicken.domain.klausur;
 
-public class VeranstaltungsId {
+class VeranstaltungsId {
 
   Long id;
 
-  public VeranstaltungsId(Long veranstaltungsId) {
+  VeranstaltungsId(Long veranstaltungsId) {
     id = veranstaltungsId;
   }
 
-  public Long getId() {
+  Long getId() {
     return id;
-  }
-
-  @Override
-  public String toString() {
-    return "VeranstaltungsId{" +
-        "id=" + id +
-        '}';
   }
 }

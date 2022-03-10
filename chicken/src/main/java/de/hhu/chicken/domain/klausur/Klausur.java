@@ -19,25 +19,25 @@ public class Klausur {
   private final VeranstaltungsId veranstaltungsId;
 
   public Klausur(String fach, LocalDate datum, LocalTime von, LocalTime bis,
-      Klausurart klausurart, VeranstaltungsId veranstaltungsId) {
+      boolean isPraesenz, Long veranstaltungsId) {
     this.uuid = UUID.randomUUID();
     this.fach = fach;
     this.datum = datum;
     this.von = von;
     this.bis = bis;
-    this.klausurart = klausurart;
-    this.veranstaltungsId = veranstaltungsId;
+    this.klausurart = isPraesenz ? PRAESENZ : ONLINE;
+    this.veranstaltungsId = new VeranstaltungsId(veranstaltungsId);
   }
 
   public Klausur(UUID uuid, String fach, LocalDate datum, LocalTime von, LocalTime bis,
-                 Klausurart klausurart, VeranstaltungsId veranstaltungsId) {
+                 boolean isPraesenz, Long veranstaltungsId) {
     this.uuid = uuid;
     this.fach = fach;
     this.datum = datum;
     this.von = von;
     this.bis = bis;
-    this.klausurart = klausurart;
-    this.veranstaltungsId = veranstaltungsId;
+    this.klausurart = isPraesenz ? PRAESENZ : ONLINE;
+    this.veranstaltungsId = new VeranstaltungsId(veranstaltungsId);
   }
 
   public LocalTime berechneFreistellungsStartzeitpunkt() {
@@ -84,12 +84,12 @@ public class Klausur {
     return bis;
   }
 
-  public Klausurart getKlausurart() {
-    return klausurart;
+  public boolean isPraesenz() {
+    return klausurart.equals(PRAESENZ);
   }
 
-  public VeranstaltungsId getVeranstaltungsId() {
-    return veranstaltungsId;
+  public Long getVeranstaltungsId() {
+    return veranstaltungsId.getId();
   }
 
   @Override

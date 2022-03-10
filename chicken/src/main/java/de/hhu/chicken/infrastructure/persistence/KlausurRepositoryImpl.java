@@ -1,8 +1,6 @@
 package de.hhu.chicken.infrastructure.persistence;
 
 import de.hhu.chicken.domain.klausur.Klausur;
-import de.hhu.chicken.domain.klausur.Klausurart;
-import de.hhu.chicken.domain.klausur.VeranstaltungsId;
 import de.hhu.chicken.infrastructure.persistence.dao.KlausurDao;
 import de.hhu.chicken.infrastructure.persistence.dto.KlausurDto;
 import de.hhu.chicken.service.repositories.KlausurRepository;
@@ -20,17 +18,13 @@ public class KlausurRepositoryImpl implements KlausurRepository {
   }
 
   private Klausur klausurDtoToKlausur(KlausurDto klausurDto) {
-    Klausurart klausurart = Klausurart.PRAESENZ;
-    if (klausurDto.getKlausurart() == 0) {
-      klausurart = Klausurart.ONLINE;
-    }
     return new Klausur(klausurDto.getUuid(),
         klausurDto.getFach(),
         klausurDto.getDatum(),
         klausurDto.getVon(),
         klausurDto.getBis(),
-        klausurart,
-        new VeranstaltungsId(klausurDto.getVeranstaltungsId()));
+        klausurDto.isPraesenz(),
+        klausurDto.getVeranstaltungsId());
   }
 
   private KlausurDto klausurToKlausurDto(Klausur klausur) {
@@ -39,8 +33,8 @@ public class KlausurRepositoryImpl implements KlausurRepository {
         klausur.getDatum(),
         klausur.getVon(),
         klausur.getBis(),
-        klausur.getKlausurart().ordinal(),
-        klausur.getVeranstaltungsId().getId());
+        klausur.isPraesenz(),
+        klausur.getVeranstaltungsId());
   }
 
   @Override

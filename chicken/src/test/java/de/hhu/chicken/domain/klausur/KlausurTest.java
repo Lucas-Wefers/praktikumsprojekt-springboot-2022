@@ -1,7 +1,6 @@
 package de.hhu.chicken.domain.klausur;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,8 +16,8 @@ public class KlausurTest {
         LocalDate.of(2022, 3, 12),
         LocalTime.of(10, 30),
         LocalTime.of(11, 30),
-        Klausurart.PRAESENZ,
-        mock(VeranstaltungsId.class));
+        true,
+        1234L);
 
     LocalTime startzeitpunkt = klausur.berechneFreistellungsStartzeitpunkt();
 
@@ -32,8 +31,8 @@ public class KlausurTest {
         LocalDate.of(2022, 3, 12),
         LocalTime.of(9, 30),
         LocalTime.of(11, 30),
-        Klausurart.PRAESENZ,
-        mock(VeranstaltungsId.class));
+        true,
+        1234L);
 
     LocalTime startzeitpunkt = klausur.berechneFreistellungsStartzeitpunkt();
 
@@ -47,8 +46,8 @@ public class KlausurTest {
         LocalDate.of(2022, 3, 12),
         LocalTime.of(10, 30),
         LocalTime.of(11, 30),
-        Klausurart.ONLINE,
-        mock(VeranstaltungsId.class));
+        false,
+        1234L);
 
     LocalTime startzeitpunkt = klausur.berechneFreistellungsStartzeitpunkt();
 
@@ -62,8 +61,8 @@ public class KlausurTest {
         LocalDate.of(2022, 3, 12),
         LocalTime.of(8, 45),
         LocalTime.of(11, 30),
-        Klausurart.ONLINE,
-        mock(VeranstaltungsId.class));
+        false,
+        1234L);
 
     LocalTime startzeitpunkt = klausur.berechneFreistellungsStartzeitpunkt();
 
@@ -77,8 +76,8 @@ public class KlausurTest {
         LocalDate.of(2022, 3, 12),
         LocalTime.of(8, 30),
         LocalTime.of(10, 30),
-        Klausurart.PRAESENZ,
-        mock(VeranstaltungsId.class));
+        true,
+        1234L);
 
     LocalTime endzeitpunkt = klausur.berechneFreistellungsEndzeitpunkt();
 
@@ -92,8 +91,8 @@ public class KlausurTest {
         LocalDate.of(2022, 3, 12),
         LocalTime.of(8, 30),
         LocalTime.of(12, 30),
-        Klausurart.PRAESENZ,
-        mock(VeranstaltungsId.class));
+        true,
+        1234L);
 
     LocalTime endzeitpunkt = klausur.berechneFreistellungsEndzeitpunkt();
 
@@ -107,8 +106,8 @@ public class KlausurTest {
         LocalDate.of(2022, 3, 12),
         LocalTime.of(8, 30),
         LocalTime.of(12, 30),
-        Klausurart.ONLINE,
-        mock(VeranstaltungsId.class));
+        false,
+        1234L);
 
     LocalTime endzeitpunkt = klausur.berechneFreistellungsEndzeitpunkt();
 
@@ -122,8 +121,8 @@ public class KlausurTest {
         LocalDate.of(2022, 3, 12),
         LocalTime.of(8, 30),
         LocalTime.of(14, 30),
-        Klausurart.ONLINE,
-        mock(VeranstaltungsId.class));
+        false,
+        1234L);
 
     LocalTime endzeitpunkt = klausur.berechneFreistellungsEndzeitpunkt();
 
