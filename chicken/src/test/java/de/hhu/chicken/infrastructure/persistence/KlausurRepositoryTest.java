@@ -14,6 +14,8 @@ import de.hhu.chicken.infrastructure.persistence.dao.KlausurDao;
 import de.hhu.chicken.infrastructure.persistence.dto.KlausurDto;
 import de.hhu.chicken.service.repositories.KlausurRepository;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -57,5 +59,19 @@ public class KlausurRepositoryTest {
     repo.klausurSpeichern(klausur);
 
     verify(klausurDao).save(klausurDto);
+  }
+
+  @Test
+  @DisplayName("Beim Suchen einer nicht existierenden uuid wird null returned")
+  void test_4() {
+    UUID uuid = UUID.randomUUID();
+    KlausurDao klausurDao = mock(KlausurDao.class);
+    KlausurRepository repo = new KlausurRepositoryImpl(klausurDao);
+    when(klausurDao.findByUuid(uuid)).thenReturn(Optional.empty());
+
+    Klausur klausur = repo.findKlausurByUuid(uuid);
+
+    assertThat(klausur).isNull();
+    verify(klausurDao).findByUuid(uuid);
   }
 }

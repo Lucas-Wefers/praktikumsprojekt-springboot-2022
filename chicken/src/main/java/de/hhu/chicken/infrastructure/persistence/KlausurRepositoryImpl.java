@@ -5,6 +5,7 @@ import de.hhu.chicken.infrastructure.persistence.dao.KlausurDao;
 import de.hhu.chicken.infrastructure.persistence.dto.KlausurDto;
 import de.hhu.chicken.service.repositories.KlausurRepository;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.stereotype.Repository;
 
@@ -52,6 +53,10 @@ public class KlausurRepositoryImpl implements KlausurRepository {
 
   @Override
   public Klausur findKlausurByUuid(UUID uuid) {
-    throw new UnsupportedOperationException("Not yet implemented");
+    Optional<KlausurDto> klausurDto = klausurDao.findByUuid(uuid);
+    if (klausurDto.isEmpty()) {
+      return null;
+    }
+    return klausurDtoToKlausur(klausurDto.get());
   }
 }
