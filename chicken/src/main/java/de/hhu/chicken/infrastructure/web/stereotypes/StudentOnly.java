@@ -1,4 +1,5 @@
 package de.hhu.chicken.infrastructure.web.stereotypes;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -11,4 +12,5 @@ import org.springframework.security.access.annotation.Secured;
 @Documented
 @Secured("ROLE_STUDENT")
 public @interface StudentOnly {
+
 }
