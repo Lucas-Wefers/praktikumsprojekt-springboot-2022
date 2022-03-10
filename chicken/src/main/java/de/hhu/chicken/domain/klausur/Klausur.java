@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class Klausur {
 
-  private final UUID uuid = UUID.randomUUID();
+  private final UUID uuid;
   private final String fach;
   private final LocalDate datum;
   private final LocalTime von;
@@ -20,6 +20,18 @@ public class Klausur {
 
   public Klausur(String fach, LocalDate datum, LocalTime von, LocalTime bis,
       Klausurart klausurart, VeranstaltungsId veranstaltungsId) {
+    this.uuid = UUID.randomUUID();
+    this.fach = fach;
+    this.datum = datum;
+    this.von = von;
+    this.bis = bis;
+    this.klausurart = klausurart;
+    this.veranstaltungsId = veranstaltungsId;
+  }
+
+  public Klausur(UUID uuid, String fach, LocalDate datum, LocalTime von, LocalTime bis,
+                 Klausurart klausurart, VeranstaltungsId veranstaltungsId) {
+    this.uuid = uuid;
     this.fach = fach;
     this.datum = datum;
     this.von = von;
