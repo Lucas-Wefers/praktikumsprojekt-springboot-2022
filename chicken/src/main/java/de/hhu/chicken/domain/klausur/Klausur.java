@@ -96,4 +96,17 @@ public class Klausur {
   public int hashCode() {
     return Objects.hash(uuid);
   }
+
+  @Override
+  public String toString() {
+    return "Klausur{" +
+        "uuid=" + uuid +
+        ", fach='" + fach + '\'' +
+        ", datum=" + datum +
+        ", von=" + von +
+        ", bis=" + bis +
+        ", klausurart=" + klausurart +
+        ", veranstaltungsId=" + veranstaltungsId +
+        '}';
+  }
 }
