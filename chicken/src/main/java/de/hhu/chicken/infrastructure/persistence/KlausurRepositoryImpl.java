@@ -39,7 +39,10 @@ public class KlausurRepositoryImpl implements KlausurRepository {
 
   @Override
   public List<Klausur> alleKlausuren() {
-    throw new UnsupportedOperationException("Not yet implemented");
+    List<KlausurDto> klausurDtos = klausurDao.findAll();
+    return klausurDtos.stream()
+        .map(this::klausurDtoToKlausur)
+        .toList();
   }
 
   @Override
