@@ -3,11 +3,13 @@ package de.hhu.chicken.domain.klausur;
 import static de.hhu.chicken.domain.klausur.Klausurart.ONLINE;
 import static de.hhu.chicken.domain.klausur.Klausurart.PRAESENZ;
 
+import de.hhu.chicken.domain.stereotypes.AggregateRoot;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 import java.util.UUID;
 
+@AggregateRoot
 public class Klausur {
 
   private final UUID uuid;
