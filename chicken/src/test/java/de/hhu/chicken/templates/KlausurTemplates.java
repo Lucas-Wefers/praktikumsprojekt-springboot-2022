@@ -29,7 +29,19 @@ public class KlausurTemplates {
 
   public static Klausur beispielklausur() {
     return
-        new Klausur("Programmierung",
+        new Klausur(UUID.fromString("01aebee7-a544-43ab-8768-1231a2f6a4f3"),
+            "Programmierung",
+            LocalDate.of(2022, 3, 17),
+            LocalTime.of(8, 30),
+            LocalTime.of(9, 30),
+            false,
+            1234L);
+  }
+
+  public static KlausurDto beispielklausurDto() {
+    return
+        new KlausurDto(UUID.fromString("01aebee7-a544-43ab-8768-1231a2f6a4f3"),
+            "Programmierung",
             LocalDate.of(2022, 3, 17),
             LocalTime.of(8, 30),
             LocalTime.of(9, 30),

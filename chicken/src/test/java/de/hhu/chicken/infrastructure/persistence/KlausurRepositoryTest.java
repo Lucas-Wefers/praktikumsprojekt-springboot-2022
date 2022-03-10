@@ -1,5 +1,7 @@
 package de.hhu.chicken.infrastructure.persistence;
 
+import static de.hhu.chicken.templates.KlausurTemplates.beispielklausur;
+import static de.hhu.chicken.templates.KlausurTemplates.beispielklausurDto;
 import static de.hhu.chicken.templates.KlausurTemplates.zweiBeispielklausuren;
 import static de.hhu.chicken.templates.KlausurTemplates.zweiBeispielklausurenDtos;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,5 +44,18 @@ public class KlausurRepositoryTest {
 
     assertThat(klausuren).isEqualTo(zweiBeispielklausuren());
     verify(klausurDao).findAll();
+  }
+
+  @Test
+  @DisplayName("Beim Speichern einer Klausur wird die save Methode im Dao aufgerufen")
+  void test_3() {
+    Klausur klausur = beispielklausur();
+    KlausurDto klausurDto = beispielklausurDto();
+    KlausurDao klausurDao = mock(KlausurDao.class);
+    KlausurRepository repo = new KlausurRepositoryImpl(klausurDao);
+
+    repo.klausurSpeichern(klausur);
+
+    verify(klausurDao).save(klausurDto);
   }
 }

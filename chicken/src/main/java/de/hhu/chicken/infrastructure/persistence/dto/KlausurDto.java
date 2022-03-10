@@ -2,6 +2,7 @@ package de.hhu.chicken.infrastructure.persistence.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 import java.util.UUID;
 import org.springframework.data.annotation.Id;
 
@@ -52,5 +53,22 @@ public class KlausurDto {
 
   public Long getVeranstaltungsId() {
     return veranstaltungsId;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    KlausurDto that = (KlausurDto) o;
+    return uuid.equals(that.uuid);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(uuid);
   }
 }

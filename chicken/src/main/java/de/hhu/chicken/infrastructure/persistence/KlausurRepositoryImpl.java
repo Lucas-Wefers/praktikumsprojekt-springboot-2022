@@ -47,7 +47,7 @@ public class KlausurRepositoryImpl implements KlausurRepository {
 
   @Override
   public void klausurSpeichern(Klausur klausur) {
-    throw new UnsupportedOperationException("Not yet implemented");
+    klausurDao.save(klausurToKlausurDto(klausur));
   }
 
   @Override
