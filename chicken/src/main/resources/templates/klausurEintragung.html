@@ -6,8 +6,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <title>Neue Klausur eintragen</title>
+  <style>
+    .error {
+      color: red;
+    }
+  </style>
+  <script>
+
+  </script>
 </head>
 <body>
-
+<div class="container">
+  <h1>Neue Klausur eintragen</h1>
+  <form th:action="@{/klausuren}" th:object="${klausurForm}" method="post">
+    <!--            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>-->
+    <div class="mb-3 mt-4">
+      <label for="lectureName">Name der Veranstaltung</label>
+      <input type="text" id="lectureName" class="form-control" th:field="*{fach}">
+      <div class="error" th:if="${#fields.hasErrors('fach')}">Geben Sie einen gültigen Veranstaltungsnamen ein!</div>
+    </div>
+    <div class="mb-3">
+      <label for="lectureId">ID der Veranstaltung im LSF</label>
+      <input type="text" id="lectureId" class="form-control" th:field="*{veranstaltungsId}">
+      <div class="error" th:if="${#fields.hasErrors('veranstaltungsId')}">Die ID konnte nicht im LSF gefunden werden!</div>
+    </div>
+    <div class="mb-3">
+      <input type="checkbox" id="liveExam" class="" name="isPraesenz" th:field="*{isPraesenz}">
+      <label for="liveExam">Die Klausur findet in Präsenz statt.</label>
+    </div>
+    <div class="mb-3">
+      <label for="liveExam">Datum der Klausur</label>
+      <input type="date" id="dayOfExam" class="form-control" th:field="*{datum}">
+      <div class="error" th:if="${#fields.hasErrors('datum')}">Geben Sie ein gültiges Datum ein!</div>
+    </div>
+    <div class="mb-3">
+      <label for="startTime">Klausurbeginn</label>
+      <input type="time" id="startTime" class="form-control" th:field="*{von}">
+      <div class="error" th:if="${#fields.hasErrors('von')}">Gebe Sie eine gültige Uhrzeit ein!</div>
+    </div>
+    <div class="mb-3">
+      <label for="endTime">Klausurende</label>
+      <input type="time" id="endTime" class="form-control" th:field="*{bis}">
+      <div class="error" th:if="${#fields.hasErrors('bis')}">Gebe Sie eine gültige Uhrzeit ein!</div>
+    </div>
+    <button class="btn btn-primary" type="submit">Eintragen</button>
+  </form>
+</div>
 </body>
 </html>
