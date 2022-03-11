@@ -17,9 +17,11 @@ public record KlausurForm(
     LocalDate datum,
 
     @NotNull
+    @DateTimeFormat(pattern = "HH:mm")
     LocalTime von,
 
     @NotNull
+    @DateTimeFormat(pattern = "HH:mm")
     LocalTime bis,
 
     Boolean isPraesenz,

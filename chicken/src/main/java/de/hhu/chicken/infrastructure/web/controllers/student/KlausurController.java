@@ -23,4 +23,13 @@ public class KlausurController {
   public String klausuren(KlausurForm klausurForm) {
     return "klausurEintragung";
   }
+
+  @PostMapping("/klausuren")
+  public String eintragen(@Valid KlausurForm klausurForm, BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+      return "klausurEintragung";
+    }
+    klausurService.klausurSpeichern(klausurForm.toKlausur());
+    return "klausurErfolg";
+  }
 }
