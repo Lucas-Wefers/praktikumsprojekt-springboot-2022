@@ -19,7 +19,7 @@ public class KlausurRepositoryImpl implements KlausurRepository {
   }
 
   private Klausur klausurDtoToKlausur(KlausurDto klausurDto) {
-    return new Klausur(klausurDto.getUuid(),
+    return new Klausur(klausurDto.getId(),
         klausurDto.getFach(),
         klausurDto.getDatum(),
         klausurDto.getVon(),
@@ -29,7 +29,7 @@ public class KlausurRepositoryImpl implements KlausurRepository {
   }
 
   private KlausurDto klausurToKlausurDto(Klausur klausur) {
-    return new KlausurDto(klausur.getUuid(),
+    return new KlausurDto(klausur.getId(),
         klausur.getFach(),
         klausur.getDatum(),
         klausur.getVon(),
@@ -52,8 +52,8 @@ public class KlausurRepositoryImpl implements KlausurRepository {
   }
 
   @Override
-  public Klausur findKlausurByUuid(UUID uuid) {
-    Optional<KlausurDto> klausurDto = klausurDao.findByUuid(uuid);
+  public Klausur findKlausurById(Long id) {
+    Optional<KlausurDto> klausurDto = klausurDao.findById(id);
     if (klausurDto.isEmpty()) {
       return null;
     }

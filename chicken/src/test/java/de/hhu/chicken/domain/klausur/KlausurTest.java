@@ -12,12 +12,7 @@ public class KlausurTest {
   @Test
   @DisplayName("Bei einer Präsenzklausur um 10:30 wird ab 8:30 freigestellt")
   void test_1() {
-    Klausur klausur = new Klausur("Programmierung",
-        LocalDate.of(2022, 3, 12),
-        LocalTime.of(10, 30),
-        LocalTime.of(11, 30),
-        true,
-        1234L);
+    Klausur klausur = beispielKlausur(10, 30, 11, true);
 
     LocalTime startzeitpunkt = klausur.berechneFreistellungsStartzeitpunkt();
 
@@ -27,12 +22,7 @@ public class KlausurTest {
   @Test
   @DisplayName("Bei einer Präsenzklausur um 9:30 wird ab 8:30 freigestellt")
   void test_2() {
-    Klausur klausur = new Klausur("Programmierung",
-        LocalDate.of(2022, 3, 12),
-        LocalTime.of(9, 30),
-        LocalTime.of(11, 30),
-        true,
-        1234L);
+    Klausur klausur = beispielKlausur(9, 30, 11, true);
 
     LocalTime startzeitpunkt = klausur.berechneFreistellungsStartzeitpunkt();
 
@@ -42,12 +32,7 @@ public class KlausurTest {
   @Test
   @DisplayName("Bei einer Onlineklausur um 10:30 wird ab 10:00 freigestellt")
   void test_3() {
-    Klausur klausur = new Klausur("Programmierung",
-        LocalDate.of(2022, 3, 12),
-        LocalTime.of(10, 30),
-        LocalTime.of(11, 30),
-        false,
-        1234L);
+    Klausur klausur = beispielKlausur(10, 30, 11, false);
 
     LocalTime startzeitpunkt = klausur.berechneFreistellungsStartzeitpunkt();
 
@@ -57,12 +42,7 @@ public class KlausurTest {
   @Test
   @DisplayName("Bei einer Onlineklausur um 8:45 wird ab 8:30 freigestellt")
   void test_4() {
-    Klausur klausur = new Klausur("Programmierung",
-        LocalDate.of(2022, 3, 12),
-        LocalTime.of(8, 45),
-        LocalTime.of(11, 30),
-        false,
-        1234L);
+    Klausur klausur = beispielKlausur(8, 45, 11, false);
 
     LocalTime startzeitpunkt = klausur.berechneFreistellungsStartzeitpunkt();
 
@@ -72,12 +52,7 @@ public class KlausurTest {
   @Test
   @DisplayName("Bei einer Präsenzklausur die um 10:30 endet wird bis 12:30 freigestellt")
   void test_5() {
-    Klausur klausur = new Klausur("Programmierung",
-        LocalDate.of(2022, 3, 12),
-        LocalTime.of(8, 30),
-        LocalTime.of(10, 30),
-        true,
-        1234L);
+    Klausur klausur = beispielKlausur(8, 30, 10, true);
 
     LocalTime endzeitpunkt = klausur.berechneFreistellungsEndzeitpunkt();
 
@@ -87,12 +62,7 @@ public class KlausurTest {
   @Test
   @DisplayName("Bei einer Präsenzklausur die um 12:30 endet wird bis 13:30 freigestellt")
   void test_6() {
-    Klausur klausur = new Klausur("Programmierung",
-        LocalDate.of(2022, 3, 12),
-        LocalTime.of(8, 30),
-        LocalTime.of(12, 30),
-        true,
-        1234L);
+    Klausur klausur = beispielKlausur(8, 30, 12, true);
 
     LocalTime endzeitpunkt = klausur.berechneFreistellungsEndzeitpunkt();
 
@@ -102,12 +72,7 @@ public class KlausurTest {
   @Test
   @DisplayName("Bei einer Onlineklausur die um 12:30 endet wird bis 12:30 freigestellt")
   void test_7() {
-    Klausur klausur = new Klausur("Programmierung",
-        LocalDate.of(2022, 3, 12),
-        LocalTime.of(8, 30),
-        LocalTime.of(12, 30),
-        false,
-        1234L);
+    Klausur klausur = beispielKlausur(8, 30, 12, false);
 
     LocalTime endzeitpunkt = klausur.berechneFreistellungsEndzeitpunkt();
 
@@ -117,15 +82,20 @@ public class KlausurTest {
   @Test
   @DisplayName("Bei einer Onlineklausur die um 14:30 endet wird bis 13:30 freigestellt")
   void test_8() {
-    Klausur klausur = new Klausur("Programmierung",
-        LocalDate.of(2022, 3, 12),
-        LocalTime.of(8, 30),
-        LocalTime.of(14, 30),
-        false,
-        1234L);
+    Klausur klausur = beispielKlausur(8, 30, 14, false);
 
     LocalTime endzeitpunkt = klausur.berechneFreistellungsEndzeitpunkt();
 
     assertThat(endzeitpunkt).isEqualTo(LocalTime.of(13, 30));
+  }
+
+  private Klausur beispielKlausur(int startStunde, int startMinute, int endStunde, boolean isPraesenz) {
+    return new Klausur(1L,
+        "Programmierung",
+        LocalDate.of(2022, 3, 12),
+        LocalTime.of(startStunde, startMinute),
+        LocalTime.of(endStunde, 30),
+        isPraesenz,
+        1234L);
   }
 }

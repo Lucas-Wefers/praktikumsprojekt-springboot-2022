@@ -12,7 +12,7 @@ import java.util.UUID;
 @AggregateRoot
 public class Klausur {
 
-  private final UUID uuid;
+  private final Long id;
   private final String fach;
   private final LocalDate datum;
   private final LocalTime von;
@@ -20,20 +20,9 @@ public class Klausur {
   private final Klausurart klausurart;
   private final VeranstaltungsId veranstaltungsId;
 
-  public Klausur(String fach, LocalDate datum, LocalTime von, LocalTime bis,
-      boolean isPraesenz, Long veranstaltungsId) {
-    this.uuid = UUID.randomUUID();
-    this.fach = fach;
-    this.datum = datum;
-    this.von = von;
-    this.bis = bis;
-    this.klausurart = isPraesenz ? PRAESENZ : ONLINE;
-    this.veranstaltungsId = new VeranstaltungsId(veranstaltungsId);
-  }
-
-  public Klausur(UUID uuid, String fach, LocalDate datum, LocalTime von, LocalTime bis,
+  public Klausur(Long id, String fach, LocalDate datum, LocalTime von, LocalTime bis,
                  boolean isPraesenz, Long veranstaltungsId) {
-    this.uuid = uuid;
+    this.id = id;
     this.fach = fach;
     this.datum = datum;
     this.von = von;
@@ -66,8 +55,8 @@ public class Klausur {
     return endzeitpunkt;
   }
 
-  public UUID getUuid() {
-    return uuid;
+  public Long getId() {
+    return id;
   }
 
   public String getFach() {
@@ -103,24 +92,11 @@ public class Klausur {
       return false;
     }
     Klausur klausur = (Klausur) o;
-    return uuid.equals(klausur.uuid);
+    return Objects.equals(id, klausur.id);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid);
-  }
-
-  @Override
-  public String toString() {
-    return "Klausur{" +
-        "uuid=" + uuid +
-        ", fach='" + fach + '\'' +
-        ", datum=" + datum +
-        ", von=" + von +
-        ", bis=" + bis +
-        ", klausurart=" + klausurart +
-        ", veranstaltungsId=" + veranstaltungsId +
-        '}';
+    return Objects.hash(id);
   }
 }

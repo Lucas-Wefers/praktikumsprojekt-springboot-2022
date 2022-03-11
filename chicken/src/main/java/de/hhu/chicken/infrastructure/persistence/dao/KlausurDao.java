@@ -10,5 +10,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface KlausurDao extends CrudRepository<KlausurDto, UUID> {
 
   List<KlausurDto> findAll();
-  Optional<KlausurDto> findByUuid(UUID uuid);
+  Optional<KlausurDto> findById(Long id);
 }

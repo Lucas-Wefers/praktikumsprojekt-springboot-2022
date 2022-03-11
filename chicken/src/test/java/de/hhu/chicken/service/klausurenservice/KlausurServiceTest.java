@@ -49,12 +49,12 @@ public class KlausurServiceTest {
     KlausurRepository repo = mock(KlausurRepository.class);
     KlausurService service = new KlausurService(repo);
     Klausur beispielklausur = beispielklausur();
-    UUID uuid = beispielklausur.getUuid();
-    when(repo.findKlausurByUuid(uuid)).thenReturn(beispielklausur);
+    Long id = beispielklausur.getId();
+    when(repo.findKlausurById(id)).thenReturn(beispielklausur);
 
-    Klausur klausurByUuid = service.findKlausurByUuid(uuid);
+    Klausur klausurByUuid = service.findKlausurById(id);
 
     assertThat(klausurByUuid).isEqualTo(beispielklausur);
-    verify(repo).findKlausurByUuid(uuid);
+    verify(repo).findKlausurById(id);
   }
 }

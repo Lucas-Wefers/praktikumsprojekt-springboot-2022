@@ -24,7 +24,7 @@ public class KlausurService {
     repo.klausurSpeichern(klausur);
   }
 
-  public Klausur findKlausurByUuid(UUID uuid) {
-    return repo.findKlausurByUuid(uuid);
+  public Klausur findKlausurById(Long id) {
+    return repo.findKlausurById(id);
   }
 }

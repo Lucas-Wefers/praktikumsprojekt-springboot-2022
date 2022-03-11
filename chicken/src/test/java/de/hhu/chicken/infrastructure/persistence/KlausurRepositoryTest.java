@@ -66,13 +66,13 @@ public class KlausurRepositoryTest {
   void test_4() {
     KlausurDao klausurDao = mock(KlausurDao.class);
     KlausurRepository repo = new KlausurRepositoryImpl(klausurDao);
-    UUID uuid = UUID.randomUUID();
-    when(klausurDao.findByUuid(uuid)).thenReturn(Optional.empty());
+    Long id = 1L;
+    when(klausurDao.findById(id)).thenReturn(Optional.empty());
 
-    Klausur klausur = repo.findKlausurByUuid(uuid);
+    Klausur klausur = repo.findKlausurById(id);
 
     assertThat(klausur).isNull();
-    verify(klausurDao).findByUuid(uuid);
+    verify(klausurDao).findById(id);
   }
 
   @Test
@@ -82,11 +82,11 @@ public class KlausurRepositoryTest {
     KlausurRepository repo = new KlausurRepositoryImpl(klausurDao);
     Klausur klausur = beispielklausur();
     KlausurDto klausurDto = beispielklausurDto();
-    when(klausurDao.findByUuid(klausur.getUuid())).thenReturn(Optional.of(klausurDto));
+    when(klausurDao.findById(klausur.getId())).thenReturn(Optional.of(klausurDto));
 
-    Klausur klausurByUuid = repo.findKlausurByUuid(klausur.getUuid());
+    Klausur klausurByUuid = repo.findKlausurById(klausur.getId());
 
     assertThat(klausurByUuid).isEqualTo(klausur);
-    verify(klausurDao).findByUuid(klausur.getUuid());
+    verify(klausurDao).findById(klausur.getId());
   }
 }

@@ -11,5 +11,5 @@ public interface KlausurRepository {
 
   void klausurSpeichern(Klausur klausur);
 
-  Klausur findKlausurByUuid(UUID uuid);
+  Klausur findKlausurById(Long id);
 }

@@ -3,22 +3,21 @@ package de.hhu.chicken.infrastructure.persistence.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
-import java.util.UUID;
 import org.springframework.data.annotation.Id;
 
 public class KlausurDto {
   @Id
-  UUID uuid;
-  String fach;
-  LocalDate datum;
-  LocalTime von;
-  LocalTime bis;
-  boolean isPraesenz;
-  Long veranstaltungsId;
+  private final Long id;
+  private final String fach;
+  private final LocalDate datum;
+  private final LocalTime von;
+  private final LocalTime bis;
+  private final boolean isPraesenz;
+  private final Long veranstaltungsId;
 
-  public KlausurDto(UUID uuid, String fach, LocalDate datum, LocalTime von, LocalTime bis,
-                    boolean isPraesenz, Long veranstaltungsId) {
-    this.uuid = uuid;
+  public KlausurDto(Long id, String fach, LocalDate datum, LocalTime von, LocalTime bis,
+      boolean isPraesenz, Long veranstaltungsId) {
+    this.id = id;
     this.fach = fach;
     this.datum = datum;
     this.von = von;
@@ -27,8 +26,8 @@ public class KlausurDto {
     this.veranstaltungsId = veranstaltungsId;
   }
 
-  public UUID getUuid() {
-    return uuid;
+  public Long getId() {
+    return id;
   }
 
   public String getFach() {
@@ -64,11 +63,11 @@ public class KlausurDto {
       return false;
     }
     KlausurDto that = (KlausurDto) o;
-    return uuid.equals(that.uuid);
+    return id.equals(that.id);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(uuid);
+    return Objects.hash(id);
   }
 }

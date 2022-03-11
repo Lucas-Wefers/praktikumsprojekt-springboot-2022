@@ -10,14 +10,14 @@ import java.util.UUID;
 public class KlausurTemplates {
 
   public static List<Klausur> zweiBeispielklausuren() {
-    Klausur klausur = new Klausur(UUID.fromString("d068927a-f5ed-49f4-97b3-f05b36afed5a"),
+    Klausur klausur = new Klausur(1L,
         "Programmierung",
         LocalDate.of(2022, 3, 17),
         LocalTime.of(8, 30),
         LocalTime.of(9, 30),
         false,
         1234L);
-    Klausur klausur2 = new Klausur(UUID.fromString("01aebee7-a544-43ab-8768-1231a2f6a4f3"),
+    Klausur klausur2 = new Klausur(2L,
         "Programmierung",
         LocalDate.of(2022, 3, 19),
         LocalTime.of(8, 30),
@@ -29,7 +29,7 @@ public class KlausurTemplates {
 
   public static Klausur beispielklausur() {
     return
-        new Klausur(UUID.fromString("01aebee7-a544-43ab-8768-1231a2f6a4f3"),
+        new Klausur(1L,
             "Programmierung",
             LocalDate.of(2022, 3, 17),
             LocalTime.of(8, 30),
@@ -40,7 +40,7 @@ public class KlausurTemplates {
 
   public static KlausurDto beispielklausurDto() {
     return
-        new KlausurDto(UUID.fromString("01aebee7-a544-43ab-8768-1231a2f6a4f3"),
+        new KlausurDto(1L,
             "Programmierung",
             LocalDate.of(2022, 3, 17),
             LocalTime.of(8, 30),
@@ -50,14 +50,14 @@ public class KlausurTemplates {
   }
 
   public static List<KlausurDto> zweiBeispielklausurenDtos() {
-    KlausurDto klausur = new KlausurDto(UUID.fromString("d068927a-f5ed-49f4-97b3-f05b36afed5a"),
+    KlausurDto klausur = new KlausurDto(1L,
         "Programmierung",
         LocalDate.of(2022, 3, 17),
         LocalTime.of(8, 30),
         LocalTime.of(9, 30),
         false,
         1234L);
-    KlausurDto klausur2 = new KlausurDto(UUID.fromString("01aebee7-a544-43ab-8768-1231a2f6a4f3"),
+    KlausurDto klausur2 = new KlausurDto(2L,
         "Programmierung",
         LocalDate.of(2022, 3, 19),
         LocalTime.of(8, 30),
