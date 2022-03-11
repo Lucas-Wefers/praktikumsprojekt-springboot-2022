@@ -19,13 +19,13 @@ public class KlausurRepositoryImpl implements KlausurRepository {
   }
 
   private Klausur klausurDtoToKlausur(KlausurDto klausurDto) {
-    return new Klausur(klausurDto.getId(),
-        klausurDto.getFach(),
-        klausurDto.getDatum(),
-        klausurDto.getVon(),
-        klausurDto.getBis(),
+    return new Klausur(klausurDto.id(),
+        klausurDto.fach(),
+        klausurDto.datum(),
+        klausurDto.von(),
+        klausurDto.bis(),
         klausurDto.isPraesenz(),
-        klausurDto.getVeranstaltungsId());
+        klausurDto.veranstalungsId());
   }
 
   private KlausurDto klausurToKlausurDto(Klausur klausur) {
