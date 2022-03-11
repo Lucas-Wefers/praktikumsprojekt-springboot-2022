@@ -61,8 +61,8 @@ public class KlausurDbTest {
         false,
         1234L);
 
-    Klausur gespeicherteKlausur1 = db.klausurSpeichern(klausur);
-    Klausur gespeicherteKlausur2 = db.klausurSpeichern(klausur);
+    db.klausurSpeichern(klausur);
+    db.klausurSpeichern(klausur);
     List<Klausur> klausuren = db.alleKlausuren();
 
     assertThat(klausuren).hasSize(2);
@@ -79,7 +79,7 @@ public class KlausurDbTest {
         false,
         1234L);
 
-    Klausur gespeicherteKlausur1 = db.klausurSpeichern(klausur);
+    db.klausurSpeichern(klausur);
     Klausur gespeicherteKlausur2 = db.klausurSpeichern(klausur);
     Klausur klausurById = db.findKlausurById(gespeicherteKlausur2.getId());
 
