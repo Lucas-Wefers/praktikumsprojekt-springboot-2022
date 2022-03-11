@@ -47,8 +47,8 @@ public class KlausurRepositoryImpl implements KlausurRepository {
   }
 
   @Override
-  public void klausurSpeichern(Klausur klausur) {
-    klausurDao.save(klausurToKlausurDto(klausur));
+  public Klausur klausurSpeichern(Klausur klausur) {
+    return klausurDtoToKlausur(klausurDao.save(klausurToKlausurDto(klausur)));
   }
 
   @Override

@@ -9,7 +9,7 @@ public interface KlausurRepository {
 
   List<Klausur> alleKlausuren();
 
-  void klausurSpeichern(Klausur klausur);
+  Klausur klausurSpeichern(Klausur klausur);
 
   Klausur findKlausurById(Long id);
 }

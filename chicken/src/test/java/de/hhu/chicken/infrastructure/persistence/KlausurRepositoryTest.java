@@ -54,6 +54,7 @@ public class KlausurRepositoryTest {
     KlausurDto klausurDto = beispielklausurDto();
     KlausurDao klausurDao = mock(KlausurDao.class);
     KlausurRepository repo = new KlausurRepositoryImpl(klausurDao);
+    when(klausurDao.save(klausurDto)).thenReturn(klausurDto);
 
     repo.klausurSpeichern(klausur);
 
