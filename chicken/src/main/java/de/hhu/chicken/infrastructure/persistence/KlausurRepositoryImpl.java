@@ -25,7 +25,7 @@ public class KlausurRepositoryImpl implements KlausurRepository {
         klausurDto.von(),
         klausurDto.bis(),
         klausurDto.isPraesenz(),
-        klausurDto.veranstalungsId());
+        klausurDto.veranstaltungsId());
   }
 
   private KlausurDto klausurToKlausurDto(Klausur klausur) {
