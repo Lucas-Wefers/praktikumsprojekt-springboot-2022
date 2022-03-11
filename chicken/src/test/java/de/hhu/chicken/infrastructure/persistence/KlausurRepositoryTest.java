@@ -64,14 +64,29 @@ public class KlausurRepositoryTest {
   @Test
   @DisplayName("Beim Suchen einer nicht existierenden uuid wird null returned")
   void test_4() {
-    UUID uuid = UUID.randomUUID();
     KlausurDao klausurDao = mock(KlausurDao.class);
     KlausurRepository repo = new KlausurRepositoryImpl(klausurDao);
+    UUID uuid = UUID.randomUUID();
     when(klausurDao.findByUuid(uuid)).thenReturn(Optional.empty());
 
     Klausur klausur = repo.findKlausurByUuid(uuid);
 
     assertThat(klausur).isNull();
     verify(klausurDao).findByUuid(uuid);
+  }
+
+  @Test
+  @DisplayName("Beim Suchen einer existierenden uuid wird eine Klausur returned")
+  void test_5() {
+    KlausurDao klausurDao = mock(KlausurDao.class);
+    KlausurRepository repo = new KlausurRepositoryImpl(klausurDao);
+    Klausur klausur = beispielklausur();
+    KlausurDto klausurDto = beispielklausurDto();
+    when(klausurDao.findByUuid(klausur.getUuid())).thenReturn(Optional.of(klausurDto));
+
+    Klausur klausurByUuid = repo.findKlausurByUuid(klausur.getUuid());
+
+    assertThat(klausurByUuid).isEqualTo(klausur);
+    verify(klausurDao).findByUuid(klausur.getUuid());
   }
 }
