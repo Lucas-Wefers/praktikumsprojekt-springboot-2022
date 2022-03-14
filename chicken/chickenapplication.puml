@@ -1,146 +1,280 @@
 @startuml
 
 package domain {
-    package domain.stereotypes {
-        annotation AggregateRoot {}
-    }
-    package klausur {
-        enum Klausurart {
-            ONLINE
-            PRAESENZ
-        }
-        class VeranstaltungsId {
-            Long id
-        }
-        class Klausur {
-            Long id
-            String fach
-            LocalDate datum
-            LocalTime von
-            LocalTime bis
-            Klausurart klausurart
-            VeranstaltungsId veranstaltungsId
-            LocalTime berechneFreistellungsStartzeitpunkt()
-            LocalTime berechneFreistellungsEndzeitpunkt()
-        }
+  package domain.stereotypes {
+    annotation AggregateRoot {}
+  }
+
+  package klausur {
+    enum Klausurart {
+      ONLINE
+      PRAESENZ
     }
 
-    package student {
-        class Urlaubstermin {
-            LocalDate datum
-            LocalTime von
-            LocalTime bis
-            boolean istVielfacheViertelstunde()
-        }
-        class Student {
-            GithubHandle handle
-            Set<KlausurReferenz> klausurtermine
-            Set<Urlaubstermin> urlaubstermine
-            double berechneResturlaub()
-            void fuegeKlausurterminHinzu()
-            void fuegeUrlaubsterminHinzu()
-        }
-        Student --> Urlaubstermin
+    class VeranstaltungsId {
+      Long id
     }
-    student --> klausur
 
+    class Klausur {
+      Long id
+      String fach
+      LocalDate datum
+      LocalTime von
+      LocalTime bis
+      Klausurart klausurart
+      VeranstaltungsId veranstaltungsId
+      LocalTime berechneFreistellungsStartzeitpunkt()
+      LocalTime berechneFreistellungsEndzeitpunkt()
+    }
+  }
+
+  package student {
+    class Urlaubstermin {
+      LocalDate datum
+      LocalTime von
+      LocalTime bis
+      boolean istVielfacheViertelstunde()
+    }
+
+    class Student {
+      GithubHandle handle
+      Set<KlausurReferenz> klausurtermine
+      Set<Urlaubstermin> urlaubstermine
+      double berechneResturlaub()
+      void fuegeKlausurterminHinzu()
+      void fuegeUrlaubsterminHinzu()
+    }
+
+    Student --> Urlaubstermin
+  }
+
+  student --> klausur
 }
 
 package service {
-    package studentenservice {
-        class StudentService {
-            void berechneResturlaub()
-            void klausurAnmelden()
-            Set<Klausur> klausurtermine()
-            void klausurStornieren()
-            void urlaubAnmelden()
-            Set<Urlaubstermin> urlaubstermine()
-            void urlaubStornieren()
-        }
+  package studentenservice {
+    class StudentService {
+      void berechneResturlaub()
+      void klausurAnmelden()
+      Set<Klausur> klausurtermine()
+      void klausurStornieren()
+      void urlaubAnmelden()
+      Set<Urlaubstermin> urlaubstermine()
+      void urlaubStornieren()
+    }
+  }
+
+  package klausurservice {
+    class KlausurService {
+      void klausurSpeichern()
+      List<Klausur> alleKlausuren()
+      Klausur findKlausurById()
+    }
+  }
+
+  package repositories {
+    interface KlausurRepository {
+      List<Klausur> alleKlausuren()
+      Klausur klausurSpeichern()
+      Klausur findKlausurById()
     }
 
-    package klausurservice {
-        class KlausurService {
-            void klausurSpeichern()
-            List<Klausur> alleKlausuren()
-            Klausur findKlausurById()
-        }
-    }
-    package repositories {
-        interface KlausurRepository {
-            List<Klausur> alleKlausuren()
-            Klausur klausurSpeichern()
-            Klausur findKlausurById()
-        }
-        interface StudentRepository {}
-    }
-    KlausurService --> KlausurRepository
-    StudentService --> StudentRepository
-    StudentService --> KlausurRepository
+    interface StudentRepository {}
+  }
 
+  KlausurService --> KlausurRepository
+  StudentService --> StudentRepository
+  StudentService --> KlausurRepository
 }
 
 package infrastructure {
-    class ChickenApplication {}
-        package web {
-        package configuration {
-            class MethodSecurityConfiguration {}
-            class SecurityConfiguration {}
-            class WebSecurityConfiguration {}
+  class ChickenApplication {}
+    package web {
+      package configuration {
+        class MethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
+          @Configuration
+          @EnableGlobalMethodSecurityd
         }
 
-        package forms {
-
+        class SecurityConfiguration {
+          SessionAuthenticationStrategy sessionAuthenticationStrategy()
+          OAuth2AuthorizedClientManager authorizedClientManager()
         }
-        package web.stereotypes {
 
+        class WebSecurityConfiguration {
+          List<String> organisatoren
+          List<String> tutoren
+          void configure()
+          OAuth2UserService<OAuth2UserRequest, OAuth2User> createUserService()
         }
-        class KlausurController {}
-        class UrlaubsterminController {}
-        class StartseitenController {}
     }
-    package persistenz {
 
-        package dao {
-            interface KlausurDao extends CrudRepository {
-                List<KlausurDto> findAll()
-                Optional<KlausurDto> findById()
-            }
-            interface StudentDao extends CrudRepository {}
-        }
-        class KlausurRepositoryImpl {
-            KlausurDao klausurDao
-            List<Klausur> alleKlausuren()
-            Klausur klausurSpeichern()
-            Klausur findKlausurById()
-        }
-        class StudentRepositoryImpl {
-            StudentDao studentDao
-        }
+    package forms {
+      class KlausurForm {
+        String fach
+        LocalDate datum
+        LocalTime von
+        LocalTime bis
+        Boolean isPraesenz
+        Long veranstaltungsId
+      }
 
-        package dto {
-          class KlausurDto {
-            Long id
-            String fach
-            LocalDate datum
-            LocalTime von
-            LocalTime bis
-            boolean isPraesenz
-            Long veranstaltungsId
+      package verification {
+        package verification.stereotypes {
+          annotation IsValidDatum {
+            @Documented
+            @Constraint(validatedBy = KlausurDatumVerifizierer.class)
+            @Target({ElementType.METHOD, ElementType.FIELD})
+            @Retention(RetentionPolicy.RUNTIME)
           }
-          class StudentDto {
-            Long id
-            String handle
-            Set<KlausurReferenz> klausurtermine
-            Set<Urlaubstermin> urlaubstermine
+
+          annotation IsValidId {
+            @Documented
+            @Constraint(validatedBy = KlausurVeranstaltungsIdVerifizierer.class)
+            @Target({ElementType.METHOD, ElementType.FIELD})
+            @Retention(RetentionPolicy.RUNTIME)
+          }
+
+          annotation IsValidOnlineKlausurZeitraum {
+            @Documented
+            @Constraint(validatedBy = OnlineKlausurZeitraumVerifizierer.class)
+            @Target({ElementType.METHOD, ElementType.FIELD})
+            @Retention(RetentionPolicy.RUNTIME)
+          }
+
+          annotation IsValidPraesenzKlausurZeitraum {
+            @Documented
+            @Constraint(validatedBy = PraesenzKlausurZeitraumVerifizierer.class)
+            @Target({ElementType.METHOD, ElementType.FIELD})
+            @Retention(RetentionPolicy.RUNTIME)
           }
         }
 
-        StudentRepositoryImpl --> StudentDao
-        KlausurRepositoryImpl --> KlausurDao
-        StudentDao --> StudentDto
-        KlausurDao --> KlausurDto
+        class KlausurDatumVerifizierer implements ConstraintValidator {
+          boolean isValid()
+        }
+
+        class KlausurVeranstaltungsIdVerifizierer implements ConstraintValidator {
+          boolean isValid()
+        }
+
+        class OnlineKlausurZeitraumVerifizierer implements ConstraintValidator {
+          boolean isValid()
+        }
+
+        class PraesenzKlausurZeitraumVerifizierer implements ConstraintValidator {
+          boolean isValid()
+        }
+
+        KlausurDatumVerifizierer --> IsValidDatum
+        KlausurVeranstaltungsIdVerifizierer --> IsValidId
+        OnlineKlausurZeitraumVerifizierer --> IsValidOnlineKlausurZeitraum
+        PraesenzKlausurZeitraumVerifizierer --> IsValidPraesenzKlausurZeitraum
+      }
+
+      KlausurForm --> verification
     }
+
+    package web.stereotypes {
+      annotation OrganisatorOnly {
+        @Target(ElementType.TYPE)
+        @Retention(RetentionPolicy.RUNTIME)
+        @Documented
+        @Secured("ROLE_ORGANISATOR")
+      }
+
+      annotation StudentOnly {
+        @Target(ElementType.TYPE)
+        @Retention(RetentionPolicy.RUNTIME)
+        @Documented
+        @Secured("ROLE_STUDENT")
+      }
+
+      annotation TutorOnly {
+        @Target(ElementType.TYPE)
+        @Retention(RetentionPolicy.RUNTIME)
+        @Documented
+        @Secured("ROLE_TUTOR")
+      }
+    }
+
+    package controllers {
+      package organisator {
+        class OrganisatorController {
+          String index()
+        }
+      }
+
+      package tutor {
+        class TutorController {
+          String index()
+        }
+      }
+
+      package controllers.student {
+        class KlausurController {
+          KlausurService klausurService
+          String klausuren()
+          String eintragen()
+          String anmelden()
+        }
+
+        class StartseitenController {
+          String index()
+        }
+
+        class UrlaubsterminController {
+
+        }
+      }
+    }
+  }
+
+  package persistenz {
+    package dao {
+      interface KlausurDao extends CrudRepository {
+        List<KlausurDto> findAll()
+        Optional<KlausurDto> findById()
+      }
+
+      interface StudentDao extends CrudRepository {}
+    }
+
+    class KlausurRepositoryImpl {
+      KlausurDao klausurDao
+      List<Klausur> alleKlausuren()
+      Klausur klausurSpeichern()
+      Klausur findKlausurById()
+    }
+
+    class StudentRepositoryImpl {
+      StudentDao studentDao
+    }
+
+    package dto {
+      class KlausurDto {
+        Long id
+        String fach
+        LocalDate datum
+        LocalTime von
+        LocalTime bis
+        boolean isPraesenz
+        Long veranstaltungsId
+      }
+
+      class StudentDto {
+        Long id
+        String handle
+        Set<KlausurReferenz> klausurtermine
+        Set<Urlaubstermin> urlaubstermine
+      }
+    }
+
+    StudentRepositoryImpl --> StudentDao
+    KlausurRepositoryImpl --> KlausurDao
+    StudentDao --> StudentDto
+    KlausurDao --> KlausurDto
+  }
 }
 
 service --> domain
