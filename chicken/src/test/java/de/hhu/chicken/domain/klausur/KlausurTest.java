@@ -10,23 +10,23 @@ import org.junit.jupiter.api.Test;
 public class KlausurTest {
 
   @Test
-  @DisplayName("Bei einer Präsenzklausur um 10:30 wird ab 8:30 freigestellt")
+  @DisplayName("Bei einer Präsenzklausur um 10:30 wird ab 9:30 freigestellt")
   void test_1() {
     Klausur klausur = beispielKlausur(10, 30, 11, true);
 
     LocalTime startzeitpunkt = klausur.berechneFreistellungsStartzeitpunkt();
 
-    assertThat(startzeitpunkt).isEqualTo(LocalTime.of(8, 30));
+    assertThat(startzeitpunkt).isEqualTo(LocalTime.of(9, 30));
   }
 
   @Test
-  @DisplayName("Bei einer Präsenzklausur um 9:30 wird ab 8:30 freigestellt")
+  @DisplayName("Bei einer Präsenzklausur um 9:30 wird ab 9:30 freigestellt")
   void test_2() {
     Klausur klausur = beispielKlausur(9, 30, 11, true);
 
     LocalTime startzeitpunkt = klausur.berechneFreistellungsStartzeitpunkt();
 
-    assertThat(startzeitpunkt).isEqualTo(LocalTime.of(8, 30));
+    assertThat(startzeitpunkt).isEqualTo(LocalTime.of(9, 30));
   }
 
   @Test
@@ -40,13 +40,13 @@ public class KlausurTest {
   }
 
   @Test
-  @DisplayName("Bei einer Onlineklausur um 8:45 wird ab 8:30 freigestellt")
+  @DisplayName("Bei einer Onlineklausur um 8:45 wird ab 9:30 freigestellt")
   void test_4() {
     Klausur klausur = beispielKlausur(8, 45, 11, false);
 
     LocalTime startzeitpunkt = klausur.berechneFreistellungsStartzeitpunkt();
 
-    assertThat(startzeitpunkt).isEqualTo(LocalTime.of(8, 30));
+    assertThat(startzeitpunkt).isEqualTo(LocalTime.of(9, 30));
   }
 
   @Test

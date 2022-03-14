@@ -7,7 +7,6 @@ import de.hhu.chicken.domain.stereotypes.AggregateRoot;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
-import java.util.UUID;
 
 @AggregateRoot
 public class Klausur {
@@ -19,6 +18,9 @@ public class Klausur {
   private final LocalTime bis;
   private final Klausurart klausurart;
   private final VeranstaltungsId veranstaltungsId;
+
+  private final LocalTime praktikumStart = LocalTime.of(9, 30);
+  private final LocalTime praktikumEnde = LocalTime.of(13, 30);
 
   public Klausur(Long id, String fach, LocalDate datum, LocalTime von, LocalTime bis,
                  boolean isPraesenz, Long veranstaltungsId) {
@@ -32,25 +34,35 @@ public class Klausur {
   }
 
   public LocalTime berechneFreistellungsStartzeitpunkt() {
-    LocalTime startzeitpunkt;
-    if (klausurart.equals(ONLINE)) {
-      startzeitpunkt = von.minusMinutes(30);
-    } else {
-      startzeitpunkt = von.minusHours(2);
+    LocalTime freistellungsStartzeitpunkt = von;
+
+    if (klausurart == PRAESENZ) {
+      if (freistellungsStartzeitpunkt.minusHours(2L).isBefore(freistellungsStartzeitpunkt)) {
+        freistellungsStartzeitpunkt = freistellungsStartzeitpunkt.minusHours(2L);
+      }
     }
-    if (startzeitpunkt.isBefore(LocalTime.of(8, 30))) {
-      startzeitpunkt = LocalTime.of(8, 30);
+    else {
+      if (freistellungsStartzeitpunkt.minusMinutes(30L).isBefore(freistellungsStartzeitpunkt)) {
+        freistellungsStartzeitpunkt = freistellungsStartzeitpunkt.minusMinutes(30L);
+      }
     }
-    return startzeitpunkt;
+    if (freistellungsStartzeitpunkt.isBefore(praktikumStart)) {
+      return praktikumStart;
+    }
+
+    return freistellungsStartzeitpunkt;
   }
 
   public LocalTime berechneFreistellungsEndzeitpunkt() {
     LocalTime endzeitpunkt = bis;
-    if (klausurart.equals(PRAESENZ)) {
-      endzeitpunkt = bis.plusHours(2);
+
+    if (klausurart == PRAESENZ) {
+      if (endzeitpunkt.plusHours(2L).isAfter(endzeitpunkt)) {
+        endzeitpunkt = endzeitpunkt.plusHours(2L);
+      }
     }
-    if (endzeitpunkt.isAfter(LocalTime.of(13, 30))) {
-      endzeitpunkt = LocalTime.of(13, 30);
+    if (endzeitpunkt.isAfter(praktikumEnde)) {
+      return praktikumEnde;
     }
     return endzeitpunkt;
   }
