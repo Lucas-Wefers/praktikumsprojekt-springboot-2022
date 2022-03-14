@@ -20,12 +20,16 @@ public class KlausurDatumVerifizierer implements ConstraintValidator<IsValidDatu
 
   @Override
   public boolean isValid(LocalDate value, ConstraintValidatorContext context) {
-    if (value.getDayOfWeek().equals(DayOfWeek.SATURDAY) ||
-        value.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+    if (value == null) {
       return false;
     }
 
-    return value != null && !value.isBefore(startDatum) && !value.isAfter(endeDatum);
+    if (value.getDayOfWeek().equals(DayOfWeek.SATURDAY)
+        || value.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+      return false;
+    }
+
+    return !value.isBefore(startDatum) && !value.isAfter(endeDatum);
   }
 
   void setStartDatum(LocalDate startDatum) {

@@ -21,7 +21,7 @@ public class PraesenzKlausurZeitraumVerifizierer implements
     LocalTime von = zeitraum.get(0);
     LocalTime bis = zeitraum.get(1);
 
-    if(von.isAfter(bis)) {
+    if (von.isAfter(bis)) {
       return false;
     }
 

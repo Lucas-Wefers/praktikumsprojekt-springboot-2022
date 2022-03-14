@@ -41,8 +41,7 @@ public class Klausur {
       if (freistellungsStartzeitpunkt.minusHours(2L).isBefore(freistellungsStartzeitpunkt)) {
         freistellungsStartzeitpunkt = freistellungsStartzeitpunkt.minusHours(2L);
       }
-    }
-    else {
+    } else {
       if (freistellungsStartzeitpunkt.minusMinutes(30L).isBefore(freistellungsStartzeitpunkt)) {
         freistellungsStartzeitpunkt = freistellungsStartzeitpunkt.minusMinutes(30L);
       }
