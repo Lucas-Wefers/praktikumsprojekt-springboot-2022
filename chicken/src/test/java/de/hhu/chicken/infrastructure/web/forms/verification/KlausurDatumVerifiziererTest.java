@@ -48,4 +48,24 @@ public class KlausurDatumVerifiziererTest {
 
     assertThat(isValid).isTrue();
   }
+
+  @Test
+  @DisplayName("Eine Klausur innerhalb des Praktikumszeitraum an einem Samstag ist nicht valide")
+  void test_4() {
+    LocalDate datum = LocalDate.of(2022, 3, 19);
+
+    boolean isValid = verifizierer.isValid(datum, mock(ConstraintValidatorContext.class));
+
+    assertThat(isValid).isFalse();
+  }
+
+  @Test
+  @DisplayName("Eine Klausur innerhalb des Praktikumszeitraum an einem Sonntag ist nicht valide")
+  void test_5() {
+    LocalDate datum = LocalDate.of(2022, 3, 20);
+
+    boolean isValid = verifizierer.isValid(datum, mock(ConstraintValidatorContext.class));
+
+    assertThat(isValid).isFalse();
+  }
 }

@@ -1,6 +1,7 @@
 package de.hhu.chicken.infrastructure.web.forms.verification;
 
 import de.hhu.chicken.infrastructure.web.forms.verification.stereotypes.IsValidDatum;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -19,6 +20,11 @@ public class KlausurDatumVerifizierer implements ConstraintValidator<IsValidDatu
 
   @Override
   public boolean isValid(LocalDate value, ConstraintValidatorContext context) {
+    if (value.getDayOfWeek().equals(DayOfWeek.SATURDAY) ||
+        value.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+      return false;
+    }
+
     return value != null && !value.isBefore(startDatum) && !value.isAfter(endeDatum);
   }
 
