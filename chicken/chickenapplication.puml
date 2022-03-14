@@ -1,19 +1,19 @@
 @startuml
 
 package domain {
+    package domain.stereotypes {
+        annotation AggregateRoot {}
+    }
     package klausur {
         enum Klausurart {
             ONLINE
             PRAESENZ
         }
-
         class VeranstaltungsId {
-            @Rules
-            String id
+            Long id
         }
-
         class Klausur {
-            UUID uuid
+            Long id
             String fach
             LocalDate datum
             LocalTime von
@@ -24,7 +24,6 @@ package domain {
             LocalTime berechneFreistellungsEndzeitpunkt()
         }
     }
-
 
     package student {
         class Urlaubstermin {
@@ -41,7 +40,6 @@ package domain {
             void fuegeKlausurterminHinzu()
             void fuegeUrlaubsterminHinzu()
         }
-
         Student --> Urlaubstermin
     }
     student --> klausur
@@ -64,18 +62,16 @@ package service {
     package klausurservice {
         class KlausurService {
             void klausurSpeichern()
-            Set<Klausur> alleKlausuren()
-        }
-        class KlausurVerifizierer {
-            LocalDateTime praktikumsStart
-            LocalDateTime praktikumsEnde
-
-            boolean istValide(Integer veranstaltungsId)
-
+            List<Klausur> alleKlausuren()
+            Klausur findKlausurById()
         }
     }
     package repositories {
-        interface KlausurRepository {}
+        interface KlausurRepository {
+            List<Klausur> alleKlausuren()
+            Klausur klausurSpeichern()
+            Klausur findKlausurById()
+        }
         interface StudentRepository {}
     }
     KlausurService --> KlausurRepository
@@ -86,7 +82,19 @@ package service {
 
 package infrastructure {
     class ChickenApplication {}
-    package web {
+        package web {
+        package configuration {
+            class MethodSecurityConfiguration {}
+            class SecurityConfiguration {}
+            class WebSecurityConfiguration {}
+        }
+
+        package forms {
+
+        }
+        package web.stereotypes {
+
+        }
         class KlausurController {}
         class UrlaubsterminController {}
         class StartseitenController {}
@@ -94,11 +102,17 @@ package infrastructure {
     package persistenz {
 
         package dao {
-            interface KlausurDao extends CrudRepository {}
+            interface KlausurDao extends CrudRepository {
+                List<KlausurDto> findAll()
+                Optional<KlausurDto> findById()
+            }
             interface StudentDao extends CrudRepository {}
         }
         class KlausurRepositoryImpl {
             KlausurDao klausurDao
+            List<Klausur> alleKlausuren()
+            Klausur klausurSpeichern()
+            Klausur findKlausurById()
         }
         class StudentRepositoryImpl {
             StudentDao studentDao
@@ -111,8 +125,8 @@ package infrastructure {
             LocalDate datum
             LocalTime von
             LocalTime bis
-            boolean klausurart
-            String veranstaltungsId
+            boolean isPraesenz
+            Long veranstaltungsId
           }
           class StudentDto {
             Long id
@@ -121,8 +135,6 @@ package infrastructure {
             Set<Urlaubstermin> urlaubstermine
           }
         }
-
-
 
         StudentRepositoryImpl --> StudentDao
         KlausurRepositoryImpl --> KlausurDao
