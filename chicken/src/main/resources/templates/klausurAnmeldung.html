@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <title>Anmeldung zu einer Klausur</title>
+  <style>
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Anmeldung zu einer Klausur</h1>
+
+  <div class="formular mt-3">
+    <p class="alert"><strong>Wenn die Klausur in der Auswahl noch nicht vorhanden ist, dann können Sie
+      sie <a
+              href="/klausuren">hier</a> anlegen.</strong></p>
+    <form name="klausur_anmelden" method="post" action="/klausuranmeldung">
+      <select class="form-control" name="klausur" id="klausur-select" >
+        <option disabled selected value="">Wählen Sie eine Klausur aus</option>
+        <option th:each="klausur : ${klausuren}" th:text="${klausur.toString()}" th:value="${klausur.id}"
+        >Rechnerarchitektur (25.03.2022, 08:30 - 11:30 Uhr)</option>
+      </select>
+      <p class="p-3"><strong>
+        Sie bestätigen hiermit, dass Sie für die oben ausgewählte
+        Klausur angemeldet sind.
+      </strong>
+        <br> Bis zum Tag vor der Klausur können Sie Ihre Teilnahme selber hier stornieren. Sollten Sie sich
+        am Klausurtag entscheiden doch nicht mitzuschreiben, müssen Sie am Morgen der
+        zuständigen Tutor:in Bescheid geben und das zusätzlich
+        in einer Mail an <a href="mailto:propra@cs.hhu.de">propra@cs.hhu.de</a> mitteilen.
+        <strong>Natürlich müssen Sie dann auch am Praktikum teilnehmen.</strong> <br>
+        Ggf. überprüfen wir die Teilnahme an der Klausur über die entsprechenden Teilnehmerlisten
+      </p>
+
+      <button name="klausuranmeldung_abschicken" type="submit" class="btn btn-primary mt-2">Eintragen</button>
+    </form>
+  </div>
+
+</div>
+
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/jquery.datetimepicker.full.min.js"></script>
+
+
+</body>
+</html>
+

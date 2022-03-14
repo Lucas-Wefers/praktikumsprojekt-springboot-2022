@@ -1,10 +1,13 @@
 package de.hhu.chicken.infrastructure.web.controllers.student;
 
+import de.hhu.chicken.domain.klausur.Klausur;
 import de.hhu.chicken.infrastructure.web.forms.KlausurForm;
 import de.hhu.chicken.infrastructure.web.stereotypes.StudentOnly;
 import de.hhu.chicken.service.klausurservice.KlausurService;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class KlausurController {
 
-  final KlausurService klausurService;
+  private final KlausurService klausurService;
 
   public KlausurController(KlausurService klausurService) {
     this.klausurService = klausurService;
@@ -31,5 +34,12 @@ public class KlausurController {
     }
     klausurService.klausurSpeichern(klausurForm.toKlausur());
     return "klausurErfolg";
+  }
+
+  @GetMapping("/klausuranmeldung")
+  public String anmelden(Model model) {
+    List<Klausur> klausuren = klausurService.alleKlausuren();
+    model.addAttribute("klausuren", klausuren);
+    return "klausurAnmeldung";
   }
 }

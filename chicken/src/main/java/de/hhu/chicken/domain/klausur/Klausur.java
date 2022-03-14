@@ -6,6 +6,7 @@ import static de.hhu.chicken.domain.klausur.Klausurart.PRAESENZ;
 import de.hhu.chicken.domain.stereotypes.AggregateRoot;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @AggregateRoot
@@ -110,5 +111,12 @@ public class Klausur {
   @Override
   public int hashCode() {
     return Objects.hash(id);
+  }
+
+  @Override
+  public String toString() {
+    return fach + " (" + datum.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ", "
+        + von.format(DateTimeFormatter.ofPattern("HH:mm")) + " - "
+        + bis.format(DateTimeFormatter.ofPattern("HH:mm")) + " Uhr)";
   }
 }
