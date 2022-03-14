@@ -78,11 +78,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         Map<String, Object> extendedAttributes = new HashMap<>(attributes);
         return new DefaultOAuth2User(authorities, extendedAttributes, "login");
       }
-
-
     };
-
-
   }
-
 }
