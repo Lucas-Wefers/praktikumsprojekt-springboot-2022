@@ -26,7 +26,7 @@
       <label for="liveExam">Die Klausur findet in Präsenz statt.</label>
     </div>
     <div class="mb-3">
-      <label for="liveExam">Datum der Klausur</label>
+      <label for="liveExam">Datum der Klausur (yyyy-mm-dd)</label>
       <input type="date" id="dayOfExam" class="form-control" th:field="*{datum}">
       <div class="error" th:if="${#fields.hasErrors('datum')}">Geben Sie ein gültiges Datum ein!</div>
     </div>
