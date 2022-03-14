@@ -1,10 +1,11 @@
 package de.hhu.chicken.infrastructure.web.forms.verification;
 
+import de.hhu.chicken.infrastructure.web.forms.verification.stereotypes.IsValidId;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.springframework.web.reactive.function.client.WebClient;
 
-public class KlausurVerifizierer implements ConstraintValidator<IsValidId, Long> {
+public class KlausurVeranstaltungsIdVerifizierer implements ConstraintValidator<IsValidId, Long> {
 
   @Override
   public boolean isValid(Long value, ConstraintValidatorContext context) {

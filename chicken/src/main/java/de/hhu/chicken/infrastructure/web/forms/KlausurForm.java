@@ -1,7 +1,7 @@
 package de.hhu.chicken.infrastructure.web.forms;
 
 import de.hhu.chicken.domain.klausur.Klausur;
-import de.hhu.chicken.infrastructure.web.forms.verification.IsValidId;
+import de.hhu.chicken.infrastructure.web.forms.verification.stereotypes.IsValidId;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import javax.validation.constraints.NotEmpty;

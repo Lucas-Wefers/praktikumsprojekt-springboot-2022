@@ -28,3 +28,9 @@ spring:
 gruppen:
   organisatoren:
   tutoren:
+
+praktikumszeiten:
+  start:
+    datum: "2022-03-08"
+  ende:
+    datum: "2022-03-30"
