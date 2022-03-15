@@ -41,7 +41,7 @@ package domain {
       Set<Urlaubstermin> urlaubstermine
       double berechneResturlaub()
       void fuegeKlausurterminHinzu(id, datum, vonFreistellung, bisFreistellung)
-      void fuegeUrlaubsterminHinzu()
+      void fuegeUrlaubsterminHinzu(datum, von, bis)
     }
 
     Student --> Urlaubstermin
@@ -53,7 +53,13 @@ package domain {
 package service {
   package studentenservice {
     class StudentService {
-      void klausurAnmelden()
+      void klausurAnmelden(id)
+      void urlaubAnmelden(datum, von, bis)
+      void klausurStornieren(id)
+      void urlaubStornieren(datum, von, bis)
+      Student findStudentByHandle(handle)
+      List<Klausur> alleAngemeldetenKlausuren(handle)
+      List<Urlaubstermin> alleUrlaubstermine(handle)
     }
   }
 
