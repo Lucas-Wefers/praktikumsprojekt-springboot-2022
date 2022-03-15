@@ -33,7 +33,6 @@ package domain {
       LocalDate datum
       LocalTime von
       LocalTime bis
-      boolean istVielfacheViertelstunde()
     }
 
     class Student {

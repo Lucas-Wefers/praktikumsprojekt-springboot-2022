@@ -92,7 +92,7 @@ public class Klausur {
   }
 
   public Long getVeranstaltungsId() {
-    return veranstaltungsId.getId();
+    return veranstaltungsId.veranstaltungsId();
   }
 
   @Override

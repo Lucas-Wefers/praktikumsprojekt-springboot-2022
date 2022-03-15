@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 public class KlausurVeranstaltungsIdVerifiziererTest {
 
   @Test
-  @DisplayName("Die Veranstaltung mit id 1 existiert nicht")
+  @DisplayName("Die Veranstaltung mit veranstaltungsId 1 existiert nicht")
   void test_1() {
     Long veranstaltungsId = 1L;
     KlausurVeranstaltungsIdVerifizierer verifizierer = new KlausurVeranstaltungsIdVerifizierer();
@@ -21,7 +21,7 @@ public class KlausurVeranstaltungsIdVerifiziererTest {
   }
 
   @Test
-  @DisplayName("Die Veranstaltung mit id 1234 existiert")
+  @DisplayName("Die Veranstaltung mit veranstaltungsId 1234 existiert")
   void test_2() {
     Long veranstaltungsId = 1234L;
     KlausurVeranstaltungsIdVerifizierer verifizierer = new KlausurVeranstaltungsIdVerifizierer();

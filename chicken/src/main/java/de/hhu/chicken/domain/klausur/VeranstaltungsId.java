@@ -1,14 +1,5 @@
 package de.hhu.chicken.domain.klausur;
 
-class VeranstaltungsId {
+record VeranstaltungsId(Long veranstaltungsId) {
 
-  Long id;
-
-  VeranstaltungsId(Long veranstaltungsId) {
-    id = veranstaltungsId;
-  }
-
-  Long getId() {
-    return id;
-  }
 }

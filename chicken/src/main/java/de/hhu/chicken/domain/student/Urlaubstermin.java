@@ -1,5 +1,8 @@
 package de.hhu.chicken.domain.student;
 
-class Urlaubstermin {
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+record Urlaubstermin(LocalDate datum, LocalTime von, LocalTime bis) {
 
 }
