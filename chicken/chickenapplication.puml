@@ -40,7 +40,7 @@ package domain {
       Set<KlausurReferenz> klausurtermine
       Set<Urlaubstermin> urlaubstermine
       double berechneResturlaub()
-      void fuegeKlausurterminHinzu()
+      void fuegeKlausurterminHinzu(id, datum, vonFreistellung, bisFreistellung)
       void fuegeUrlaubsterminHinzu()
     }
 
@@ -53,13 +53,7 @@ package domain {
 package service {
   package studentenservice {
     class StudentService {
-      void berechneResturlaub()
       void klausurAnmelden()
-      Set<Klausur> klausurtermine()
-      void klausurStornieren()
-      void urlaubAnmelden()
-      Set<Urlaubstermin> urlaubstermine()
-      void urlaubStornieren()
     }
   }
 
