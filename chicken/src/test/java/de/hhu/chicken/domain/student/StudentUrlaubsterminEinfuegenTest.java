@@ -203,4 +203,86 @@ public class StudentUrlaubsterminEinfuegenTest {
     assertThat(student.getUrlaubstermine()).hasSize(1);
     assertThat(student.getUrlaubstermine()).contains(urlaubstermin);
   }
+
+  @Test
+  @DisplayName("Bei zwei direkt aufeinanderfolgenden 1h Urlaubsterminen, werden diese zu einem "
+     + "2h Urlaubstermin vereinigt")
+  void test_14() {
+    Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 10, 30);
+    Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(10, 30, 11, 30);
+    Student student = new Student("Jens");
+
+    fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
+    fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
+
+    assertThat(student.getUrlaubstermine()).hasSize(1);
+    assertThat(student.getUrlaubstermine())
+        .contains(urlaubsterminTemplate(9 , 30, 11, 30));
+  }
+
+  @Test
+  @DisplayName("Bei zwei direkt aufeinanderfolgenden 1h Urlaubsterminen, werden diese zu einem " +
+      "2h Urlaubstermin vereinigt (andere Reihenfolge)")
+  void test_15() {
+    Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 10, 30);
+    Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(8, 30, 9, 30);
+    Student student = new Student("Jens");
+
+    fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
+    fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
+
+    assertThat(student.getUrlaubstermine()).hasSize(1);
+    assertThat(student.getUrlaubstermine())
+        .contains(urlaubsterminTemplate(8 , 30, 10, 30));
+  }
+
+  @Test
+  @DisplayName("Bei zwei ueberlappenden 1h Urlaubsterminen, werden diese zu einem " +
+      "2h Urlaubstermin vereinigt")
+  void test_16() {
+    Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 10, 30);
+    Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(10, 0, 11, 0);
+    Student student = new Student("Jens");
+
+    fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
+    fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
+
+    assertThat(student.getUrlaubstermine()).hasSize(1);
+    assertThat(student.getUrlaubstermine())
+        .contains(urlaubsterminTemplate(9 , 30, 11, 0));
+  }
+
+  @Test
+  @DisplayName("Bei zwei ueberlappenden 1h Urlaubsterminen, werden diese zu einem " +
+      "2h Urlaubstermin vereinigt (andere Reihenfolge)")
+  void test_17() {
+    Urlaubstermin urlaubstermin = urlaubsterminTemplate(10, 0, 11, 0);
+    Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(9, 30, 10, 30);
+    Student student = new Student("Jens");
+
+    fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
+    fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
+
+    assertThat(student.getUrlaubstermine()).hasSize(1);
+    assertThat(student.getUrlaubstermine())
+        .contains(urlaubsterminTemplate(9 , 30, 11, 0));
+  }
+
+  @Test
+  @DisplayName("Bei drei ueberlappenden Urlaubsterminen, werden diese zu einem " +
+      "Urlaubstermin vereingt")
+  void test_18() {
+    Urlaubstermin urlaubstermin = urlaubsterminTemplate(10, 0, 11, 0);
+    Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(11, 0, 12, 30);
+    Urlaubstermin urlaubstermin3 = urlaubsterminTemplate(12, 0, 13, 0);
+    Student student = new Student("Jens");
+
+    fuegeUrlaubsterminHinzu(urlaubstermin, student, true);
+    fuegeUrlaubsterminHinzu(urlaubstermin2, student, true);
+    fuegeUrlaubsterminHinzu(urlaubstermin3, student, true);
+
+    assertThat(student.getUrlaubstermine()).hasSize(1);
+    assertThat(student.getUrlaubstermine())
+        .contains(urlaubsterminTemplate(10 , 0, 13, 0));
+  }
 }

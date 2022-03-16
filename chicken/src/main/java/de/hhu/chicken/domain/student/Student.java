@@ -41,34 +41,39 @@ public class Student {
     if (urlaubsdauer > berechneResturlaub()) {
       return;
     }
+    //while(overlap exists)
+    boolean isEingetragen = false;
+    for (int i = 0; i < getUrlaubstermineMitSelbemDatum(datum).size(); i++) {
+      List<Urlaubstermin> urlaubstermineMitSelbemDatum = getUrlaubstermineMitSelbemDatum(datum);
 
-    List<Urlaubstermin> urlaubstermineMitSelbemDatum = getUrlaubstermineMitSelbemDatum(datum);
+      for (Urlaubstermin urlaubsterminMitSelbemDatum : urlaubstermineMitSelbemDatum) {
+        LocalTime vonNeuemUrlaub = urlaubstermin.getVon();
+        LocalTime bisNeuemUrlaub = urlaubstermin.getBis();
+        LocalTime vonBestehendemUrlaub = urlaubsterminMitSelbemDatum.getVon();
+        LocalTime bisBestehendemUrlaub = urlaubsterminMitSelbemDatum.getBis();
 
-    for (Urlaubstermin urlaubsterminMitSelbemDatum : urlaubstermineMitSelbemDatum) {
-      LocalTime vonNeuemUrlaub = urlaubstermin.getVon();
-      LocalTime bisNeuemUrlaub = urlaubstermin.getBis();
-      LocalTime vonBestehendemUrlaub = urlaubsterminMitSelbemDatum.getVon();
-      LocalTime bisBestehendemUrlaub = urlaubsterminMitSelbemDatum.getBis();
+        if (!vonBestehendemUrlaub.isAfter(bisNeuemUrlaub)
+            && !vonNeuemUrlaub.isAfter(bisBestehendemUrlaub)) {
+          LocalTime vonNeu = vonNeuemUrlaub.isBefore(vonBestehendemUrlaub)
+              ? vonNeuemUrlaub : vonBestehendemUrlaub;
+          LocalTime bisNeu = bisNeuemUrlaub.isAfter(bisBestehendemUrlaub)
+              ? bisNeuemUrlaub : bisBestehendemUrlaub;
+          Urlaubstermin vereinigterUrlaub = new Urlaubstermin(datum, vonNeu, bisNeu);
 
-      if (!vonBestehendemUrlaub.isAfter(bisNeuemUrlaub)
-          && !vonNeuemUrlaub.isAfter(bisBestehendemUrlaub)) {
-        LocalTime vonNeu = vonNeuemUrlaub.isBefore(vonBestehendemUrlaub)
-            ? vonNeuemUrlaub : vonBestehendemUrlaub;
-        LocalTime bisNeu = bisNeuemUrlaub.isAfter(bisBestehendemUrlaub)
-            ? bisNeuemUrlaub : bisBestehendemUrlaub;
-        Urlaubstermin vereinigterUrlaub = new Urlaubstermin(datum, vonNeu, bisNeu);
-
-        urlaubstermine.remove(urlaubsterminMitSelbemDatum);
-        if (istValideUrlaubsdauer(vereinigterUrlaub) || istKlausurtag) {
-          urlaubstermine.add(vereinigterUrlaub);
-          return;
-        } else {
-          urlaubstermine.add(urlaubsterminMitSelbemDatum);
+          urlaubstermine.remove(urlaubsterminMitSelbemDatum);
+          if (istValideUrlaubsdauer(vereinigterUrlaub) || istKlausurtag) {
+            urlaubstermine.add(vereinigterUrlaub);
+            urlaubstermin = vereinigterUrlaub;
+            isEingetragen = true;
+            break;
+          } else {
+            urlaubstermine.add(urlaubsterminMitSelbemDatum);
+          }
         }
       }
     }
 
-    if (istKlausurtag || istValideUrlaubsdauer(urlaubstermin)) {
+    if ((istKlausurtag || istValideUrlaubsdauer(urlaubstermin)) && !isEingetragen ) {
       urlaubstermine.add(urlaubstermin);
     }
   }
