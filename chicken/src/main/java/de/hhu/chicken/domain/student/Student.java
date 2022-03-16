@@ -20,17 +20,45 @@ public class Student {
     this.githubHandle = new GithubHandle(githubHandle);
   }
 
-  public void fuegeKlausurterminHinzu(Long klausurReferenz) {
-    throw new UnsupportedOperationException("Not yet implemented");
+  public void fuegeKlausurterminHinzu(Long klausurReferenz, LocalDate datum,
+      LocalTime vonKlausurFreistellung, LocalTime bisKlausurFreistellung) {
+    if (klausurReferenzen.contains(klausurReferenz)) {
+      return;
+    }
+
+    //11:00 - 12:00, Klausur: 09:30-10:30
+    List<Urlaubstermin> urlaubstermine = this.urlaubstermine.stream()
+        .filter(x -> x.getDatum().equals(datum)).toList();
+    List<Urlaubstermin> endgueltigeTermine = new ArrayList<>();
+
+    LocalTime vonUrlaub;
+    LocalTime bisUrlaub;
+    for (Urlaubstermin urlaubstermin : urlaubstermine) {
+      vonUrlaub = urlaubstermin.getVon();
+      bisUrlaub = urlaubstermin.getBis();
+
+      if (vonUrlaub.isAfter(vonKlausurFreistellung) && bisUrlaub.isBefore(bisKlausurFreistellung)) {
+        // loesche
+      } else if (vonUrlaub.isBefore(vonKlausurFreistellung) && bisUrlaub.isBefore(
+          bisKlausurFreistellung)) {
+        // behalte urlaub vor vonKlausurFreistellung verwerfe den Rest (abspalten des hinteren Teils)
+      } else if (vonKlausurFreistellung.isBefore(vonUrlaub) && bisKlausurFreistellung.isBefore(
+          bisUrlaub)) {
+        // behalte urlaub nach vonKlausurFreistellung verwerfe den Rest (abspalten des vorderen Teils)
+      } else if (vonUrlaub.isBefore(vonKlausurFreistellung) && bisUrlaub.isAfter(bisKlausurFreistellung)) {
+        // spalte urlaub in 2 neue urlaubstermine auf und loesche inneren teil
+      }
+    }
+
+
   }
 
   public void fuegeUrlaubsterminHinzu(LocalDate datum, LocalTime von, LocalTime bis,
-                                      boolean istKlausurtag) {
+      boolean istKlausurtag) {
     Urlaubstermin urlaubstermin = new Urlaubstermin(datum, von, bis);
     if (istKlausurtag) {
       urlaubstermine.add(urlaubstermin);
-    }
-    else if (istValideUrlaubsdauer(urlaubstermin)) {
+    } else if (istValideUrlaubsdauer(urlaubstermin)) {
       urlaubstermine.add(urlaubstermin);
     }
   }
@@ -68,7 +96,7 @@ public class Student {
   }
 
   private boolean istValideUrlaubsdauerFuerZweiUrlaube(Urlaubstermin urlaubstermin,
-                                                       Urlaubstermin urlaubstermin2) {
+      Urlaubstermin urlaubstermin2) {
     boolean istValideUrlaubsDauerFuerZweiUrlaube =
         urlaubstermin.dauer().plus(urlaubstermin2.dauer()).toMinutes() <= 150;
 
@@ -92,7 +120,7 @@ public class Student {
   }
 
   public List<Urlaubstermin> getUrlaubstermine() {
-    return urlaubstermine;
+    return List.copyOf(urlaubstermine);
   }
 
   @Override
