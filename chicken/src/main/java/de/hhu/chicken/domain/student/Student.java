@@ -28,6 +28,8 @@ public class Student {
       return;
     }
 
+    klausurReferenzen.add(new KlausurReferenz(klausurReferenz));
+
     List<Urlaubstermin> urlaubstermineMitSelbemDatum = urlaubstermine.stream()
         .filter(x -> x.getDatum().equals(datum))
         .toList();

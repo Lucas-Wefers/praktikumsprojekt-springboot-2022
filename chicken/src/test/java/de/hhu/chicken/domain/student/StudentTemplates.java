@@ -24,11 +24,21 @@ public class StudentTemplates {
 
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 10, 30);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(11, 0, 12, 0);
-    Urlaubstermin urlaubstermin3 = urlaubsterminTemplate(12, 30, 13, 30);
+    Urlaubstermin urlaubstermin3 = urlaubsterminTemplate(12, 30, 13, 0);
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, true);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, true);
     fuegeUrlaubsterminHinzu(urlaubstermin3, student, true);
+
+    return student;
+  }
+
+  static Student studentMitEinemUrlaubstermin(int hVon, int minVon, int hBis, int minBis) {
+    Student student = new Student("jensbendisposto");
+
+    Urlaubstermin urlaubstermin = urlaubsterminTemplate(hVon, minVon, hBis, minBis);
+
+    fuegeUrlaubsterminHinzu(urlaubstermin, student, true);
 
     return student;
   }
