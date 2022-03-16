@@ -20,7 +20,7 @@ public class StudentUrlaubsterminEinfuegenTest {
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
 
     assertThat(student.getUrlaubstermine()).hasSize(1);
-    assertThat(student.getUrlaubstermine().get(0)).isEqualTo(urlaubstermin);
+    assertThat(student.getUrlaubstermine()).contains(urlaubstermin);
   }
 
   @Test
@@ -33,7 +33,7 @@ public class StudentUrlaubsterminEinfuegenTest {
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
 
     assertThat(student.getUrlaubstermine()).hasSize(1);
-    assertThat(student.getUrlaubstermine().get(0)).isEqualTo(urlaubstermin);
+    assertThat(student.getUrlaubstermine()).contains(urlaubstermin);
   }
 
   @Test
@@ -60,8 +60,8 @@ public class StudentUrlaubsterminEinfuegenTest {
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
 
     assertThat(student.getUrlaubstermine()).hasSize(2);
-    assertThat(student.getUrlaubstermine().get(0)).isEqualTo(urlaubstermin);
-    assertThat(student.getUrlaubstermine().get(1)).isEqualTo(urlaubstermin2);
+    assertThat(student.getUrlaubstermine()).contains(urlaubstermin);
+    assertThat(student.getUrlaubstermine()).contains(urlaubstermin2);
   }
 
   @Test
@@ -76,8 +76,8 @@ public class StudentUrlaubsterminEinfuegenTest {
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
 
     assertThat(student.getUrlaubstermine()).hasSize(2);
-    assertThat(student.getUrlaubstermine().get(0)).isEqualTo(urlaubstermin);
-    assertThat(student.getUrlaubstermine().get(1)).isEqualTo(urlaubstermin2);
+    assertThat(student.getUrlaubstermine()).contains(urlaubstermin);
+    assertThat(student.getUrlaubstermine()).contains(urlaubstermin2);
   }
 
   @Test
@@ -91,7 +91,7 @@ public class StudentUrlaubsterminEinfuegenTest {
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
 
     assertThat(student.getUrlaubstermine()).hasSize(1);
-    assertThat(student.getUrlaubstermine().get(0)).isEqualTo(urlaubstermin);
+    assertThat(student.getUrlaubstermine()).contains(urlaubstermin);
   }
 
   @Test
@@ -105,7 +105,7 @@ public class StudentUrlaubsterminEinfuegenTest {
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
 
     assertThat(student.getUrlaubstermine()).hasSize(1);
-    assertThat(student.getUrlaubstermine().get(0)).isEqualTo(urlaubstermin);
+    assertThat(student.getUrlaubstermine()).contains(urlaubstermin);
   }
 
   @Test
@@ -119,7 +119,7 @@ public class StudentUrlaubsterminEinfuegenTest {
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
 
     assertThat(student.getUrlaubstermine()).hasSize(1);
-    assertThat(student.getUrlaubstermine().get(0)).isEqualTo(urlaubstermin);
+    assertThat(student.getUrlaubstermine()).contains(urlaubstermin);
   }
 
   @Test
@@ -133,7 +133,7 @@ public class StudentUrlaubsterminEinfuegenTest {
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
 
     assertThat(student.getUrlaubstermine()).hasSize(1);
-    assertThat(student.getUrlaubstermine().get(0)).isEqualTo(urlaubstermin);
+    assertThat(student.getUrlaubstermine()).contains(urlaubstermin);
   }
 
   @Test
@@ -147,7 +147,7 @@ public class StudentUrlaubsterminEinfuegenTest {
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
 
     assertThat(student.getUrlaubstermine()).hasSize(1);
-    assertThat(student.getUrlaubstermine().get(0)).isEqualTo(urlaubstermin);
+    assertThat(student.getUrlaubstermine()).contains(urlaubstermin);
   }
 
   @Test
@@ -164,8 +164,8 @@ public class StudentUrlaubsterminEinfuegenTest {
     fuegeUrlaubsterminHinzu(urlaubstermin3, student, false);
 
     assertThat(student.getUrlaubstermine()).hasSize(2);
-    assertThat(student.getUrlaubstermine().get(0)).isEqualTo(urlaubstermin);
-    assertThat(student.getUrlaubstermine().get(1)).isEqualTo(urlaubstermin2);
+    assertThat(student.getUrlaubstermine()).contains(urlaubstermin);
+    assertThat(student.getUrlaubstermine()).contains(urlaubstermin2);
   }
 
   @Test
@@ -182,8 +182,25 @@ public class StudentUrlaubsterminEinfuegenTest {
     fuegeUrlaubsterminHinzu(urlaubstermin3, student, true);
 
     assertThat(student.getUrlaubstermine()).hasSize(3);
-    assertThat(student.getUrlaubstermine().get(0)).isEqualTo(urlaubstermin);
-    assertThat(student.getUrlaubstermine().get(1)).isEqualTo(urlaubstermin2);
-    assertThat(student.getUrlaubstermine().get(2)).isEqualTo(urlaubstermin3);
+    assertThat(student.getUrlaubstermine()).contains(urlaubstermin);
+    assertThat(student.getUrlaubstermine()).contains(urlaubstermin2);
+    assertThat(student.getUrlaubstermine()).contains(urlaubstermin3);
+  }
+
+  @Test
+  @DisplayName("Bei zwei 4h Urlaubsterminen, wird nur der 1. hinzugefuegt")
+  void test_13() {
+    Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 13, 30);
+    Urlaubstermin urlaubstermin2 = new Urlaubstermin(
+        LocalDate.of(2022, 2, 16),
+        LocalTime.of(9, 30),
+        LocalTime.of(13, 30));
+    Student student = new Student("Jens");
+
+    fuegeUrlaubsterminHinzu(urlaubstermin, student, true);
+    fuegeUrlaubsterminHinzu(urlaubstermin2, student, true);
+
+    assertThat(student.getUrlaubstermine()).hasSize(1);
+    assertThat(student.getUrlaubstermine()).contains(urlaubstermin);
   }
 }
