@@ -1,5 +1,7 @@
 package de.hhu.chicken.domain.student;
 
+import static de.hhu.chicken.domain.student.StudentTemplates.fuegeUrlaubsterminHinzu;
+import static de.hhu.chicken.domain.student.StudentTemplates.urlaubsterminTemplate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
@@ -7,21 +9,7 @@ import java.time.LocalTime;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class StudentTest {
-
-  private Urlaubstermin urlaubsterminTemplate(int hVon, int minVon, int hBis, int minBis) {
-    return new Urlaubstermin(LocalDate.of(2022, 2, 15),
-        LocalTime.of(hVon, minVon),
-        LocalTime.of(hBis, minBis));
-  }
-
-  private void fuegeUrlaubsterminHinzu(Urlaubstermin urlaubstermin, Student student,
-                                       boolean istKlausurtag) {
-    student.fuegeUrlaubsterminHinzu(urlaubstermin.getDatum(),
-        urlaubstermin.getVon(),
-        urlaubstermin.getBis(),
-        istKlausurtag);
-  }
+public class StudentUrlaubsterminEinfuegenTest {
 
   @Test
   @DisplayName("Ein Urlaubsblock von 4 Stunden wird hinzugefuegt")
