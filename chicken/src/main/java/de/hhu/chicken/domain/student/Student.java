@@ -19,8 +19,8 @@ public class Student {
   }
 
   public void fuegeKlausurHinzu(Long klausurReferenz, LocalDate datum,
-                                LocalTime vonKlausurFreistellung,
-                                LocalTime bisKlausurFreistellung) {
+      LocalTime vonKlausurFreistellung,
+      LocalTime bisKlausurFreistellung) {
     if (containsKlausurReferenz(klausurReferenz)) {
       return;
     }
@@ -34,7 +34,7 @@ public class Student {
   }
 
   public void fuegeUrlaubsterminHinzu(LocalDate datum, LocalTime von, LocalTime bis,
-                                      boolean istKlausurtag) {
+      boolean istKlausurtag) {
     Urlaubstermin urlaubstermin = new Urlaubstermin(datum, von, bis);
     int urlaubsdauer = (int) urlaubstermin.dauer().toMinutes();
 
@@ -42,10 +42,33 @@ public class Student {
       return;
     }
 
-    if (istKlausurtag) {
-      urlaubstermine.add(urlaubstermin);
+    List<Urlaubstermin> urlaubstermineMitSelbemDatum = getUrlaubstermineMitSelbemDatum(datum);
 
-    } else if (istValideUrlaubsdauer(urlaubstermin)) {
+    for (Urlaubstermin urlaubsterminMitSelbemDatum : urlaubstermineMitSelbemDatum) {
+      LocalTime vonNeuemUrlaub = urlaubstermin.getVon();
+      LocalTime bisNeuemUrlaub = urlaubstermin.getBis();
+      LocalTime vonBestehendemUrlaub = urlaubsterminMitSelbemDatum.getVon();
+      LocalTime bisBestehendemUrlaub = urlaubsterminMitSelbemDatum.getBis();
+
+      if (!vonBestehendemUrlaub.isAfter(bisNeuemUrlaub)
+          && !vonNeuemUrlaub.isAfter(bisBestehendemUrlaub)) {
+        LocalTime vonNeu = vonNeuemUrlaub.isBefore(vonBestehendemUrlaub)
+            ? vonNeuemUrlaub : vonBestehendemUrlaub;
+        LocalTime bisNeu = bisNeuemUrlaub.isAfter(bisBestehendemUrlaub)
+            ? bisNeuemUrlaub : bisBestehendemUrlaub;
+        Urlaubstermin vereinigterUrlaub = new Urlaubstermin(datum, vonNeu, bisNeu);
+
+        urlaubstermine.remove(urlaubsterminMitSelbemDatum);
+        if (istValideUrlaubsdauer(vereinigterUrlaub) || istKlausurtag) {
+          urlaubstermine.add(vereinigterUrlaub);
+          return;
+        } else {
+          urlaubstermine.add(urlaubsterminMitSelbemDatum);
+        }
+      }
+    }
+
+    if (istKlausurtag || istValideUrlaubsdauer(urlaubstermin)) {
       urlaubstermine.add(urlaubstermin);
     }
   }
@@ -57,8 +80,8 @@ public class Student {
   }
 
   private void aktualisiereUrlaubstermine(LocalDate datum, LocalTime vonKlausurFreistellung,
-                                          LocalTime bisKlausurFreistellung,
-                                          List<Urlaubstermin> urlaubstermineMitSelbemDatum) {
+      LocalTime bisKlausurFreistellung,
+      List<Urlaubstermin> urlaubstermineMitSelbemDatum) {
     for (Urlaubstermin urlaubstermin : urlaubstermineMitSelbemDatum) {
       LocalTime vonUrlaub = urlaubstermin.getVon();
       LocalTime bisUrlaub = urlaubstermin.getBis();
@@ -85,8 +108,8 @@ public class Student {
   }
 
   private void spalteUrlaubstermin(LocalDate datum, LocalTime vonKlausurFreistellung,
-                                   LocalTime bisKlausurFreistellung, LocalTime vonUrlaub,
-                                   LocalTime bisUrlaub) {
+      LocalTime bisKlausurFreistellung, LocalTime vonUrlaub,
+      LocalTime bisUrlaub) {
     if (vonUrlaub.isBefore(vonKlausurFreistellung)) {
       urlaubstermine.add(new Urlaubstermin(datum, vonUrlaub, vonKlausurFreistellung));
     }
@@ -96,8 +119,8 @@ public class Student {
   }
 
   private boolean isAusserhalbVonUrlaubstermin(LocalTime vonKlausurFreistellung,
-                                               LocalTime bisKlausurFreistellung,
-                                               LocalTime vonUrlaub, LocalTime bisUrlaub) {
+      LocalTime bisKlausurFreistellung,
+      LocalTime vonUrlaub, LocalTime bisUrlaub) {
     return bisKlausurFreistellung.isBefore(vonUrlaub)
         || bisUrlaub.isBefore(vonKlausurFreistellung);
   }
@@ -129,7 +152,7 @@ public class Student {
   }
 
   private boolean istValideUrlaubsdauerFuerZweiUrlaube(Urlaubstermin urlaubstermin,
-                                                       Urlaubstermin urlaubstermin2) {
+      Urlaubstermin urlaubstermin2) {
     boolean istValideUrlaubsDauerFuerZweiUrlaube =
         urlaubstermin.dauer().plus(urlaubstermin2.dauer()).toMinutes() <= 150;
 
