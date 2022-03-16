@@ -42,7 +42,11 @@ public class Student {
       vonUrlaub = urlaubstermin.getVon();
       bisUrlaub = urlaubstermin.getBis();
 
-      if (vonUrlaub.isBefore(vonKlausurFreistellung) && bisUrlaub.isBefore(
+      if (bisKlausurFreistellung.isBefore(vonUrlaub)
+          || bisUrlaub.isBefore(vonKlausurFreistellung)) {
+        urlaubstermine.add(urlaubstermin);
+
+      } else if (vonUrlaub.isBefore(vonKlausurFreistellung) && bisUrlaub.isBefore(
           bisKlausurFreistellung)) {
         // behalte urlaub vor vonKlausurFreistellung verwerfe den Rest (abspalten des hinteren Teils)
         // Urlaub 10:00 - 11:00, Klausur 10:45 - 11:45
@@ -58,10 +62,6 @@ public class Student {
           bisUrlaub.isAfter(bisKlausurFreistellung)) {
         urlaubstermine.add(new Urlaubstermin(datum, vonUrlaub, vonKlausurFreistellung));
         urlaubstermine.add(new Urlaubstermin(datum, bisKlausurFreistellung, bisUrlaub));
-
-      } else if (bisKlausurFreistellung.isBefore(vonUrlaub)
-          || bisUrlaub.isBefore(vonKlausurFreistellung)) {
-        urlaubstermine.add(urlaubstermin);
       }
     }
   }
@@ -94,7 +94,7 @@ public class Student {
     List<Urlaubstermin> urlaubstermineMitGleichemDatum =
         urlaubstermine.stream()
             .filter(x -> x.getDatum().equals(urlaubstermin.getDatum()))
-            .collect(Collectors.toList());
+            .toList();
 
     if (urlaubstermineMitGleichemDatum.size() == 1) {
       Urlaubstermin urlaubstermin2 = urlaubstermineMitGleichemDatum.get(0);

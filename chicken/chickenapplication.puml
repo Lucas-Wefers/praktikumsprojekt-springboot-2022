@@ -1,5 +1,4 @@
 @startuml
-
 package domain {
   package domain.stereotypes {
     annotation AggregateRoot {}
@@ -279,5 +278,4 @@ package infrastructure {
 service --> domain
 infrastructure --> service
 infrastructure --> domain
-
 @enduml
