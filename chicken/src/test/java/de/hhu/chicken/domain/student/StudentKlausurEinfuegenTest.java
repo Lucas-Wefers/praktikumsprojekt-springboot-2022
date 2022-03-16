@@ -56,7 +56,7 @@ public class StudentKlausurEinfuegenTest {
   }
 
   @Test
-  @DisplayName("Eine Klausur kann nicht doppelt eingefügt werden")
+  @DisplayName("Eine Klausur kann nicht doppelt eingefuegt werden")
   void test_4() {
     Student student = studentMitMehrerenUrlaubsterminen();
 

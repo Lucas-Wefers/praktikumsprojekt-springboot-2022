@@ -6,7 +6,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @AggregateRoot
@@ -21,53 +20,65 @@ public class Student {
   }
 
   public void fuegeKlausurHinzu(Long klausurReferenz, LocalDate datum,
-                                LocalTime vonKlausurFreistellung,
-                                LocalTime bisKlausurFreistellung) {
-    if (klausurReferenzen.stream()
-        .anyMatch(x -> x.id().equals(klausurReferenz))) {
+      LocalTime vonKlausurFreistellung,
+      LocalTime bisKlausurFreistellung) {
+    if (containsKlausurReferenz(klausurReferenz)) {
       return;
     }
-
     klausurReferenzen.add(new KlausurReferenz(klausurReferenz));
 
-    List<Urlaubstermin> urlaubstermineMitSelbemDatum = urlaubstermine.stream()
-        .filter(x -> x.getDatum().equals(datum))
-        .toList();
-
+    List<Urlaubstermin> urlaubstermineMitSelbemDatum = getUrlaubstermineMitSelbemDatum(datum);
     urlaubstermine.removeAll(urlaubstermineMitSelbemDatum);
 
-    LocalTime vonUrlaub;
-    LocalTime bisUrlaub;
+    aktualisiereUrlaub(datum, vonKlausurFreistellung, bisKlausurFreistellung, urlaubstermineMitSelbemDatum);
+  }
+
+  private void aktualisiereUrlaub(LocalDate datum, LocalTime vonKlausurFreistellung,
+      LocalTime bisKlausurFreistellung, List<Urlaubstermin> urlaubstermineMitSelbemDatum) {
     for (Urlaubstermin urlaubstermin : urlaubstermineMitSelbemDatum) {
-      vonUrlaub = urlaubstermin.getVon();
-      bisUrlaub = urlaubstermin.getBis();
+      LocalTime vonUrlaub = urlaubstermin.getVon();
+      LocalTime bisUrlaub = urlaubstermin.getBis();
 
-      if (bisKlausurFreistellung.isBefore(vonUrlaub)
-          || bisUrlaub.isBefore(vonKlausurFreistellung)) {
-        urlaubstermine.add(urlaubstermin);
-
-      } else if (vonUrlaub.isBefore(vonKlausurFreistellung) && bisUrlaub.isBefore(
-          bisKlausurFreistellung)) {
-        // behalte urlaub vor vonKlausurFreistellung verwerfe den Rest (abspalten des hinteren Teils)
-        // Urlaub 10:00 - 11:00, Klausur 10:45 - 11:45
-        urlaubstermine.add(new Urlaubstermin(datum, vonUrlaub, vonKlausurFreistellung));
-
-      } else if (vonKlausurFreistellung.isBefore(vonUrlaub) && bisKlausurFreistellung.isBefore(
+      if (isAusserhalbVonUrlaub(vonKlausurFreistellung, bisKlausurFreistellung, vonUrlaub,
           bisUrlaub)) {
-        // behalte urlaub nach vonKlausurFreistellung verwerfe den Rest (abspalten des vorderen Teils)
-        // Urlaub 10:00 - 11:00, Klausur 9:45 - 10:45
-        urlaubstermine.add(new Urlaubstermin(datum, bisKlausurFreistellung, bisUrlaub));
-
-      } else if (vonUrlaub.isBefore(vonKlausurFreistellung) &&
-          bisUrlaub.isAfter(bisKlausurFreistellung)) {
-        urlaubstermine.add(new Urlaubstermin(datum, vonUrlaub, vonKlausurFreistellung));
-        urlaubstermine.add(new Urlaubstermin(datum, bisKlausurFreistellung, bisUrlaub));
+        urlaubstermine.add(urlaubstermin);
+      } else {
+        spalteUrlaub(datum, vonKlausurFreistellung, bisKlausurFreistellung, vonUrlaub,
+            bisUrlaub);
       }
     }
   }
 
+  private boolean containsKlausurReferenz(Long klausurReferenz) {
+    return klausurReferenzen.stream()
+        .anyMatch(x -> x.id().equals(klausurReferenz));
+  }
+
+  private List<Urlaubstermin> getUrlaubstermineMitSelbemDatum(LocalDate datum) {
+    return urlaubstermine.stream()
+        .filter(x -> x.getDatum().equals(datum))
+        .toList();
+  }
+
+  private void spalteUrlaub(LocalDate datum, LocalTime vonKlausurFreistellung,
+      LocalTime bisKlausurFreistellung, LocalTime vonUrlaub, LocalTime bisUrlaub) {
+    if (vonUrlaub.isBefore(vonKlausurFreistellung)) {
+      urlaubstermine.add(new Urlaubstermin(datum, vonUrlaub, vonKlausurFreistellung));
+    }
+    if (bisKlausurFreistellung.isBefore(bisUrlaub)) {
+      urlaubstermine.add(new Urlaubstermin(datum, bisKlausurFreistellung, bisUrlaub));
+    }
+  }
+
+  private boolean isAusserhalbVonUrlaub(LocalTime vonKlausurFreistellung,
+      LocalTime bisKlausurFreistellung,
+      LocalTime vonUrlaub, LocalTime bisUrlaub) {
+    return bisKlausurFreistellung.isBefore(vonUrlaub)
+        || bisUrlaub.isBefore(vonKlausurFreistellung);
+  }
+
   public void fuegeUrlaubsterminHinzu(LocalDate datum, LocalTime von, LocalTime bis,
-                                      boolean istKlausurtag) {
+      boolean istKlausurtag) {
     Urlaubstermin urlaubstermin = new Urlaubstermin(datum, von, bis);
     if (istKlausurtag) {
       urlaubstermine.add(urlaubstermin);
@@ -87,14 +98,12 @@ public class Student {
   public List<Long> getKlausurReferenzen() {
     return klausurReferenzen.stream()
         .map(KlausurReferenz::id)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   private boolean istValideUrlaubsdauer(Urlaubstermin urlaubstermin) {
-    List<Urlaubstermin> urlaubstermineMitGleichemDatum =
-        urlaubstermine.stream()
-            .filter(x -> x.getDatum().equals(urlaubstermin.getDatum()))
-            .toList();
+    List<Urlaubstermin> urlaubstermineMitGleichemDatum = getUrlaubstermineMitSelbemDatum(
+        urlaubstermin.getDatum());
 
     if (urlaubstermineMitGleichemDatum.size() == 1) {
       Urlaubstermin urlaubstermin2 = urlaubstermineMitGleichemDatum.get(0);
@@ -109,7 +118,7 @@ public class Student {
   }
 
   private boolean istValideUrlaubsdauerFuerZweiUrlaube(Urlaubstermin urlaubstermin,
-                                                       Urlaubstermin urlaubstermin2) {
+      Urlaubstermin urlaubstermin2) {
     boolean istValideUrlaubsDauerFuerZweiUrlaube =
         urlaubstermin.dauer().plus(urlaubstermin2.dauer()).toMinutes() <= 150;
 
