@@ -5,6 +5,7 @@ import static de.hhu.chicken.templates.KlausurTemplates.beispielklausur2;
 import static de.hhu.chicken.templates.KlausurTemplates.beispielklausur3;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -190,5 +191,20 @@ public class StudentServiceTest {
     urlaubAnmelden(15, 10, 30, 11, 30);
 
     verify(studentRepository).studentSpeichern(new Student(handle));
+  }
+
+  @Test
+  @DisplayName("Ein Student wird geladen und eine Klausur wird nach Id geloescht und der Student "
+      + "wird wieder gespeichert")
+  void test_10() {
+    Student student = new Student(handle);
+    when(studentRepository.findStudentByHandle(handle)).thenReturn(student);
+    when(klausurRepository.findKlausurById(1L)).thenReturn(beispielklausur());
+    studentService.klausurAnmelden(handle, 1L);
+
+    studentService.klausurStornieren(handle, 1L);
+
+    verify(studentRepository, times(2)).studentSpeichern(student);
+    assertThat(student.getKlausurReferenzen()).isEmpty();
   }
 }

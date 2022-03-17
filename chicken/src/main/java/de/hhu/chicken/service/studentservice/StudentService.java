@@ -39,7 +39,7 @@ public class StudentService {
     }
     List<Long> klausurReferenzen = student.getKlausurReferenzen();
     List<Klausur> klausurenAmGleichenTag = klausurReferenzen.stream()
-        .map(r -> klausurRepository.findKlausurById(r))
+        .map(klausurRepository::findKlausurById)
         .filter(x -> x.getDatum().equals(datum))
         .toList();
 
@@ -63,7 +63,9 @@ public class StudentService {
   }
 
   public void klausurStornieren(String handle, Long id) {
-    throw new UnsupportedOperationException("Not yet implemented");
+    Student student = studentRepository.findStudentByHandle(handle);
+    student.storniereKlausur(id);
+    studentRepository.studentSpeichern(student);
   }
 
   public void urlaubStornieren(String handle, LocalDate datum, LocalTime von, LocalTime bis) {
