@@ -20,7 +20,16 @@ public class StudentService {
   }
 
   public void klausurAnmelden(String handle, Long id) {
-    throw new UnsupportedOperationException("Not yet implemented");
+    Student student = studentRepository.findStudentByHandle(handle);
+    if(student == null) {
+      student = new Student(handle);
+    }
+    Klausur klausur = klausurRepository.findKlausurById(id);
+    student.fuegeKlausurHinzu(id,
+        klausur.getDatum(),
+        klausur.berechneFreistellungsStartzeitpunkt(),
+        klausur.berechneFreistellungsEndzeitpunkt());
+    studentRepository.studentSpeichern(student);
   }
 
   public void urlaubAnmelden(String handle, LocalDate datum, LocalTime von, LocalTime bis) {
