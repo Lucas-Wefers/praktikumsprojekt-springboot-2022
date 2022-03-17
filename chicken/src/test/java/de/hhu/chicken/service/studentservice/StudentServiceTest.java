@@ -21,23 +21,28 @@ import org.junit.jupiter.api.Test;
 
 public class StudentServiceTest {
 
+  // ---------------- arrange -------------------------------
   private final StudentRepository studentRepository = mock(StudentRepository.class);
   private final KlausurRepository klausurRepository = mock(KlausurRepository.class);
-  private final StudentService studentService = new StudentService(studentRepository, klausurRepository);
-  private final String handle = "jens";
+  private final StudentService studentService =
+      new StudentService(studentRepository, klausurRepository);
+  private static final String handle = "jens";
 
-  private void assertThatUrlaubstermineSindGleich(Urlaubstermin urlaubstermin, int klausurTag, int hVon,
+  private void assertThatUrlaubstermineSindGleich(Urlaubstermin urlaubstermin, int klausurTag,
+                                                  int hVon,
                                                   int minVon, int hBis, int minBis) {
     assertThat(urlaubstermin.getDatum()).isEqualTo(LocalDate.of(2022, 3, klausurTag));
     assertThat(urlaubstermin.getVon()).isEqualTo(LocalTime.of(hVon, minVon));
     assertThat(urlaubstermin.getBis()).isEqualTo(LocalTime.of(hBis, minBis));
   }
+
   private void fuegeKlausurHinzu(Student student, Klausur klausur) {
     student.fuegeKlausurHinzu(klausur.getId(),
         klausur.getDatum(),
         klausur.berechneFreistellungsStartzeitpunkt(),
         klausur.berechneFreistellungsEndzeitpunkt());
   }
+
   private void urlaubsterminAnmelden(int klausurTag, int hVon, int minVon, int hBis, int minBis) {
     studentService.urlaubsterminAnmelden(handle,
         LocalDate.of(2022, 3, klausurTag),
@@ -222,5 +227,13 @@ public class StudentServiceTest {
 
     verify(studentRepository, times(2)).studentSpeichern(student);
     assertThat(student.getUrlaubstermine()).isEmpty();
+  }
+
+  @Test
+  @DisplayName("Der Service ruft das Repository auf und lädt einen Studenten nach Id")
+  void test_12() {
+    Student student = studentService.findStudentByHandle(handle);
+
+    verify(studentRepository).findStudentByHandle(handle);
   }
 }

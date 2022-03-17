@@ -75,7 +75,7 @@ public class StudentService {
   }
 
   public Student findStudentByHandle(String handle) {
-    throw new UnsupportedOperationException("Not yet implemented");
+    return studentRepository.findStudentByHandle(handle);
   }
 
   public List<Klausur> alleAngemeldetenKlausuren(String handle) {
