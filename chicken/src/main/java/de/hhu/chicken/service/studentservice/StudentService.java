@@ -33,7 +33,33 @@ public class StudentService {
   }
 
   public void urlaubAnmelden(String handle, LocalDate datum, LocalTime von, LocalTime bis) {
-    throw new UnsupportedOperationException("Not yet implemented");
+    Student student = studentRepository.findStudentByHandle(handle);
+    if(student == null) {
+      student = new Student(handle);
+    }
+    List<Long> klausurReferenzen = student.getKlausurReferenzen();
+    List<Klausur> klausurenAmGleichenTag = klausurReferenzen.stream()
+        .map(r -> klausurRepository.findKlausurById(r))
+        .filter(x -> x.getDatum().equals(datum))
+        .toList();
+
+    boolean istKlausurTag = !klausurenAmGleichenTag.isEmpty();
+    List<Klausur> ueberschneideneKlausuren = klausurenAmGleichenTag.stream()
+        .filter(x -> von.isBefore(x.berechneFreistellungsEndzeitpunkt()))
+        .filter(x -> x.berechneFreistellungsStartzeitpunkt().isBefore(bis))
+        .toList();
+    
+    for (Klausur klausur : ueberschneideneKlausuren) {
+      student.storniereKlausur(klausur.getId());
+    }
+    student.fuegeUrlaubsterminHinzu(datum, von, bis, istKlausurTag);
+    for (Klausur klausur : ueberschneideneKlausuren) {
+      student.fuegeKlausurHinzu(klausur.getId(),
+          klausur.getDatum(),
+          klausur.berechneFreistellungsStartzeitpunkt(),
+          klausur.berechneFreistellungsEndzeitpunkt());
+    }
+    studentRepository.studentSpeichern(student);
   }
 
   public void klausurStornieren(String handle, Long id) {
