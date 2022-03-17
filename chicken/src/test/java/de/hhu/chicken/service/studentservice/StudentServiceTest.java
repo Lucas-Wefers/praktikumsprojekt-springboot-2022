@@ -16,7 +16,6 @@ import de.hhu.chicken.service.repositories.KlausurRepository;
 import de.hhu.chicken.service.repositories.StudentRepository;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -39,8 +38,8 @@ public class StudentServiceTest {
         klausur.berechneFreistellungsStartzeitpunkt(),
         klausur.berechneFreistellungsEndzeitpunkt());
   }
-  private void urlaubAnmelden(int klausurTag, int hVon, int minVon, int hBis, int minBis) {
-    studentService.urlaubAnmelden(handle,
+  private void urlaubsterminAnmelden(int klausurTag, int hVon, int minVon, int hBis, int minBis) {
+    studentService.urlaubsterminAnmelden(handle,
         LocalDate.of(2022, 3, klausurTag),
         LocalTime.of(hVon, minVon),
         LocalTime.of(hBis, minBis));
@@ -78,7 +77,7 @@ public class StudentServiceTest {
     Student student = new Student(handle);
     when(studentRepository.findStudentByHandle(handle)).thenReturn(student);
 
-    urlaubAnmelden(15, 9, 30, 13, 30);
+    urlaubsterminAnmelden(15, 9, 30, 13, 30);
 
     Urlaubstermin urlaubstermin = student.getUrlaubstermine().get(0);
     verify(studentRepository).studentSpeichern(student);
@@ -96,7 +95,7 @@ public class StudentServiceTest {
     when(studentRepository.findStudentByHandle(handle)).thenReturn(student);
     when(klausurRepository.findKlausurById(1L)).thenReturn(klausur);
 
-    urlaubAnmelden(17, 10, 45, 11, 15);
+    urlaubsterminAnmelden(17, 10, 45, 11, 15);
 
     verify(studentRepository).studentSpeichern(student);
     assertThat(student.getUrlaubstermine()).isEmpty();
@@ -112,7 +111,7 @@ public class StudentServiceTest {
     when(studentRepository.findStudentByHandle(handle)).thenReturn(student);
     when(klausurRepository.findKlausurById(1L)).thenReturn(klausur);
 
-    urlaubAnmelden(17, 11, 0, 13, 30);
+    urlaubsterminAnmelden(17, 11, 0, 13, 30);
 
     verify(studentRepository).studentSpeichern(student);
     assertThat(student.getUrlaubstermine()).hasSize(1);
@@ -130,7 +129,7 @@ public class StudentServiceTest {
     when(studentRepository.findStudentByHandle(handle)).thenReturn(student);
     when(klausurRepository.findKlausurById(1L)).thenReturn(klausur);
 
-    urlaubAnmelden(17, 9, 30, 11, 30);
+    urlaubsterminAnmelden(17, 9, 30, 11, 30);
 
     verify(studentRepository).studentSpeichern(student);
     assertThat(student.getUrlaubstermine()).hasSize(1);
@@ -148,7 +147,7 @@ public class StudentServiceTest {
     when(studentRepository.findStudentByHandle(handle)).thenReturn(student);
     when(klausurRepository.findKlausurById(1L)).thenReturn(klausur);
 
-    urlaubAnmelden(17, 9, 30, 13, 30);
+    urlaubsterminAnmelden(17, 9, 30, 13, 30);
 
     verify(studentRepository).studentSpeichern(student);
     assertThat(student.getUrlaubstermine()).hasSize(2);
@@ -171,7 +170,7 @@ public class StudentServiceTest {
     when(klausurRepository.findKlausurById(1L)).thenReturn(klausur);
     when(klausurRepository.findKlausurById(2L)).thenReturn(klausur2);
 
-    urlaubAnmelden(17, 9, 30, 13, 30);
+    urlaubsterminAnmelden(17, 9, 30, 13, 30);
 
     assertThat(student.getUrlaubstermine()).hasSize(3);
     Urlaubstermin urlaubstermin = student.getUrlaubstermine().get(0);
@@ -188,7 +187,7 @@ public class StudentServiceTest {
   void test_9() {
     when(studentRepository.findStudentByHandle(handle)).thenReturn(null);
 
-    urlaubAnmelden(15, 10, 30, 11, 30);
+    urlaubsterminAnmelden(15, 10, 30, 11, 30);
 
     verify(studentRepository).studentSpeichern(new Student(handle));
   }
@@ -206,5 +205,22 @@ public class StudentServiceTest {
 
     verify(studentRepository, times(2)).studentSpeichern(student);
     assertThat(student.getKlausurReferenzen()).isEmpty();
+  }
+
+  @Test
+  @DisplayName("Ein Student wird geladen und ein Urlaub wird geloescht und der Student "
+      + "wird wieder gespeichert")
+  void test_11() {
+    Student student = new Student(handle);
+    when(studentRepository.findStudentByHandle(handle)).thenReturn(student);
+    urlaubsterminAnmelden(17, 9, 30, 13, 30);
+
+    studentService.urlaubsterminStornieren(handle,
+        LocalDate.of(2022, 3, 17),
+        LocalTime.of(9, 30),
+        LocalTime.of(13, 30));
+
+    verify(studentRepository, times(2)).studentSpeichern(student);
+    assertThat(student.getUrlaubstermine()).isEmpty();
   }
 }

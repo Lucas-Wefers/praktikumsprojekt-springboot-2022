@@ -32,7 +32,7 @@ public class StudentService {
     studentRepository.studentSpeichern(student);
   }
 
-  public void urlaubAnmelden(String handle, LocalDate datum, LocalTime von, LocalTime bis) {
+  public void urlaubsterminAnmelden(String handle, LocalDate datum, LocalTime von, LocalTime bis) {
     Student student = studentRepository.findStudentByHandle(handle);
     if(student == null) {
       student = new Student(handle);
@@ -68,8 +68,10 @@ public class StudentService {
     studentRepository.studentSpeichern(student);
   }
 
-  public void urlaubStornieren(String handle, LocalDate datum, LocalTime von, LocalTime bis) {
-    throw new UnsupportedOperationException("Not yet implemented");
+  public void urlaubsterminStornieren(String handle, LocalDate datum, LocalTime von, LocalTime bis) {
+    Student student = studentRepository.findStudentByHandle(handle);
+    student.storniereUrlaub(datum, von, bis);
+    studentRepository.studentSpeichern(student);
   }
 
   public Student findStudentByHandle(String handle) {
