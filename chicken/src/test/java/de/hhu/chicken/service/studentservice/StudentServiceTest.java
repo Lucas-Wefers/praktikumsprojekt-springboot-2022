@@ -4,6 +4,7 @@ import static de.hhu.chicken.templates.KlausurTemplates.beispielklausur;
 import static de.hhu.chicken.templates.KlausurTemplates.beispielklausur2;
 import static de.hhu.chicken.templates.KlausurTemplates.beispielklausur3;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -16,6 +17,7 @@ import de.hhu.chicken.service.repositories.KlausurRepository;
 import de.hhu.chicken.service.repositories.StudentRepository;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -230,10 +232,38 @@ public class StudentServiceTest {
   }
 
   @Test
-  @DisplayName("Der Service ruft das Repository auf und lädt einen Studenten nach Id")
+  @DisplayName("Der Service ruft das Repository auf und laedt einen Studenten nach Id")
   void test_12() {
-    Student student = studentService.findStudentByHandle(handle);
+    studentService.findStudentByHandle(handle);
 
     verify(studentRepository).findStudentByHandle(handle);
+  }
+
+  @Test
+  @DisplayName("Der Service laedt den Studenten und seine Klausuren, "
+      + "und gibt seine angemeldeten Klausuren zurueck")
+  void test_13() {
+    when(klausurRepository.findKlausurById(1L)).thenReturn(beispielklausur());
+    when(klausurRepository.findKlausurById(2L)).thenReturn(beispielklausur3());
+    when(studentRepository.findStudentByHandle(handle)).thenReturn(new Student(handle));
+    studentService.klausurAnmelden(handle, 1L);
+    studentService.klausurAnmelden(handle, 2L);
+
+    List<Klausur> klausuren = studentService.alleAngemeldetenKlausuren(handle);
+
+    verify(studentRepository, times(3)).findStudentByHandle(handle);
+    verify(klausurRepository, times(4)).findKlausurById(any());
+    assertThat(klausuren).hasSize(2);
+    assertThat(klausuren).contains(beispielklausur(), beispielklausur3());
+  }
+
+  @Test
+  @DisplayName("Ein nicht existierender Student hat keine Klausuren")
+  void test_14() {
+    when(studentRepository.findStudentByHandle(handle)).thenReturn(null);
+
+    List<Klausur> klausuren = studentService.alleAngemeldetenKlausuren(handle);
+
+    assertThat(klausuren).isEmpty();
   }
 }

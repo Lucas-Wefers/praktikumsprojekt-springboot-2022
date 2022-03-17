@@ -21,7 +21,7 @@ public class StudentService {
 
   public void klausurAnmelden(String handle, Long id) {
     Student student = studentRepository.findStudentByHandle(handle);
-    if(student == null) {
+    if (student == null) {
       student = new Student(handle);
     }
     Klausur klausur = klausurRepository.findKlausurById(id);
@@ -34,7 +34,7 @@ public class StudentService {
 
   public void urlaubsterminAnmelden(String handle, LocalDate datum, LocalTime von, LocalTime bis) {
     Student student = studentRepository.findStudentByHandle(handle);
-    if(student == null) {
+    if (student == null) {
       student = new Student(handle);
     }
     List<Long> klausurReferenzen = student.getKlausurReferenzen();
@@ -48,7 +48,7 @@ public class StudentService {
         .filter(x -> von.isBefore(x.berechneFreistellungsEndzeitpunkt()))
         .filter(x -> x.berechneFreistellungsStartzeitpunkt().isBefore(bis))
         .toList();
-    
+
     for (Klausur klausur : ueberschneideneKlausuren) {
       student.storniereKlausur(klausur.getId());
     }
@@ -68,7 +68,8 @@ public class StudentService {
     studentRepository.studentSpeichern(student);
   }
 
-  public void urlaubsterminStornieren(String handle, LocalDate datum, LocalTime von, LocalTime bis) {
+  public void urlaubsterminStornieren(String handle, LocalDate datum, LocalTime von,
+                                      LocalTime bis) {
     Student student = studentRepository.findStudentByHandle(handle);
     student.storniereUrlaub(datum, von, bis);
     studentRepository.studentSpeichern(student);
@@ -79,6 +80,13 @@ public class StudentService {
   }
 
   public List<Klausur> alleAngemeldetenKlausuren(String handle) {
-    throw new UnsupportedOperationException("Not yet implemented");
+    Student student = studentRepository.findStudentByHandle(handle);
+    if (student == null) {
+      return List.of();
+    }
+    List<Long> klausurReferenzen = student.getKlausurReferenzen();
+    return klausurReferenzen.stream()
+        .map(klausurRepository::findKlausurById)
+        .toList();
   }
 }
