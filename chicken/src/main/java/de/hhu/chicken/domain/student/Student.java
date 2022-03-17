@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @AggregateRoot
 public class Student {
@@ -16,6 +17,12 @@ public class Student {
 
   public Student(String githubHandle) {
     this.githubHandle = new GithubHandle(githubHandle);
+  }
+
+  public int berechneResturlaub() {
+    return 240 - urlaubstermine.stream()
+        .mapToInt(x -> (int) x.dauer().toMinutes())
+        .sum();
   }
 
   public void fuegeKlausurHinzu(Long klausurReferenz, LocalDate datum,
@@ -35,53 +42,98 @@ public class Student {
 
   public void fuegeUrlaubsterminHinzu(LocalDate datum, LocalTime von, LocalTime bis,
       boolean istKlausurtag) {
-    Urlaubstermin urlaubstermin = new Urlaubstermin(datum, von, bis);
-    int urlaubsdauer = (int) urlaubstermin.dauer().toMinutes();
-
-    if (urlaubsdauer > berechneResturlaub()) {
+    if (berechneResturlaub() == 0) {
       return;
     }
-    //while(overlap exists)
-    boolean isEingetragen = false;
-    for (int i = 0; i < getUrlaubstermineMitSelbemDatum(datum).size(); i++) {
-      List<Urlaubstermin> urlaubstermineMitSelbemDatum = getUrlaubstermineMitSelbemDatum(datum);
 
-      for (Urlaubstermin urlaubsterminMitSelbemDatum : urlaubstermineMitSelbemDatum) {
-        LocalTime vonNeuemUrlaub = urlaubstermin.getVon();
-        LocalTime bisNeuemUrlaub = urlaubstermin.getBis();
-        LocalTime vonBestehendemUrlaub = urlaubsterminMitSelbemDatum.getVon();
-        LocalTime bisBestehendemUrlaub = urlaubsterminMitSelbemDatum.getBis();
+    List<Urlaubstermin> alleUrlaubsTermine = new ArrayList<>(urlaubstermine);
+    List<Urlaubstermin> termineAmSelbemTag = getUrlaubstermineMitSelbemDatum(datum);
+    List<Urlaubstermin> ueberschneidendeTermine = termineAmSelbemTag
+        .stream()
+        .filter(x -> termineUeberschneidenSich(von, bis, x.getVon(), x.getBis()))
+        .collect(Collectors.toList());
+    ueberschneidendeTermine.add(new Urlaubstermin(datum, von, bis));
 
-        if (!vonBestehendemUrlaub.isAfter(bisNeuemUrlaub)
-            && !vonNeuemUrlaub.isAfter(bisBestehendemUrlaub)) {
-          LocalTime vonNeu = vonNeuemUrlaub.isBefore(vonBestehendemUrlaub)
-              ? vonNeuemUrlaub : vonBestehendemUrlaub;
-          LocalTime bisNeu = bisNeuemUrlaub.isAfter(bisBestehendemUrlaub)
-              ? bisNeuemUrlaub : bisBestehendemUrlaub;
-          Urlaubstermin vereinigterUrlaub = new Urlaubstermin(datum, vonNeu, bisNeu);
+    LocalTime minVon = ueberschneidendeTermine
+        .stream()
+        .map(Urlaubstermin::getVon)
+        .reduce((acc, t) -> t.isBefore(acc) ? t : acc)
+        .orElseGet(() -> von);
 
-          urlaubstermine.remove(urlaubsterminMitSelbemDatum);
-          if (istValideUrlaubsdauer(vereinigterUrlaub) || istKlausurtag) {
-            urlaubstermine.add(vereinigterUrlaub);
-            urlaubstermin = vereinigterUrlaub;
-            isEingetragen = true;
-            break;
-          } else {
-            urlaubstermine.add(urlaubsterminMitSelbemDatum);
-          }
-        }
-      }
-    }
+    LocalTime maxBis = ueberschneidendeTermine
+        .stream()
+        .map(Urlaubstermin::getBis)
+        .reduce((acc, t) -> t.isAfter(acc) ? t : acc)
+        .orElseGet(() -> bis);
 
-    if ((istKlausurtag || istValideUrlaubsdauer(urlaubstermin)) && !isEingetragen ) {
-      urlaubstermine.add(urlaubstermin);
+    Urlaubstermin vereinigt = new Urlaubstermin(datum, minVon, maxBis);
+    termineAmSelbemTag.removeAll(ueberschneidendeTermine);
+    termineAmSelbemTag.add(vereinigt);
+
+    alleUrlaubsTermine.removeAll(ueberschneidendeTermine);
+    alleUrlaubsTermine.add(vereinigt);
+
+    if (istValiderUrlaub(istKlausurtag, alleUrlaubsTermine, termineAmSelbemTag)) {
+      urlaubstermine = alleUrlaubsTermine;
     }
   }
 
-  public int berechneResturlaub() {
-    return 240 - urlaubstermine.stream()
-        .mapToInt(x -> (int) x.dauer().toMinutes())
-        .sum();
+  public void storniereKlausur(Long klausurId) {
+    klausurReferenzen.remove(new KlausurReferenz(klausurId));
+  }
+
+  public void storniereUrlaub(Urlaubstermin urlaubstermin) {
+    urlaubstermine.remove(urlaubstermin);
+  }
+
+  private boolean istValiderUrlaub(boolean istKlausurtag, List<Urlaubstermin> alleUrlaubsTermine,
+      List<Urlaubstermin> termineAmSelbemTag) {
+    return (istKlausurtag
+        ||
+        hatEinenUrlaubsblockDerDenGanzenTagDauert(termineAmSelbemTag)
+        ||
+        hatEinenUrlaubsblockDerKuerzerAlsZweiStundenIst(termineAmSelbemTag)
+        ||
+        hatZweiUrlaubsbloeckeWobeiEinerAmAnfangUndEinerAmEndeIst(termineAmSelbemTag))
+        &&
+        esIstGenugUrlaubszeitVorhanden(alleUrlaubsTermine);
+  }
+
+  private boolean esIstGenugUrlaubszeitVorhanden(List<Urlaubstermin> alleUrlaubsTermine) {
+    return alleUrlaubsTermine.stream().mapToInt(t -> (int) t.dauer().toMinutes()).sum() <= 240;
+  }
+
+  private boolean hatZweiUrlaubsbloeckeWobeiEinerAmAnfangUndEinerAmEndeIst(
+      List<Urlaubstermin> termineAmSelbemTag) {
+    return termineAmSelbemTag.stream().mapToInt(t -> (int) t.dauer().toMinutes()).sum() <= 150
+        && termineAmSelbemTag.size() == 2
+        && termineAmSelbemTag
+        .stream()
+        .anyMatch(t -> t.getVon()
+            .equals(LocalTime.of(9, 30)))
+        && termineAmSelbemTag
+        .stream()
+        .anyMatch(t -> t.getBis()
+            .equals(LocalTime.of(13, 30)));
+  }
+
+  private boolean hatEinenUrlaubsblockDerKuerzerAlsZweiStundenIst(
+      List<Urlaubstermin> termineAmSelbemTag) {
+    return termineAmSelbemTag.stream().mapToInt(t -> (int) t.dauer().toMinutes()).sum() <= 150
+        && termineAmSelbemTag.size() == 1;
+  }
+
+  private boolean hatEinenUrlaubsblockDerDenGanzenTagDauert(
+      List<Urlaubstermin> termineAmSelbemTag) {
+    int dauerTag = termineAmSelbemTag.stream().mapToInt(t -> (int) t.dauer().toMinutes()).sum();
+    return dauerTag == 240 && termineAmSelbemTag.size() == 1;
+  }
+
+  private boolean termineUeberschneidenSich(LocalTime von1,
+      LocalTime bis1,
+      LocalTime von2,
+      LocalTime bis2) {
+    return !von1.isAfter(bis2) && !von2.isAfter(bis1);
   }
 
   private void aktualisiereUrlaubstermine(LocalDate datum, LocalTime vonKlausurFreistellung,
@@ -109,7 +161,7 @@ public class Student {
   private List<Urlaubstermin> getUrlaubstermineMitSelbemDatum(LocalDate datum) {
     return urlaubstermine.stream()
         .filter(x -> x.getDatum().equals(datum))
-        .toList();
+        .collect(Collectors.toList());
   }
 
   private void spalteUrlaubstermin(LocalDate datum, LocalTime vonKlausurFreistellung,
@@ -138,43 +190,6 @@ public class Student {
     return klausurReferenzen.stream()
         .map(KlausurReferenz::id)
         .toList();
-  }
-
-  private boolean istValideUrlaubsdauer(Urlaubstermin urlaubstermin) {
-    List<Urlaubstermin> urlaubstermineMitGleichemDatum = getUrlaubstermineMitSelbemDatum(
-        urlaubstermin.getDatum());
-
-    if (urlaubstermineMitGleichemDatum.size() == 1) {
-      Urlaubstermin urlaubstermin2 = urlaubstermineMitGleichemDatum.get(0);
-      return istValideUrlaubsdauerFuerZweiUrlaube(urlaubstermin, urlaubstermin2);
-    }
-
-    if (urlaubstermineMitGleichemDatum.size() == 0) {
-      return istValideUrlaubsdauerFuerEinenUrlaub(urlaubstermin);
-    }
-
-    return false;
-  }
-
-  private boolean istValideUrlaubsdauerFuerZweiUrlaube(Urlaubstermin urlaubstermin,
-      Urlaubstermin urlaubstermin2) {
-    boolean istValideUrlaubsDauerFuerZweiUrlaube =
-        urlaubstermin.dauer().plus(urlaubstermin2.dauer()).toMinutes() <= 150;
-
-    if (urlaubstermin.getVon().equals(LocalTime.of(9, 30))
-        && urlaubstermin2.getBis().equals(LocalTime.of(13, 30))) {
-      return istValideUrlaubsDauerFuerZweiUrlaube;
-    }
-    if (urlaubstermin2.getVon().equals(LocalTime.of(9, 30))
-        && urlaubstermin.getBis().equals(LocalTime.of(13, 30))) {
-      return istValideUrlaubsDauerFuerZweiUrlaube;
-    }
-    return false;
-  }
-
-  private boolean istValideUrlaubsdauerFuerEinenUrlaub(Urlaubstermin urlaubstermin) {
-    return urlaubstermin.dauer().toMinutes() <= 150
-        || urlaubstermin.dauer().toMinutes() == 240;
   }
 
   public List<Urlaubstermin> getUrlaubstermine() {
