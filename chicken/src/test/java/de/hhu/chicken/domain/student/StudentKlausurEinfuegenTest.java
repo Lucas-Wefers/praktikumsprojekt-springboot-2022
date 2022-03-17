@@ -22,7 +22,7 @@ public class StudentKlausurEinfuegenTest {
         LocalTime.of(13, 0),
         LocalTime.of(13, 30));
 
-    assertThat(student.klausurReferenzen).contains(new KlausurReferenz(1L));
+    assertThat(student.getKlausurReferenzen()).contains(1L);
   }
 
   @Test
@@ -69,7 +69,7 @@ public class StudentKlausurEinfuegenTest {
         LocalTime.of(13, 0),
         LocalTime.of(13, 30));
 
-    assertThat(student.klausurReferenzen).hasSize(1);
+    assertThat(student.getKlausurReferenzen()).hasSize(1);
     assertThat(student.getUrlaubstermine()).hasSize(3);
   }
 

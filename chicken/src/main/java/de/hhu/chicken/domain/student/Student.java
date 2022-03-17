@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 @AggregateRoot
 public class Student {
 
-  GithubHandle githubHandle;
-  List<KlausurReferenz> klausurReferenzen = new ArrayList<>();
-  List<Urlaubstermin> urlaubstermine = new ArrayList<>();
+  private GithubHandle githubHandle;
+  private List<KlausurReferenz> klausurReferenzen = new ArrayList<>();
+  private List<Urlaubstermin> urlaubstermine = new ArrayList<>();
 
   public Student(String githubHandle) {
     this.githubHandle = new GithubHandle(githubHandle);
@@ -26,8 +26,8 @@ public class Student {
   }
 
   public void fuegeKlausurHinzu(Long klausurReferenz, LocalDate datum,
-      LocalTime vonKlausurFreistellung,
-      LocalTime bisKlausurFreistellung) {
+                                LocalTime vonKlausurFreistellung,
+                                LocalTime bisKlausurFreistellung) {
     if (containsKlausurReferenz(klausurReferenz)) {
       return;
     }
@@ -41,7 +41,7 @@ public class Student {
   }
 
   public void fuegeUrlaubsterminHinzu(LocalDate datum, LocalTime von, LocalTime bis,
-      boolean istKlausurtag) {
+                                      boolean istKlausurtag) {
     if (berechneResturlaub() == 0) {
       return;
     }
@@ -58,13 +58,13 @@ public class Student {
         .stream()
         .map(Urlaubstermin::getVon)
         .reduce((acc, t) -> t.isBefore(acc) ? t : acc)
-        .orElseGet(() -> von);
+        .orElse(von);
 
     LocalTime maxBis = ueberschneidendeTermine
         .stream()
         .map(Urlaubstermin::getBis)
         .reduce((acc, t) -> t.isAfter(acc) ? t : acc)
-        .orElseGet(() -> bis);
+        .orElse(bis);
 
     Urlaubstermin vereinigt = new Urlaubstermin(datum, minVon, maxBis);
     termineAmSelbemTag.removeAll(ueberschneidendeTermine);
@@ -87,7 +87,7 @@ public class Student {
   }
 
   private boolean istValiderUrlaub(boolean istKlausurtag, List<Urlaubstermin> alleUrlaubsTermine,
-      List<Urlaubstermin> termineAmSelbemTag) {
+                                   List<Urlaubstermin> termineAmSelbemTag) {
     return (istKlausurtag
         ||
         hatEinenUrlaubsblockDerDenGanzenTagDauert(termineAmSelbemTag)
@@ -130,15 +130,15 @@ public class Student {
   }
 
   private boolean termineUeberschneidenSich(LocalTime von1,
-      LocalTime bis1,
-      LocalTime von2,
-      LocalTime bis2) {
+                                            LocalTime bis1,
+                                            LocalTime von2,
+                                            LocalTime bis2) {
     return !von1.isAfter(bis2) && !von2.isAfter(bis1);
   }
 
   private void aktualisiereUrlaubstermine(LocalDate datum, LocalTime vonKlausurFreistellung,
-      LocalTime bisKlausurFreistellung,
-      List<Urlaubstermin> urlaubstermineMitSelbemDatum) {
+                                          LocalTime bisKlausurFreistellung,
+                                          List<Urlaubstermin> urlaubstermineMitSelbemDatum) {
     for (Urlaubstermin urlaubstermin : urlaubstermineMitSelbemDatum) {
       LocalTime vonUrlaub = urlaubstermin.getVon();
       LocalTime bisUrlaub = urlaubstermin.getBis();
@@ -165,8 +165,8 @@ public class Student {
   }
 
   private void spalteUrlaubstermin(LocalDate datum, LocalTime vonKlausurFreistellung,
-      LocalTime bisKlausurFreistellung, LocalTime vonUrlaub,
-      LocalTime bisUrlaub) {
+                                   LocalTime bisKlausurFreistellung, LocalTime vonUrlaub,
+                                   LocalTime bisUrlaub) {
     if (vonUrlaub.isBefore(vonKlausurFreistellung)) {
       urlaubstermine.add(new Urlaubstermin(datum, vonUrlaub, vonKlausurFreistellung));
     }
@@ -176,8 +176,8 @@ public class Student {
   }
 
   private boolean isAusserhalbVonUrlaubstermin(LocalTime vonKlausurFreistellung,
-      LocalTime bisKlausurFreistellung,
-      LocalTime vonUrlaub, LocalTime bisUrlaub) {
+                                               LocalTime bisKlausurFreistellung,
+                                               LocalTime vonUrlaub, LocalTime bisUrlaub) {
     return bisKlausurFreistellung.isBefore(vonUrlaub)
         || bisUrlaub.isBefore(vonKlausurFreistellung);
   }

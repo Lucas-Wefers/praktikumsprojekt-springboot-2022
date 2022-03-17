@@ -52,13 +52,12 @@ package domain {
 package service {
   package studentenservice {
     class StudentService {
-      void klausurAnmelden(id)
-      void urlaubAnmelden(datum, von, bis)
-      void klausurStornieren(id)
-      void urlaubStornieren(datum, von, bis)
+      void klausurAnmelden(handle, id)
+      void urlaubAnmelden(handle, datum, von, bis)
+      void klausurStornieren(handle, id)
+      void urlaubStornieren(handle, datum, von, bis)
       Student findStudentByHandle(handle)
       List<Klausur> alleAngemeldetenKlausuren(handle)
-      List<Urlaubstermin> alleUrlaubstermine(handle)
     }
   }
 

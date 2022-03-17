@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class KlausurService {
 
-  KlausurRepository repo;
+  private final KlausurRepository repo;
 
   public KlausurService(
       KlausurRepository repo) {
