@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 @AggregateRoot
 public class Student {
 
-  private GithubHandle githubHandle;
+  private GithubHandle handle;
   private List<KlausurReferenz> klausurReferenzen = new ArrayList<>();
   private List<Urlaubstermin> urlaubstermine = new ArrayList<>();
 
-  public Student(String githubHandle) {
-    this.githubHandle = new GithubHandle(githubHandle);
+  public Student(String handle) {
+    this.handle = new GithubHandle(handle);
   }
 
   public int berechneResturlaub() {
@@ -182,8 +182,8 @@ public class Student {
         || bisUrlaub.isBefore(vonKlausurFreistellung);
   }
 
-  public String getGithubHandle() {
-    return githubHandle.handle();
+  public String getHandle() {
+    return handle.handle();
   }
 
   public List<Long> getKlausurReferenzen() {
@@ -205,11 +205,11 @@ public class Student {
       return false;
     }
     Student student = (Student) o;
-    return githubHandle.equals(student.githubHandle);
+    return handle.equals(student.handle);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(githubHandle);
+    return Objects.hash(handle);
   }
 }

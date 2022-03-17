@@ -53,9 +53,9 @@ package service {
   package studentenservice {
     class StudentService {
       void klausurAnmelden(handle, id)
-      void urlaubAnmelden(handle, datum, von, bis)
+      void urlaubsterminAnmelden(handle, datum, von, bis)
       void klausurStornieren(handle, id)
-      void urlaubStornieren(handle, datum, von, bis)
+      void urlaubsterminStornieren(handle, datum, von, bis)
       Student findStudentByHandle(handle)
       List<Klausur> alleAngemeldetenKlausuren(handle)
     }
@@ -76,7 +76,10 @@ package service {
       Klausur findKlausurById()
     }
 
-    interface StudentRepository {}
+    interface StudentRepository {
+      Student findStudentByHandle(handle)
+      Student studentSpeichern(student)
+    }
   }
 
   KlausurService --> KlausurRepository
