@@ -19,6 +19,16 @@ public class Student {
     this.handle = new GithubHandle(handle);
   }
 
+  public Student(String handle,
+                 List<Long> klausurReferenzen,
+                 List<Urlaubstermin> urlaubstermine) {
+    this.handle = new GithubHandle(handle);
+    this.klausurReferenzen = klausurReferenzen.stream()
+        .map(KlausurReferenz::new)
+        .toList();
+    this.urlaubstermine = List.copyOf(urlaubstermine);
+  }
+
   public int berechneResturlaub() {
     return 240 - urlaubstermine.stream()
         .mapToInt(x -> (int) x.dauer().toMinutes())

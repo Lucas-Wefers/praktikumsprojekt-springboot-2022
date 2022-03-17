@@ -6,5 +6,5 @@ public interface StudentRepository {
 
   Student findStudentByHandle(String handle);
 
-  Student studentSpeichern(Student student);
+  void studentSpeichern(Student student);
 }
