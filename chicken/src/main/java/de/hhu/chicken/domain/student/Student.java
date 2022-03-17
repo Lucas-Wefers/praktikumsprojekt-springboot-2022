@@ -82,8 +82,8 @@ public class Student {
     klausurReferenzen.remove(new KlausurReferenz(klausurId));
   }
 
-  public void storniereUrlaub(Urlaubstermin urlaubstermin) {
-    urlaubstermine.remove(urlaubstermin);
+  public void storniereUrlaub(LocalDate datum, LocalTime von, LocalTime bis) {
+    urlaubstermine.remove(new Urlaubstermin(datum, von, bis));
   }
 
   private boolean istValiderUrlaub(boolean istKlausurtag, List<Urlaubstermin> alleUrlaubsTermine,
