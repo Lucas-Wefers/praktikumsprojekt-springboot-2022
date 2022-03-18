@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 public class KlausurServiceTest {
 
   @Test
-  @DisplayName("Der Service ruft das Repository auf und gibt die richtigen Klausurtermine zurück")
+  @DisplayName("Der Service ruft das Repository auf und gibt die richtigen Klausurtermine zurueck")
   void test_1() {
     KlausurRepository repo = mock(KlausurRepository.class);
     KlausurService service = new KlausurService(repo);

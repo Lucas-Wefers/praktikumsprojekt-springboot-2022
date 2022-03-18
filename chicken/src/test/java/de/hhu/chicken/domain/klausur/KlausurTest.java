@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 public class KlausurTest {
 
   @Test
-  @DisplayName("Bei einer Präsenzklausur um 10:30 wird ab 9:30 freigestellt")
+  @DisplayName("Bei einer Praesenzklausur um 10:30 wird ab 9:30 freigestellt")
   void test_1() {
     Klausur klausur = beispielKlausur(10, 30, 11, true);
 
@@ -20,7 +20,7 @@ public class KlausurTest {
   }
 
   @Test
-  @DisplayName("Bei einer Präsenzklausur um 9:30 wird ab 9:30 freigestellt")
+  @DisplayName("Bei einer Praesenzklausur um 9:30 wird ab 9:30 freigestellt")
   void test_2() {
     Klausur klausur = beispielKlausur(9, 30, 11, true);
 
@@ -50,7 +50,7 @@ public class KlausurTest {
   }
 
   @Test
-  @DisplayName("Bei einer Präsenzklausur die um 10:30 endet wird bis 12:30 freigestellt")
+  @DisplayName("Bei einer Praesenzklausur die um 10:30 endet wird bis 12:30 freigestellt")
   void test_5() {
     Klausur klausur = beispielKlausur(8, 30, 10, true);
 
@@ -60,7 +60,7 @@ public class KlausurTest {
   }
 
   @Test
-  @DisplayName("Bei einer Präsenzklausur die um 12:30 endet wird bis 13:30 freigestellt")
+  @DisplayName("Bei einer Praesenzklausur die um 12:30 endet wird bis 13:30 freigestellt")
   void test_6() {
     Klausur klausur = beispielKlausur(8, 30, 12, true);
 

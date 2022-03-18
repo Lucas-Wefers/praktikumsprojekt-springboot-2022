@@ -34,7 +34,7 @@ public class KlausurControllerTest {
   KlausurService klausurService;
 
   @Test
-  @DisplayName("Die richtige Seite für das Eintragen von Klausuren wird aufgerufen und ist "
+  @DisplayName("Die richtige Seite fuer das Eintragen von Klausuren wird aufgerufen und ist "
       + "erreichbar")
   void test_1() throws Exception {
     mvc.perform(get("/klausuren"))

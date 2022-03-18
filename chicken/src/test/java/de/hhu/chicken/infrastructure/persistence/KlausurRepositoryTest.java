@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 public class KlausurRepositoryTest {
 
   @Test
-  @DisplayName("Eine leere Datenbank enthält keine Klausuren")
+  @DisplayName("Eine leere Datenbank enthaelt keine Klausuren")
   void test_1() {
     KlausurDao klausurDao = mock(KlausurDao.class);
     KlausurRepository repo = new KlausurRepositoryImpl(klausurDao);

@@ -35,63 +35,63 @@ public class WebSecurityConfigurationTest {
   }
 
   @Test
-  @DisplayName("Studenten dürfen auf die Studentenseite zugreifen")
+  @DisplayName("Studenten duerfen auf die Studentenseite zugreifen")
   void test_2() throws Exception {
     mockMvc.perform(get("/").session(studentSession()))
         .andExpect(status().isOk());
   }
 
   @Test
-  @DisplayName("Studenten dürfen nicht auf die Tutorenseite zugreifen")
+  @DisplayName("Studenten duerfen nicht auf die Tutorenseite zugreifen")
   void test_3() throws Exception {
     mockMvc.perform(get("/tutor").session(studentSession()))
         .andExpect(status().isForbidden());
   }
 
   @Test
-  @DisplayName("Studenten dürfen nicht auf die Organisatorenseite zugreifen")
+  @DisplayName("Studenten duerfen nicht auf die Organisatorenseite zugreifen")
   void test_4() throws Exception {
     mockMvc.perform(get("/organisator").session(studentSession()))
         .andExpect(status().isForbidden());
   }
 
   @Test
-  @DisplayName("Tutoren dürfen nicht auf die Studentenseite zugreifen")
+  @DisplayName("Tutoren duerfen nicht auf die Studentenseite zugreifen")
   void test_5() throws Exception {
     mockMvc.perform(get("/").session(tutorSession()))
         .andExpect(status().isForbidden());
   }
 
   @Test
-  @DisplayName("Tutoren dürfen auf die Tutorenseite zugreifen")
+  @DisplayName("Tutoren duerfen auf die Tutorenseite zugreifen")
   void test_6() throws Exception {
     mockMvc.perform(get("/tutor").session(tutorSession()))
         .andExpect(status().isOk());
   }
 
   @Test
-  @DisplayName("Tutoren dürfen nicht auf die Organisatorenseite zugreifen")
+  @DisplayName("Tutoren duerfen nicht auf die Organisatorenseite zugreifen")
   void test_7() throws Exception {
     mockMvc.perform(get("/organisator").session(tutorSession()))
         .andExpect(status().isForbidden());
   }
 
   @Test
-  @DisplayName("Organisatoren dürfen nicht auf die Studentenseite zugreifen")
+  @DisplayName("Organisatoren duerfen nicht auf die Studentenseite zugreifen")
   void test_8() throws Exception {
     mockMvc.perform(get("/").session(organisatorSession()))
         .andExpect(status().isForbidden());
   }
 
   @Test
-  @DisplayName("Organisatoren dürfen nicht auf die Tutorenseite zugreifen")
+  @DisplayName("Organisatoren duerfen nicht auf die Tutorenseite zugreifen")
   void test_9() throws Exception {
     mockMvc.perform(get("/tutor").session(organisatorSession()))
         .andExpect(status().isForbidden());
   }
 
   @Test
-  @DisplayName("Organisatoren dürfen auf die Organisatorenseite zugreifen")
+  @DisplayName("Organisatoren duerfen auf die Organisatorenseite zugreifen")
   void test_10() throws Exception {
     mockMvc.perform(get("/organisator").session(organisatorSession()))
         .andExpect(status().isOk());

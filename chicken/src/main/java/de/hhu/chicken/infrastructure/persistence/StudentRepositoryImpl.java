@@ -32,6 +32,11 @@ public class StudentRepositoryImpl implements StudentRepository {
 
   @Override
   public Student findStudentByHandle(String handle) {
-    throw new UnsupportedOperationException("Not yet implemented");
+    StudentDto studentDto = studentDao.findById(handle).orElse(null);
+    if (studentDto == null) {
+      return null;
+    }
+
+    return studentDtoToStudent(studentDto);
   }
 }

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 public class PraesenzKlausurZeitraumVerifiziererTest {
 
   @Test
-  @DisplayName("Eine Präsenz-Klausur die um 6:30 endet ist außerhalb des Zeitraums")
+  @DisplayName("Eine Praesenz-Klausur die um 6:30 endet ist ausserhalb des Zeitraums")
   void test_1() {
     PraesenzKlausurZeitraumVerifizierer verifizierer = new PraesenzKlausurZeitraumVerifizierer();
     LocalTime von = LocalTime.of(5, 30);
@@ -25,7 +25,7 @@ public class PraesenzKlausurZeitraumVerifiziererTest {
   }
 
   @Test
-  @DisplayName("Eine Präsenz-Klausur die um 16:00 anfängt ist außerhalb des Zeitraums")
+  @DisplayName("Eine Praesenz-Klausur die um 16:00 anfaengt ist ausserhalb des Zeitraums")
   void test_2() {
     PraesenzKlausurZeitraumVerifizierer verifizierer = new PraesenzKlausurZeitraumVerifizierer();
     LocalTime von = LocalTime.of(16, 0);
@@ -38,7 +38,7 @@ public class PraesenzKlausurZeitraumVerifiziererTest {
   }
 
   @Test
-  @DisplayName("Eine Präsenz-Klausur, bei welcher der Start- nach dem Endzeitpunkt liegt,"
+  @DisplayName("Eine Praesenz-Klausur, bei welcher der Start- nach dem Endzeitpunkt liegt,"
       + " ist nicht valide")
   void test_3() {
     PraesenzKlausurZeitraumVerifizierer verifizierer = new PraesenzKlausurZeitraumVerifizierer();
@@ -52,7 +52,7 @@ public class PraesenzKlausurZeitraumVerifiziererTest {
   }
 
   @Test
-  @DisplayName("Eine Präsenz-Klausur von 11:30 bis 12:30 ist valide")
+  @DisplayName("Eine Praesenz-Klausur von 11:30 bis 12:30 ist valide")
   void test_4() {
     PraesenzKlausurZeitraumVerifizierer verifizierer = new PraesenzKlausurZeitraumVerifizierer();
     LocalTime von = LocalTime.of(11, 30);
@@ -65,7 +65,7 @@ public class PraesenzKlausurZeitraumVerifiziererTest {
   }
 
   @Test
-  @DisplayName("Eine Präsenz-Klausur, die um 15:15 beginnt, ist valide")
+  @DisplayName("Eine Praesenz-Klausur, die um 15:15 beginnt, ist valide")
   void test_5() {
     PraesenzKlausurZeitraumVerifizierer verifizierer = new PraesenzKlausurZeitraumVerifizierer();
     LocalTime von = LocalTime.of(15, 15);
@@ -78,7 +78,7 @@ public class PraesenzKlausurZeitraumVerifiziererTest {
   }
 
   @Test
-  @DisplayName("Eine Präsenz-Klausur, die um 7:45 endet ist valide")
+  @DisplayName("Eine Praesenz-Klausur, die um 7:45 endet ist valide")
   void test_6() {
     PraesenzKlausurZeitraumVerifizierer verifizierer = new PraesenzKlausurZeitraumVerifizierer();
     LocalTime von = LocalTime.of(7, 15);

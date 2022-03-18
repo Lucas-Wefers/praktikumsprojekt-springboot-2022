@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 public class OnlineKlausurZeitraumVerifiziererTest {
 
   @Test
-  @DisplayName("Eine Online-Klausur die um 8:30 endet ist außerhalb des Zeitraums")
+  @DisplayName("Eine Online-Klausur die um 8:30 endet ist ausserhalb des Zeitraums")
   void test_1() {
     OnlineKlausurZeitraumVerifizierer verifizierer = new OnlineKlausurZeitraumVerifizierer();
     LocalTime von = LocalTime.of(7, 30);
@@ -25,7 +25,7 @@ public class OnlineKlausurZeitraumVerifiziererTest {
   }
 
   @Test
-  @DisplayName("Eine Online-Klausur die um 14:30 anfängt ist außerhalb des Zeitraums")
+  @DisplayName("Eine Online-Klausur die um 14:30 anfaengt ist ausserhalb des Zeitraums")
   void test_2() {
     OnlineKlausurZeitraumVerifizierer verifizierer = new OnlineKlausurZeitraumVerifizierer();
     LocalTime von = LocalTime.of(14, 30);
