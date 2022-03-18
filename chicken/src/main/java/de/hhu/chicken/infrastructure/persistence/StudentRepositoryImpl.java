@@ -25,8 +25,19 @@ public class StudentRepositoryImpl implements StudentRepository {
         student.getUrlaubstermine());
   }
 
+  private StudentDto updateStudentToStudentDto(Student student) {
+    return new StudentDto(false,
+        student.getHandle(),
+        student.getKlausurReferenzen(),
+        student.getUrlaubstermine());
+  }
+
   @Override
   public void studentSpeichern(Student student) {
+    if (studentDao.existsById(student.getHandle())) {
+      studentDao.save(updateStudentToStudentDto(student));
+      return;
+    }
     studentDao.save(studentToStudentDto(student));
   }
 

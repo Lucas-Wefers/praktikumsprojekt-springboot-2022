@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 public class StudentRepositoryTest {
 
   @Test
-  @DisplayName("Beim Speichern eines Studenten wird die save Methode im Dao aufgerufen")
+  @DisplayName("Beim Speichern eines vorhandenen Studenten wird die save Methode im Dao aufgerufen")
   void test_1() {
     String handle = "jensbendisposto";
     Student student = new Student(handle);

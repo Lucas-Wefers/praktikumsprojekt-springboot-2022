@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -17,11 +19,24 @@ public class StudentDto implements Persistable<String> {
   private final List<Long> klausurReferenzen;
   private final List<Urlaubstermin> urlaubstermine;
 
+  @Transient
+  private final boolean isNew;
+
+  @PersistenceConstructor
   public StudentDto(String handle, List<Long> klausurReferenzen,
       List<Urlaubstermin> urlaubstermine) {
     this.handle = handle;
     this.klausurReferenzen = List.copyOf(klausurReferenzen);
     this.urlaubstermine = List.copyOf(urlaubstermine);
+    this.isNew = true;
+  }
+
+  public StudentDto(boolean isNew, String handle, List<Long> klausurReferenzen,
+      List<Urlaubstermin> urlaubstermine) {
+    this.handle = handle;
+    this.klausurReferenzen = List.copyOf(klausurReferenzen);
+    this.urlaubstermine = List.copyOf(urlaubstermine);
+    this.isNew = isNew;
   }
 
   public String getHandle() {
@@ -43,7 +58,7 @@ public class StudentDto implements Persistable<String> {
 
   @Override
   public boolean isNew() {
-    return true;
+    return isNew;
   }
 
   @Override
