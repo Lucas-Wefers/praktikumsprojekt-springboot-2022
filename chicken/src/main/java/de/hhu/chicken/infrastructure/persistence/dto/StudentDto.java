@@ -29,11 +29,11 @@ public class StudentDto implements Persistable<String> {
   }
 
   public List<Long> getKlausurReferenzen() {
-    return klausurReferenzen;
+    return List.copyOf(klausurReferenzen);
   }
 
   public List<Urlaubstermin> getUrlaubstermine() {
-    return urlaubstermine;
+    return List.copyOf(urlaubstermine);
   }
 
   @Override
