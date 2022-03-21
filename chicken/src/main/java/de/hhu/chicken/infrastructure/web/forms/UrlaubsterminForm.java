@@ -10,48 +10,54 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class UrlaubsterminForm{
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @IsValidDatum
-    @NotNull
-    LocalDate datum;
+public class UrlaubsterminForm {
 
-    @DateTimeFormat(pattern = "HH:mm")
-    @IsVielfacheVon15Minuten
-    @NotNull
-    LocalTime von;
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
+  @IsValidDatum
+  @NotNull
+  LocalDate datum;
 
-    @DateTimeFormat(pattern = "HH:mm")
-    @IsVielfacheVon15Minuten
-    @NotNull
-    LocalTime bis;
+  @DateTimeFormat(pattern = "HH:mm")
+  @IsVielfacheVon15Minuten
+  @NotNull
+  LocalTime von;
 
-    @IsValidUrlaubsterminZeitraum
-    private List<LocalTime> urlaubsterminZeitraum;
+  @DateTimeFormat(pattern = "HH:mm")
+  @IsVielfacheVon15Minuten
+  @NotNull
+  LocalTime bis;
 
-    public UrlaubsterminForm(LocalDate datum, LocalTime von, LocalTime bis) {
-        this.datum = datum;
-        this.von = von;
-        this.bis = bis;
-        this.urlaubsterminZeitraum = List.of(von, bis);
+  @IsValidUrlaubsterminZeitraum
+  private List<LocalTime> urlaubsterminZeitraum;
+
+  public UrlaubsterminForm(LocalDate datum, LocalTime von, LocalTime bis) {
+    this.datum = datum;
+    this.von = von;
+    this.bis = bis;
+
+    if (von == null || bis == null) {
+      return;
     }
 
-    public List<LocalTime> getUrlaubsterminZeitraum() {
-        if (urlaubsterminZeitraum == null) {
-            return List.of();
-        }
-        return List.copyOf(urlaubsterminZeitraum);
-    }
+    this.urlaubsterminZeitraum = List.of(von, bis);
+  }
 
-    public LocalDate getDatum() {
-        return datum;
+  public List<LocalTime> getUrlaubsterminZeitraum() {
+    if (urlaubsterminZeitraum == null) {
+      return List.of();
     }
+    return List.copyOf(urlaubsterminZeitraum);
+  }
 
-    public LocalTime getVon() {
-        return von;
-    }
+  public LocalDate getDatum() {
+    return datum;
+  }
 
-    public LocalTime getBis() {
-        return bis;
-    }
+  public LocalTime getVon() {
+    return von;
+  }
+
+  public LocalTime getBis() {
+    return bis;
+  }
 }

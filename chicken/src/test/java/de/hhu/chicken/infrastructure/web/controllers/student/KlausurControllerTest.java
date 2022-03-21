@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import de.hhu.chicken.domain.klausur.Klausur;
 import de.hhu.chicken.service.klausurservice.KlausurService;
+import de.hhu.chicken.service.studentservice.StudentService;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -23,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
 @WebMvcTest
 @AutoConfigureMockMvc(addFilters = false)
 public class KlausurControllerTest {
@@ -32,6 +34,9 @@ public class KlausurControllerTest {
 
   @MockBean
   KlausurService klausurService;
+
+  @MockBean
+  StudentService studentService;
 
   @Test
   @DisplayName("Die richtige Seite fuer das Eintragen von Klausuren wird aufgerufen und ist "
