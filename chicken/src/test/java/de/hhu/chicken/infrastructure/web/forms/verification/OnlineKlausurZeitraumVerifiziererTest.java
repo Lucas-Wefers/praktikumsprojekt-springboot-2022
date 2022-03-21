@@ -11,10 +11,12 @@ import org.junit.jupiter.api.Test;
 
 public class OnlineKlausurZeitraumVerifiziererTest {
 
+  private static final OnlineKlausurZeitraumVerifizierer
+      verifizierer = new OnlineKlausurZeitraumVerifizierer();
+
   @Test
   @DisplayName("Eine Online-Klausur die um 8:30 endet ist ausserhalb des Zeitraums")
   void test_1() {
-    OnlineKlausurZeitraumVerifizierer verifizierer = new OnlineKlausurZeitraumVerifizierer();
     LocalTime von = LocalTime.of(7, 30);
     LocalTime bis = LocalTime.of(8, 30);
     List<LocalTime> zeitraum = List.of(von, bis);
@@ -27,7 +29,6 @@ public class OnlineKlausurZeitraumVerifiziererTest {
   @Test
   @DisplayName("Eine Online-Klausur die um 14:30 anfaengt ist ausserhalb des Zeitraums")
   void test_2() {
-    OnlineKlausurZeitraumVerifizierer verifizierer = new OnlineKlausurZeitraumVerifizierer();
     LocalTime von = LocalTime.of(14, 30);
     LocalTime bis = LocalTime.of(16, 30);
     List<LocalTime> zeitraum = List.of(von, bis);
@@ -41,7 +42,6 @@ public class OnlineKlausurZeitraumVerifiziererTest {
   @DisplayName("Eine Online-Klausur, bei welcher der Start- nach dem Endzeitpunkt liegt,"
       + " ist nicht valide")
   void test_3() {
-    OnlineKlausurZeitraumVerifizierer verifizierer = new OnlineKlausurZeitraumVerifizierer();
     LocalTime von = LocalTime.of(12, 30);
     LocalTime bis = LocalTime.of(11, 30);
     List<LocalTime> zeitraum = List.of(von, bis);
@@ -54,7 +54,6 @@ public class OnlineKlausurZeitraumVerifiziererTest {
   @Test
   @DisplayName("Eine Online-Klausur von 11:30 bis 12:30 ist valide")
   void test_4() {
-    OnlineKlausurZeitraumVerifizierer verifizierer = new OnlineKlausurZeitraumVerifizierer();
     LocalTime von = LocalTime.of(11, 30);
     LocalTime bis = LocalTime.of(12, 30);
     List<LocalTime> zeitraum = List.of(von, bis);
@@ -67,7 +66,6 @@ public class OnlineKlausurZeitraumVerifiziererTest {
   @Test
   @DisplayName("Eine Online-Klausur, die um 13:45 beginnt, ist valide")
   void test_5() {
-    OnlineKlausurZeitraumVerifizierer verifizierer = new OnlineKlausurZeitraumVerifizierer();
     LocalTime von = LocalTime.of(13, 45);
     LocalTime bis = LocalTime.of(15, 30);
     List<LocalTime> zeitraum = List.of(von, bis);

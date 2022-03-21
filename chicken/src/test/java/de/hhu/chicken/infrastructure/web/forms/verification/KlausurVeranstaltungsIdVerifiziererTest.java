@@ -9,13 +9,16 @@ import org.junit.jupiter.api.Test;
 
 public class KlausurVeranstaltungsIdVerifiziererTest {
 
+  private static final KlausurVeranstaltungsIdVerifizierer
+      verifizierer = new KlausurVeranstaltungsIdVerifizierer();
+
   @Test
   @DisplayName("Die Veranstaltung mit veranstaltungsId 1 existiert nicht")
   void test_1() {
     Long veranstaltungsId = 1L;
-    KlausurVeranstaltungsIdVerifizierer verifizierer = new KlausurVeranstaltungsIdVerifizierer();
 
-    boolean isValid = verifizierer.isValid(veranstaltungsId, mock(ConstraintValidatorContext.class));
+    boolean isValid = verifizierer.isValid(veranstaltungsId,
+        mock(ConstraintValidatorContext.class));
 
     assertThat(isValid).isFalse();
   }
@@ -24,9 +27,9 @@ public class KlausurVeranstaltungsIdVerifiziererTest {
   @DisplayName("Die Veranstaltung mit veranstaltungsId 1234 existiert")
   void test_2() {
     Long veranstaltungsId = 1234L;
-    KlausurVeranstaltungsIdVerifizierer verifizierer = new KlausurVeranstaltungsIdVerifizierer();
 
-    boolean isValid = verifizierer.isValid(veranstaltungsId, mock(ConstraintValidatorContext.class));
+    boolean isValid = verifizierer.isValid(veranstaltungsId,
+        mock(ConstraintValidatorContext.class));
 
     assertThat(isValid).isTrue();
   }

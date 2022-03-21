@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 
 public class IsVielfacheVon15MinutenVerifiziererTest {
 
-  static IsVielfacheVon15MinutenVerifizierer verifizierer = new IsVielfacheVon15MinutenVerifizierer();
+  private static final IsVielfacheVon15MinutenVerifizierer
+      verifizierer = new IsVielfacheVon15MinutenVerifizierer();
 
   @Test
   @DisplayName("9:30 ist eine gueltige Uhrzeit")

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 public class KlausurDatumVerifiziererTest {
 
-  static KlausurDatumVerifizierer verifizierer = new KlausurDatumVerifizierer();
+  private static final KlausurDatumVerifizierer verifizierer = new KlausurDatumVerifizierer();
 
   @BeforeAll
   static void setup() {
