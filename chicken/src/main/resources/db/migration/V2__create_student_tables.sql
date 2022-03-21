@@ -1,4 +1,4 @@
-drop table if exists student, klausurreferenz, urlaubstermine;
+drop table if exists student, klausurreferenz, urlaubstermin;
 
 create table urlaubstermin
 (
