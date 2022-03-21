@@ -5,7 +5,7 @@ create table urlaubstermin
     datum   date         not null,
     von     time         not null,
     bis     time         not null,
-    student varchar(255) not null,
+    student bigint not null,
     student_key integer
 );
 

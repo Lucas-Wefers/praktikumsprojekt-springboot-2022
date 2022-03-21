@@ -16,14 +16,14 @@ public class StudentDto implements Persistable<Long> {
   private final Long githubId;
 
   private String handle;
-  private final List<Long> klausurReferenzen;
+  private final List<KlausurReferenzDto> klausurReferenzen;
   private final List<Urlaubstermin> urlaubstermine;
 
   @Transient
   private final boolean isNew;
 
   @PersistenceConstructor
-  public StudentDto(Long githubId, String handle, List<Long> klausurReferenzen,
+  public StudentDto(Long githubId, String handle, List<KlausurReferenzDto> klausurReferenzen,
                     List<Urlaubstermin> urlaubstermine) {
     this.githubId = githubId;
     this.handle = handle;
@@ -33,7 +33,7 @@ public class StudentDto implements Persistable<Long> {
   }
 
   public StudentDto(Long githubId, boolean isNew, String handle,
-                    List<Long> klausurReferenzen,
+                    List<KlausurReferenzDto> klausurReferenzen,
                     List<Urlaubstermin> urlaubstermine) {
     this.githubId = githubId;
     this.handle = handle;
@@ -46,7 +46,7 @@ public class StudentDto implements Persistable<Long> {
     return handle;
   }
 
-  public List<Long> getKlausurReferenzen() {
+  public List<KlausurReferenzDto> getKlausurReferenzen() {
     return List.copyOf(klausurReferenzen);
   }
 
