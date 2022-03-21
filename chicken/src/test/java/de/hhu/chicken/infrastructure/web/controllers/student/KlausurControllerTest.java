@@ -65,7 +65,7 @@ public class KlausurControllerTest {
   void test_3() throws Exception {
     Klausur klausur = new Klausur(null,
         "Programmierung",
-        LocalDate.of(2022, 3, 19),
+        LocalDate.of(2022, 3, 18),
         LocalTime.of(8, 30),
         LocalTime.of(10, 30),
         true,
@@ -73,7 +73,7 @@ public class KlausurControllerTest {
 
     mvc.perform(post("/klausuren")
             .param("fach", "Programmierung")
-            .param("datum", "2022-03-19")
+            .param("datum", "2022-03-18")
             .param("von", "08:30")
             .param("bis", "10:30")
             .param("isPraesenz", "true")
