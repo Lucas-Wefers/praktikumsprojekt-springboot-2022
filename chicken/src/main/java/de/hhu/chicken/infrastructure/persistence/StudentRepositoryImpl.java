@@ -5,7 +5,6 @@ import de.hhu.chicken.infrastructure.persistence.dao.StudentDao;
 import de.hhu.chicken.infrastructure.persistence.dto.KlausurReferenzDto;
 import de.hhu.chicken.infrastructure.persistence.dto.StudentDto;
 import de.hhu.chicken.service.repositories.StudentRepository;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 
 @Repository

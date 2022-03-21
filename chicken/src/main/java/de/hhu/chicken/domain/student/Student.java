@@ -29,8 +29,8 @@ public class Student {
     this.handle = new GithubHandle(handle);
     this.klausurReferenzen = klausurReferenzen.stream()
         .map(KlausurReferenz::new)
-        .toList();
-    this.urlaubstermine = List.copyOf(urlaubstermine);
+        .collect(Collectors.toList());
+    this.urlaubstermine = new ArrayList<>(urlaubstermine);
   }
 
   public int berechneResturlaub() {
