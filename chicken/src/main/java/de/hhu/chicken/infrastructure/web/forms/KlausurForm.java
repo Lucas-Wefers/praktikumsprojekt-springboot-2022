@@ -72,27 +72,41 @@ public class KlausurForm {
         veranstaltungsId);
   }
 
-  public LocalDate getDatum() {
-    return datum;
+  public List<LocalTime> getPraesenzKlausurZeitraum() {
+    if (praesenzKlausurZeitraum == null) {
+      return List.of();
+    }
+    return List.copyOf(praesenzKlausurZeitraum);
   }
 
-  public void setDatum(LocalDate datum) {
-    this.datum = datum;
+  public List<LocalTime> getOnlineKlausurZeitraum() {
+    if (onlineKlausurZeitraum == null) {
+      return List.of();
+    }
+    return List.copyOf(onlineKlausurZeitraum);
+  }
+
+  public LocalDate getDatum() {
+    return datum;
   }
 
   public LocalTime getVon() {
     return von;
   }
 
-  public void setVon(LocalTime von) {
-    this.von = von;
-  }
-
   public LocalTime getBis() {
     return bis;
   }
 
-  public void setBis(LocalTime bis) {
-    this.bis = bis;
+  public String getFach() {
+    return fach;
+  }
+
+  public Boolean isPraesenz() {
+    return isPraesenz;
+  }
+
+  public Long getVeranstaltungsId() {
+    return veranstaltungsId;
   }
 }

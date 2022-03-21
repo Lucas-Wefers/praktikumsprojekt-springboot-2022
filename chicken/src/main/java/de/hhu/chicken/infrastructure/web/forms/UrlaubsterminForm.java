@@ -36,6 +36,13 @@ public class UrlaubsterminForm{
         this.urlaubsterminZeitraum = List.of(von, bis);
     }
 
+    public List<LocalTime> getUrlaubsterminZeitraum() {
+        if (urlaubsterminZeitraum == null) {
+            return List.of();
+        }
+        return List.copyOf(urlaubsterminZeitraum);
+    }
+
     public LocalDate getDatum() {
         return datum;
     }

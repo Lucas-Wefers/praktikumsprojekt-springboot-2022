@@ -40,6 +40,13 @@
       <input type="time" id="endTime" class="form-control" th:field="*{bis}">
       <div class="error" th:if="${#fields.hasErrors('bis')}">Gebe Sie eine gültige Uhrzeit ein!</div>
     </div>
+    <div class="error" th:if="${#fields.hasErrors('praesenzKlausurZeitraum')}">
+      <div class="error" th:errors="{praesenzKlausurZeitraum}"></div>
+    </div>
+
+    <div class="error" th:if="${#fields.hasErrors('onlineKlausurZeitraum')}">
+      <div class="error" th:errors="{onlineKlausurZeitraum}"></div>
+    </div>
     <button class="btn btn-primary" type="submit">Eintragen</button>
   </form>
 </div>
