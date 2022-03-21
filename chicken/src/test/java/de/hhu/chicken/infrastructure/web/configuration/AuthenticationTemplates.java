@@ -50,6 +50,7 @@ public class AuthenticationTemplates {
   private static OAuth2AuthenticationToken buildPrincipal(String name, String... roles) {
     Map<String, Object> attributes = new HashMap<>();
     attributes.put("sub", name);
+    attributes.put("id", 28324332);
     List<GrantedAuthority> authorities =
         buildAuthorities(attributes, roles);
     OAuth2User user = new DefaultOAuth2User(authorities, attributes, "sub");

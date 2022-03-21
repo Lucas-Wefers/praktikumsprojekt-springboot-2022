@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+    <title>Urlaubsübersicht</title>
+</head>
+<body>
+<div class="container border rounded mt-4">
+    <h1>Übersicht: Freistellungen</h1>
+
+    <h2>Urlaubszeiten</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Datum</th>
+            <th>von</th>
+            <th>bis</th>
+            <th>Zeit (min)</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody th:if="${student != null}">
+        <tr th:each="urlaub : ${student.getUrlaubstermine()}">
+            <td th:text="${urlaub.getDatum()}"></td>
+            <td th:text="${urlaub.getVon()}"></td>
+            <td th:text="${urlaub.getBis()}"></td>
+            <td th:text="${urlaub.dauer().toMinutes()}"></td>
+            <td>
+                <form method="post" th:action="@{/urlaubstornieren}">
+                    <input type="hidden" th:value="${urlaub.getDatum()}" name="datum">
+                    <input type="hidden" th:value="${urlaub.getVon()}" name="von">
+                    <input type="hidden" th:value="${urlaub.getBis()}" name="bis">
+                    <button class="btn btn-primary" type="submit">Stornieren</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td><strong>Summe</strong></td>
+            <td></td>
+            <td></td>
+            <td th:if="${student == null}"><p>0</p></td>
+            <td th:if="${student != null}"><p th:text="${240 - student.berechneResturlaub()}"></p></td>
+        </tr>
+        <tr>
+            <td><strong>Resturlaub</strong></td>
+            <td></td>
+            <td></td>
+            <td th:if="${student == null}"><p>240</p></td>
+            <td th:if="${student != null}"><p th:text="${student.berechneResturlaub()}"></p></td>
+        </tr>
+        </tfoot>
+    </table>
+
+    <h2>Klausuren</h2>
+    <div th:if="${!klausuren.isEmpty()}" class="mt-2 mb-2">Sie sind für folgende Klausuren
+        angemeldet:
+    </div>
+    <div th:if="${klausuren.isEmpty()}" class="mt-2 mb-2 alert alert-warning">Sie sind für keine
+        Klausuren angemeldet.
+    </div>
+    <table th:if="${!klausuren.isEmpty()}" class="table">
+        <thead>
+        <tr>
+            <th>Veranstaltung</th>
+            <th>Klausurzeit</th>
+            <th>Freistellung vom Praktikum</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${klausuren != null}" th:each="klausur : ${klausuren}">
+            <td><span th:text="${klausur.isPraesenz()} ? 'Präsenzklausur' : 'Onlineklausur'"></span> <span
+                    th:text="${klausur.getFach()}"></span></td>
+            <td><span th:text="${klausur.getDatum()}"></span>, <span th:text="${klausur.getVon()}"></span> - <span
+                    th:text="${klausur.getBis()}"></span></td>
+            <td><span th:text="${klausur.berechneFreistellungsStartzeitpunkt()}"></span> - <span
+                    th:text="${klausur.berechneFreistellungsEndzeitpunkt()}"></span></td>
+            <td>
+                <form method="post" th:action="@{/klausurstornieren}">
+                    <input type="hidden" th:value="${klausur.getId()}" name="id">
+                    <button class="btn btn-primary" type="submit">Stornieren</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="text-center mt-4 mb-4">
+        <a class="btn btn-primary" th:href="@{/klausuranmeldung}">Klausuranmeldung</a>
+        <a class="btn btn-primary" th:href="@{/urlaubsanmeldung}">Urlaubsanmeldung</a>
+    </div>
+</div>
+</body>
+</html>
