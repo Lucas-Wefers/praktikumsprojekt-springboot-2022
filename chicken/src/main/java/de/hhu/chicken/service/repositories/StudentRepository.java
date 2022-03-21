@@ -4,7 +4,7 @@ import de.hhu.chicken.domain.student.Student;
 
 public interface StudentRepository {
 
-  Student findStudentByHandle(String handle);
+  Student findStudentByGithubId(Long githubId);
 
   void studentSpeichern(Student student);
 }

@@ -11,17 +11,21 @@ import java.util.stream.Collectors;
 @AggregateRoot
 public class Student {
 
-  private GithubHandle handle;
+
+  private final GithubId githubId;
+  private final GithubHandle handle;
   private List<KlausurReferenz> klausurReferenzen = new ArrayList<>();
   private List<Urlaubstermin> urlaubstermine = new ArrayList<>();
 
-  public Student(String handle) {
+  public Student(Long githubId, String handle) {
+    this.githubId = new GithubId(githubId);
     this.handle = new GithubHandle(handle);
   }
 
-  public Student(String handle,
+  public Student(Long githubId, String handle,
                  List<Long> klausurReferenzen,
                  List<Urlaubstermin> urlaubstermine) {
+    this.githubId = new GithubId(githubId);
     this.handle = new GithubHandle(handle);
     this.klausurReferenzen = klausurReferenzen.stream()
         .map(KlausurReferenz::new)
@@ -206,6 +210,10 @@ public class Student {
     return List.copyOf(urlaubstermine);
   }
 
+  public Long getGithubId() {
+    return githubId.id();
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -215,11 +223,11 @@ public class Student {
       return false;
     }
     Student student = (Student) o;
-    return handle.equals(student.handle);
+    return githubId.equals(student.githubId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(handle);
+    return Objects.hash(githubId);
   }
 }

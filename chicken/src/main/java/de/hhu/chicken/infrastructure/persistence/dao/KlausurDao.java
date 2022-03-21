@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.repository.CrudRepository;
 
-public interface KlausurDao extends CrudRepository<KlausurDto, UUID> {
+public interface KlausurDao extends CrudRepository<KlausurDto, Long> {
 
   List<KlausurDto> findAll();
 

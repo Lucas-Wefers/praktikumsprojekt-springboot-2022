@@ -1,7 +1,6 @@
 package de.hhu.chicken.infrastructure.persistence.dto;
 
 import de.hhu.chicken.domain.student.Urlaubstermin;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.data.annotation.Id;
@@ -11,11 +10,12 @@ import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table("student")
-public class StudentDto implements Persistable<String> {
+public class StudentDto implements Persistable<Long> {
 
   @Id
-  private final String handle;
+  private final Long githubId;
 
+  private String handle;
   private final List<Long> klausurReferenzen;
   private final List<Urlaubstermin> urlaubstermine;
 
@@ -23,16 +23,19 @@ public class StudentDto implements Persistable<String> {
   private final boolean isNew;
 
   @PersistenceConstructor
-  public StudentDto(String handle, List<Long> klausurReferenzen,
-      List<Urlaubstermin> urlaubstermine) {
+  public StudentDto(Long githubId, String handle, List<Long> klausurReferenzen,
+                    List<Urlaubstermin> urlaubstermine) {
+    this.githubId = githubId;
     this.handle = handle;
     this.klausurReferenzen = List.copyOf(klausurReferenzen);
     this.urlaubstermine = List.copyOf(urlaubstermine);
     this.isNew = true;
   }
 
-  public StudentDto(boolean isNew, String handle, List<Long> klausurReferenzen,
-      List<Urlaubstermin> urlaubstermine) {
+  public StudentDto(Long githubId, boolean isNew, String handle,
+                    List<Long> klausurReferenzen,
+                    List<Urlaubstermin> urlaubstermine) {
+    this.githubId = githubId;
     this.handle = handle;
     this.klausurReferenzen = List.copyOf(klausurReferenzen);
     this.urlaubstermine = List.copyOf(urlaubstermine);
@@ -51,14 +54,8 @@ public class StudentDto implements Persistable<String> {
     return List.copyOf(urlaubstermine);
   }
 
-  @Override
-  public String getId() {
-    return handle;
-  }
-
-  @Override
-  public boolean isNew() {
-    return isNew;
+  public Long getGithubId() {
+    return githubId;
   }
 
   @Override
@@ -70,11 +67,21 @@ public class StudentDto implements Persistable<String> {
       return false;
     }
     StudentDto that = (StudentDto) o;
-    return handle.equals(that.handle);
+    return githubId.equals(that.githubId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(handle);
+    return Objects.hash(githubId);
+  }
+
+  @Override
+  public Long getId() {
+    return githubId;
+  }
+
+  @Override
+  public boolean isNew() {
+    return isNew;
   }
 }

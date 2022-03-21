@@ -13,7 +13,7 @@ public class StudentBerechneResturlaubTest {
   @Test
   @DisplayName("Resturlaub ohne Urlaube betraegt 240min")
   void test_1() {
-    Student student = new Student("jensbendisposto");
+    Student student = new Student(14529531L, "jensbendisposto");
 
     int resturlaub = student.berechneResturlaub();
 
@@ -23,7 +23,7 @@ public class StudentBerechneResturlaubTest {
   @Test
   @DisplayName("Resturlaub mit einer Urlaubslaenge von 30min betraegt 210min")
   void test_2() {
-    Student student = new Student("jensbendisposto");
+    Student student = new Student(14529531L, "jensbendisposto");
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(10,30,11,0);
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
 

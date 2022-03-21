@@ -1,26 +1,25 @@
-drop table if exists student, student_klausur, urlaubstermine;
+drop table if exists student, klausurreferenz, urlaubstermine;
 
-create table urlaubstermine
+create table urlaubstermin
 (
     datum   date         not null,
     von     time         not null,
     bis     time         not null,
-    student varchar(255) not null
+    student varchar(255) not null,
+    student_key integer
 );
 
 create table student
 (
+    github_id BIGINT not null,
     handle varchar(255) not null,
     constraint student_pk
-        primary key (handle)
+        primary key (github_id)
 );
 
-create table student_klausur
+create table klausurreferenz
 (
-    student varchar(255) not null,
-    klausur BIGINT       not null,
-    primary key (student, klausur),
-    constraint `fk_klausur_student`
-        FOREIGN KEY (student) REFERENCES student (handle),
-        FOREIGN KEY (klausur) REFERENCES klausur (id)
+    student_key integer,
+    student BIGINT not null,
+    id      BIGINT       not null
 );

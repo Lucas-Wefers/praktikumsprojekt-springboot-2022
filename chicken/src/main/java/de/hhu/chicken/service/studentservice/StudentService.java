@@ -19,23 +19,23 @@ public class StudentService {
     this.klausurRepository = klausurRepository;
   }
 
-  public void klausurAnmelden(String handle, Long id) {
-    Student student = studentRepository.findStudentByHandle(handle);
+  public void klausurAnmelden(Long githubId, String handle, Long klausurId) {
+    Student student = studentRepository.findStudentByGithubId(githubId);
     if (student == null) {
-      student = new Student(handle);
+      student = new Student(githubId, handle);
     }
-    Klausur klausur = klausurRepository.findKlausurById(id);
-    student.fuegeKlausurHinzu(id,
+    Klausur klausur = klausurRepository.findKlausurById(klausurId);
+    student.fuegeKlausurHinzu(klausurId,
         klausur.getDatum(),
         klausur.berechneFreistellungsStartzeitpunkt(),
         klausur.berechneFreistellungsEndzeitpunkt());
     studentRepository.studentSpeichern(student);
   }
 
-  public void urlaubsterminAnmelden(String handle, LocalDate datum, LocalTime von, LocalTime bis) {
-    Student student = studentRepository.findStudentByHandle(handle);
+  public void urlaubsterminAnmelden(Long githubId, String handle, LocalDate datum, LocalTime von, LocalTime bis) {
+    Student student = studentRepository.findStudentByGithubId(githubId);
     if (student == null) {
-      student = new Student(handle);
+      student = new Student(githubId, handle);
     }
     List<Long> klausurReferenzen = student.getKlausurReferenzen();
     List<Klausur> klausurenAmGleichenTag = klausurReferenzen.stream()
@@ -62,25 +62,25 @@ public class StudentService {
     studentRepository.studentSpeichern(student);
   }
 
-  public void klausurStornieren(String handle, Long id) {
-    Student student = studentRepository.findStudentByHandle(handle);
-    student.storniereKlausur(id);
+  public void klausurStornieren(Long githubId, Long klausurId) {
+    Student student = studentRepository.findStudentByGithubId(githubId);
+    student.storniereKlausur(klausurId);
     studentRepository.studentSpeichern(student);
   }
 
-  public void urlaubsterminStornieren(String handle, LocalDate datum, LocalTime von,
+  public void urlaubsterminStornieren(Long githubId, LocalDate datum, LocalTime von,
                                       LocalTime bis) {
-    Student student = studentRepository.findStudentByHandle(handle);
+    Student student = studentRepository.findStudentByGithubId(githubId);
     student.storniereUrlaub(datum, von, bis);
     studentRepository.studentSpeichern(student);
   }
 
-  public Student findStudentByHandle(String handle) {
-    return studentRepository.findStudentByHandle(handle);
+  public Student findStudentByGithubId(Long githubId) {
+    return studentRepository.findStudentByGithubId(githubId);
   }
 
-  public List<Klausur> alleAngemeldetenKlausuren(String handle) {
-    Student student = studentRepository.findStudentByHandle(handle);
+  public List<Klausur> alleAngemeldetenKlausuren(Long githubId) {
+    Student student = studentRepository.findStudentByGithubId(githubId);
     if (student == null) {
       return List.of();
     }

@@ -23,12 +23,13 @@ import org.junit.jupiter.api.Test;
 
 public class StudentServiceTest {
 
-  // ---------------- arrange -------------------------------
+  // ------------------------------- arrange -------------------------------
   private final StudentRepository studentRepository = mock(StudentRepository.class);
   private final KlausurRepository klausurRepository = mock(KlausurRepository.class);
   private final StudentService studentService =
       new StudentService(studentRepository, klausurRepository);
   private static final String handle = "jens";
+  private final Long githubId = 14529531L;
 
   private void assertThatUrlaubstermineSindGleich(Urlaubstermin urlaubstermin, int klausurTag,
                                                   int hVon,
@@ -46,7 +47,8 @@ public class StudentServiceTest {
   }
 
   private void urlaubsterminAnmelden(int klausurTag, int hVon, int minVon, int hBis, int minBis) {
-    studentService.urlaubsterminAnmelden(handle,
+    studentService.urlaubsterminAnmelden(githubId,
+        handle,
         LocalDate.of(2022, 3, klausurTag),
         LocalTime.of(hVon, minVon),
         LocalTime.of(hBis, minBis));
@@ -56,33 +58,33 @@ public class StudentServiceTest {
   @DisplayName("Beim Anmelden zu einer Klausur eines nicht vorhandenen Studenten, "
       + "wird dieser angelegt und gespeichert")
   void test_1() {
-    when(studentRepository.findStudentByHandle(handle)).thenReturn(null);
+    when(studentRepository.findStudentByGithubId(githubId)).thenReturn(null);
     when(klausurRepository.findKlausurById(1L)).thenReturn(beispielklausur());
 
-    studentService.klausurAnmelden(handle, 1L);
+    studentService.klausurAnmelden(githubId, handle, 1L);
 
-    verify(studentRepository).studentSpeichern(new Student(handle));
+    verify(studentRepository).studentSpeichern(new Student(githubId, handle));
   }
 
   @Test
   @DisplayName("Beim Anmelden zu einer Klausur eines vorhandenen Studenten, "
       + "wird dieser zu der Klausur angemeldet und gespeichert")
   void test_2() {
-    Student student = new Student(handle);
-    when(studentRepository.findStudentByHandle(handle)).thenReturn(student);
+    Student student = new Student(githubId, handle);
+    when(studentRepository.findStudentByGithubId(githubId)).thenReturn(student);
     when(klausurRepository.findKlausurById(1L)).thenReturn(beispielklausur());
 
-    studentService.klausurAnmelden(handle, 1L);
+    studentService.klausurAnmelden(githubId, handle, 1L);
 
     verify(studentRepository).studentSpeichern(student);
     assertThat(student.getKlausurReferenzen()).contains(1L);
   }
 
   @Test
-  @DisplayName("Bei einem Tag ohne Klausuren wird der Urlaub angelegt")
+  @DisplayName("An einem Tag ohne Klausuren wird der Urlaub angelegt")
   void test_3() {
-    Student student = new Student(handle);
-    when(studentRepository.findStudentByHandle(handle)).thenReturn(student);
+    Student student = new Student(githubId, handle);
+    when(studentRepository.findStudentByGithubId(githubId)).thenReturn(student);
 
     urlaubsterminAnmelden(15, 9, 30, 13, 30);
 
@@ -96,10 +98,10 @@ public class StudentServiceTest {
   @DisplayName("Ein Urlaub der innerhalb eines Klausurfreistellungszeitraums angelegt wird, "
       + "wird ignoriert")
   void test_4() {
-    Student student = new Student(handle);
+    Student student = new Student(githubId, handle);
     Klausur klausur = beispielklausur2();
     fuegeKlausurHinzu(student, klausur);
-    when(studentRepository.findStudentByHandle(handle)).thenReturn(student);
+    when(studentRepository.findStudentByGithubId(githubId)).thenReturn(student);
     when(klausurRepository.findKlausurById(1L)).thenReturn(klausur);
 
     urlaubsterminAnmelden(17, 10, 45, 11, 15);
@@ -112,10 +114,10 @@ public class StudentServiceTest {
   @DisplayName("Ein Urlaub der den Klausurfreistellungszeitraum rechts schneidet, wird angepasst "
       + "und angelegt")
   void test_5() {
-    Student student = new Student(handle);
+    Student student = new Student(githubId, handle);
     Klausur klausur = beispielklausur2();
     fuegeKlausurHinzu(student, klausur);
-    when(studentRepository.findStudentByHandle(handle)).thenReturn(student);
+    when(studentRepository.findStudentByGithubId(githubId)).thenReturn(student);
     when(klausurRepository.findKlausurById(1L)).thenReturn(klausur);
 
     urlaubsterminAnmelden(17, 11, 0, 13, 30);
@@ -130,10 +132,10 @@ public class StudentServiceTest {
   @DisplayName("Ein Urlaub der den Klausurfreistellungszeitraum links schneidet, wird angepasst "
       + "und angelegt")
   void test_6() {
-    Student student = new Student(handle);
+    Student student = new Student(githubId, handle);
     Klausur klausur = beispielklausur2();
     fuegeKlausurHinzu(student, klausur);
-    when(studentRepository.findStudentByHandle(handle)).thenReturn(student);
+    when(studentRepository.findStudentByGithubId(githubId)).thenReturn(student);
     when(klausurRepository.findKlausurById(1L)).thenReturn(klausur);
 
     urlaubsterminAnmelden(17, 9, 30, 11, 30);
@@ -148,10 +150,10 @@ public class StudentServiceTest {
   @DisplayName("Ein Urlaub der den Klausurfreistellungszeitraum beidseitig schneidet, wird "
       + "angepasst und angelegt")
   void test_7() {
-    Student student = new Student(handle);
+    Student student = new Student(githubId, handle);
     Klausur klausur = beispielklausur2();
     fuegeKlausurHinzu(student, klausur);
-    when(studentRepository.findStudentByHandle(handle)).thenReturn(student);
+    when(studentRepository.findStudentByGithubId(githubId)).thenReturn(student);
     when(klausurRepository.findKlausurById(1L)).thenReturn(klausur);
 
     urlaubsterminAnmelden(17, 9, 30, 13, 30);
@@ -168,12 +170,12 @@ public class StudentServiceTest {
   @DisplayName("Bei zwei Klausuren an einem Tag, wird ein ganztaegiger Urlaub entsprechend "
       + "modifiziert")
   void test_8() {
-    Student student = new Student(handle);
+    Student student = new Student(githubId, handle);
     Klausur klausur = beispielklausur2();
     Klausur klausur2 = beispielklausur3();
     fuegeKlausurHinzu(student, klausur);
     fuegeKlausurHinzu(student, klausur2);
-    when(studentRepository.findStudentByHandle(handle)).thenReturn(student);
+    when(studentRepository.findStudentByGithubId(githubId)).thenReturn(student);
     when(klausurRepository.findKlausurById(1L)).thenReturn(klausur);
     when(klausurRepository.findKlausurById(2L)).thenReturn(klausur2);
 
@@ -192,23 +194,23 @@ public class StudentServiceTest {
   @DisplayName("Beim Anmelden eines Urlaubs eines nicht vorhandenen Studenten, "
       + "wird dieser angelegt und gespeichert")
   void test_9() {
-    when(studentRepository.findStudentByHandle(handle)).thenReturn(null);
+    when(studentRepository.findStudentByGithubId(githubId)).thenReturn(null);
 
     urlaubsterminAnmelden(15, 10, 30, 11, 30);
 
-    verify(studentRepository).studentSpeichern(new Student(handle));
+    verify(studentRepository).studentSpeichern(new Student(githubId, handle));
   }
 
   @Test
   @DisplayName("Ein Student wird geladen und eine Klausur wird nach Id geloescht und der Student "
       + "wird wieder gespeichert")
   void test_10() {
-    Student student = new Student(handle);
-    when(studentRepository.findStudentByHandle(handle)).thenReturn(student);
+    Student student = new Student(githubId, handle);
+    when(studentRepository.findStudentByGithubId(githubId)).thenReturn(student);
     when(klausurRepository.findKlausurById(1L)).thenReturn(beispielklausur());
-    studentService.klausurAnmelden(handle, 1L);
+    studentService.klausurAnmelden(githubId, handle, 1L);
 
-    studentService.klausurStornieren(handle, 1L);
+    studentService.klausurStornieren(githubId, 1L);
 
     verify(studentRepository, times(2)).studentSpeichern(student);
     assertThat(student.getKlausurReferenzen()).isEmpty();
@@ -218,11 +220,11 @@ public class StudentServiceTest {
   @DisplayName("Ein Student wird geladen und ein Urlaub wird geloescht und der Student "
       + "wird wieder gespeichert")
   void test_11() {
-    Student student = new Student(handle);
-    when(studentRepository.findStudentByHandle(handle)).thenReturn(student);
+    Student student = new Student(githubId, handle);
+    when(studentRepository.findStudentByGithubId(githubId)).thenReturn(student);
     urlaubsterminAnmelden(17, 9, 30, 13, 30);
 
-    studentService.urlaubsterminStornieren(handle,
+    studentService.urlaubsterminStornieren(githubId,
         LocalDate.of(2022, 3, 17),
         LocalTime.of(9, 30),
         LocalTime.of(13, 30));
@@ -234,9 +236,9 @@ public class StudentServiceTest {
   @Test
   @DisplayName("Der Service ruft das Repository auf und laedt einen Studenten nach Id")
   void test_12() {
-    studentService.findStudentByHandle(handle);
+    studentService.findStudentByGithubId(githubId);
 
-    verify(studentRepository).findStudentByHandle(handle);
+    verify(studentRepository).findStudentByGithubId(githubId);
   }
 
   @Test
@@ -245,13 +247,13 @@ public class StudentServiceTest {
   void test_13() {
     when(klausurRepository.findKlausurById(1L)).thenReturn(beispielklausur());
     when(klausurRepository.findKlausurById(2L)).thenReturn(beispielklausur3());
-    when(studentRepository.findStudentByHandle(handle)).thenReturn(new Student(handle));
-    studentService.klausurAnmelden(handle, 1L);
-    studentService.klausurAnmelden(handle, 2L);
+    when(studentRepository.findStudentByGithubId(githubId)).thenReturn(new Student(githubId, handle));
+    studentService.klausurAnmelden(githubId, handle, 1L);
+    studentService.klausurAnmelden(githubId, handle, 2L);
 
-    List<Klausur> klausuren = studentService.alleAngemeldetenKlausuren(handle);
+    List<Klausur> klausuren = studentService.alleAngemeldetenKlausuren(githubId);
 
-    verify(studentRepository, times(3)).findStudentByHandle(handle);
+    verify(studentRepository, times(3)).findStudentByGithubId(githubId);
     verify(klausurRepository, times(4)).findKlausurById(any());
     assertThat(klausuren).hasSize(2);
     assertThat(klausuren).contains(beispielklausur(), beispielklausur3());
@@ -260,9 +262,9 @@ public class StudentServiceTest {
   @Test
   @DisplayName("Ein nicht existierender Student hat keine Klausuren")
   void test_14() {
-    when(studentRepository.findStudentByHandle(handle)).thenReturn(null);
+    when(studentRepository.findStudentByGithubId(githubId)).thenReturn(null);
 
-    List<Klausur> klausuren = studentService.alleAngemeldetenKlausuren(handle);
+    List<Klausur> klausuren = studentService.alleAngemeldetenKlausuren(githubId);
 
     assertThat(klausuren).isEmpty();
   }

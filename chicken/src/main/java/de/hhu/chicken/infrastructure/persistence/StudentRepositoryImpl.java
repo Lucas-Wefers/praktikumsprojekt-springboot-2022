@@ -14,19 +14,19 @@ public class StudentRepositoryImpl implements StudentRepository {
   }
 
   private Student studentDtoToStudent(StudentDto studentDto) {
-    return new Student(studentDto.getHandle(),
+    return new Student(studentDto.getGithubId(), studentDto.getHandle(),
         studentDto.getKlausurReferenzen(),
         studentDto.getUrlaubstermine());
   }
 
   private StudentDto studentToStudentDto(Student student) {
-    return new StudentDto(student.getHandle(),
+    return new StudentDto(student.getGithubId(), student.getHandle(),
         student.getKlausurReferenzen(),
         student.getUrlaubstermine());
   }
 
   private StudentDto updateStudentToStudentDto(Student student) {
-    return new StudentDto(false,
+    return new StudentDto(student.getGithubId(), false,
         student.getHandle(),
         student.getKlausurReferenzen(),
         student.getUrlaubstermine());
@@ -34,7 +34,7 @@ public class StudentRepositoryImpl implements StudentRepository {
 
   @Override
   public void studentSpeichern(Student student) {
-    if (studentDao.existsById(student.getHandle())) {
+    if (studentDao.existsById(student.getGithubId())) {
       studentDao.save(updateStudentToStudentDto(student));
       return;
     }
@@ -42,8 +42,8 @@ public class StudentRepositoryImpl implements StudentRepository {
   }
 
   @Override
-  public Student findStudentByHandle(String handle) {
-    StudentDto studentDto = studentDao.findById(handle).orElse(null);
+  public Student findStudentByGithubId(Long githubId) {
+    StudentDto studentDto = studentDao.findById(githubId).orElse(null);
     if (studentDto == null) {
       return null;
     }

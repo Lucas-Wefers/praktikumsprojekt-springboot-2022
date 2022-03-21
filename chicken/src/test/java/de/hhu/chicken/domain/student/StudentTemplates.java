@@ -20,7 +20,7 @@ public class StudentTemplates {
   }
 
   static Student studentMitMehrerenUrlaubsterminen() {
-    Student student = new Student("jensbendisposto");
+    Student student = new Student(14529531L, "jensbendisposto");
 
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 10, 30);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(11, 0, 12, 0);
@@ -34,7 +34,7 @@ public class StudentTemplates {
   }
 
   static Student studentMitEinemUrlaubstermin(int hVon, int minVon, int hBis, int minBis) {
-    Student student = new Student("jensbendisposto");
+    Student student = new Student(14529531L, "jensbendisposto");
 
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(hVon, minVon, hBis, minBis);
 

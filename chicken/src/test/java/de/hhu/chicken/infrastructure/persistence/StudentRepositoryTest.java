@@ -20,8 +20,8 @@ public class StudentRepositoryTest {
   @DisplayName("Beim Speichern eines vorhandenen Studenten wird die save Methode im Dao aufgerufen")
   void test_1() {
     String handle = "jensbendisposto";
-    Student student = new Student(handle);
-    StudentDto studentDto = new StudentDto(handle, List.of(), List.of());
+    Student student = new Student(14529531L, handle);
+    StudentDto studentDto = new StudentDto(14529531L, handle, List.of(), List.of());
     StudentDao studentDao = mock(StudentDao.class);
     StudentRepository repo = new StudentRepositoryImpl(studentDao);
 
@@ -31,33 +31,32 @@ public class StudentRepositoryTest {
   }
 
   @Test
-  @DisplayName("Beim Suchen eines Studenten mit nicht vorhandenem Handle wird null "
+  @DisplayName("Beim Suchen eines Studenten mit nicht vorhandener Github-Id wird null "
       + "zurueckgegeben")
   void test_2() {
-    String handle = "jensbendisposto";
     StudentDao studentDao = mock(StudentDao.class);
     StudentRepository repo = new StudentRepositoryImpl(studentDao);
 
-    Student student = repo.findStudentByHandle(handle);
+    Student student = repo.findStudentByGithubId(14529531L);
 
-    verify(studentDao).findById(handle);
+    verify(studentDao).findById(14529531L);
     assertThat(student).isNull();
   }
 
   @Test
-  @DisplayName("Beim Suchen eines Studenten mit vorhandenem Handle wird das Dao aufgerufen und "
+  @DisplayName("Beim Suchen eines Studenten mit vorhandener Github-Id wird das Dao aufgerufen und "
       + "dieser zurueckgegeben")
   void test_3() {
     String handle = "jensbendisposto";
-    Student student = new Student(handle);
-    StudentDto studentDto = new StudentDto(handle, List.of(), List.of());
+    Student student = new Student(14529531L, handle);
+    StudentDto studentDto = new StudentDto(14529531L, handle, List.of(), List.of());
     StudentDao studentDao = mock(StudentDao.class);
     StudentRepository repo = new StudentRepositoryImpl(studentDao);
-    when(studentDao.findById(handle)).thenReturn(Optional.of(studentDto));
+    when(studentDao.findById(14529531L)).thenReturn(Optional.of(studentDto));
 
-    Student studentByHandle = repo.findStudentByHandle(handle);
+    Student studentByHandle = repo.findStudentByGithubId(14529531L);
 
-    verify(studentDao).findById(handle);
+    verify(studentDao).findById(14529531L);
     assertThat(studentByHandle).isEqualTo(student);
   }
 }

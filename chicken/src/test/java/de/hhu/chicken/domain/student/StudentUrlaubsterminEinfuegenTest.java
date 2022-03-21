@@ -15,7 +15,7 @@ public class StudentUrlaubsterminEinfuegenTest {
   @DisplayName("Ein Urlaubsblock von 4 Stunden wird hinzugefuegt")
   void test_1() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 13, 30);
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
 
@@ -28,7 +28,7 @@ public class StudentUrlaubsterminEinfuegenTest {
   void test_2() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 11, 30);
 
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
 
@@ -41,7 +41,7 @@ public class StudentUrlaubsterminEinfuegenTest {
   void test_3() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(10, 30, 13, 30);
 
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
 
@@ -54,7 +54,7 @@ public class StudentUrlaubsterminEinfuegenTest {
   void test_4() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 10, 30);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(12, 30, 13, 30);
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
@@ -70,7 +70,7 @@ public class StudentUrlaubsterminEinfuegenTest {
   void test_5() {
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(9, 30, 10, 30);
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(12, 30, 13, 30);
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
@@ -85,7 +85,7 @@ public class StudentUrlaubsterminEinfuegenTest {
   void test_6() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 11, 30);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(12, 30, 13, 30);
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
@@ -99,7 +99,7 @@ public class StudentUrlaubsterminEinfuegenTest {
   void test_7() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 10, 30);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(11, 30, 13, 30);
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
@@ -113,7 +113,7 @@ public class StudentUrlaubsterminEinfuegenTest {
   void test_8() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 10, 30);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(11, 30, 12, 30);
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
@@ -127,7 +127,7 @@ public class StudentUrlaubsterminEinfuegenTest {
   void test_9() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(10, 30, 11, 30);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(11, 30, 13, 30);
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
@@ -141,7 +141,7 @@ public class StudentUrlaubsterminEinfuegenTest {
   void test_10() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(10, 30, 11, 30);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(12, 0, 13, 0);
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
@@ -157,7 +157,7 @@ public class StudentUrlaubsterminEinfuegenTest {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 10, 0);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(13, 0, 13, 30);
     Urlaubstermin urlaubstermin3 = urlaubsterminTemplate(11, 0, 11, 30);
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
@@ -175,7 +175,7 @@ public class StudentUrlaubsterminEinfuegenTest {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(10, 30, 11, 0);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(12, 0, 12, 30);
     Urlaubstermin urlaubstermin3 = urlaubsterminTemplate(9, 0, 9, 30);
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, true);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, true);
@@ -195,7 +195,7 @@ public class StudentUrlaubsterminEinfuegenTest {
         LocalDate.of(2022, 2, 16),
         LocalTime.of(9, 30),
         LocalTime.of(13, 30));
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, true);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, true);
@@ -210,7 +210,7 @@ public class StudentUrlaubsterminEinfuegenTest {
   void test_14() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 10, 30);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(10, 30, 11, 30);
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
@@ -226,7 +226,7 @@ public class StudentUrlaubsterminEinfuegenTest {
   void test_15() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 10, 30);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(8, 30, 9, 30);
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
@@ -242,7 +242,7 @@ public class StudentUrlaubsterminEinfuegenTest {
   void test_16() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 10, 30);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(10, 0, 11, 0);
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
@@ -258,7 +258,7 @@ public class StudentUrlaubsterminEinfuegenTest {
   void test_17() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(10, 0, 11, 0);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(9, 30, 10, 30);
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, false);
@@ -275,7 +275,7 @@ public class StudentUrlaubsterminEinfuegenTest {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(10, 0, 11, 0);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(11, 0, 12, 30);
     Urlaubstermin urlaubstermin3 = urlaubsterminTemplate(12, 0, 13, 0);
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, true);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, true);
@@ -295,7 +295,7 @@ public class StudentUrlaubsterminEinfuegenTest {
     Urlaubstermin urlaubstermin3 = urlaubsterminTemplate(12, 0, 13, 0);
     Urlaubstermin urlaubstermin4 = urlaubsterminTemplate(9, 30, 13, 30);
 
-    Student student = new Student("Jens");
+    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, true);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, true);
