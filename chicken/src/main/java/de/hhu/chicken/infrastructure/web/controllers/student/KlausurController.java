@@ -4,8 +4,11 @@ import de.hhu.chicken.domain.klausur.Klausur;
 import de.hhu.chicken.infrastructure.web.forms.KlausurForm;
 import de.hhu.chicken.infrastructure.web.stereotypes.StudentOnly;
 import de.hhu.chicken.service.klausurservice.KlausurService;
+import de.hhu.chicken.service.studentservice.StudentService;
 import java.util.List;
 import javax.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,9 +20,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class KlausurController {
 
   private final KlausurService klausurService;
+  private final StudentService studentService;
 
-  public KlausurController(KlausurService klausurService) {
+  public KlausurController(KlausurService klausurService,
+                           StudentService studentService) {
     this.klausurService = klausurService;
+    this.studentService = studentService;
   }
 
   @GetMapping("/klausuren")
@@ -41,5 +47,22 @@ public class KlausurController {
     List<Klausur> klausuren = klausurService.alleKlausuren();
     model.addAttribute("klausuren", klausuren);
     return "klausurAnmeldung";
+  }
+
+  @PostMapping("/klausuranmeldung")
+  public String anmelden(@AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal,
+                         Long klausurId) {
+
+    if (klausurId == null
+        || klausurService.findKlausurById(klausurId) == null) {
+      return "redirect:/klausuranmeldung";
+    }
+
+    Long githubId = ((Integer) principal.getAttributes().get("id")).longValue();
+    String handle = (String) principal.getAttributes().get("login");
+
+    studentService.klausurAnmelden(githubId, handle, klausurId);
+
+    return "redirect:/";
   }
 }

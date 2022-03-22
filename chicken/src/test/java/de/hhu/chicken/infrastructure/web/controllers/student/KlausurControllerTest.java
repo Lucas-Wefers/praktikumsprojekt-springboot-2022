@@ -1,12 +1,16 @@
 package de.hhu.chicken.infrastructure.web.controllers.student;
 
+import static de.hhu.chicken.infrastructure.web.configuration.AuthenticationTemplates.studentSession;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import de.hhu.chicken.domain.klausur.Klausur;
 import de.hhu.chicken.service.klausurservice.KlausurService;
@@ -17,16 +21,12 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
 @WebMvcTest
-@AutoConfigureMockMvc(addFilters = false)
 public class KlausurControllerTest {
 
   @Autowired
@@ -38,11 +38,14 @@ public class KlausurControllerTest {
   @MockBean
   StudentService studentService;
 
+  private static final MockHttpSession session = studentSession();
+
   @Test
   @DisplayName("Die richtige Seite fuer das Eintragen von Klausuren wird aufgerufen und ist "
       + "erreichbar")
   void test_1() throws Exception {
-    mvc.perform(get("/klausuren"))
+    mvc.perform(get("/klausuren")
+            .session(session))
         .andExpect(status().isOk())
         .andExpect(view().name("klausurEintragung"));
   }
@@ -52,12 +55,14 @@ public class KlausurControllerTest {
       + "kein redirect")
   void test_2() throws Exception {
     mvc.perform(post("/klausuren")
+            .session(session)
             .param("fach", "Programmierung")
             .param("datum", "2022-03-19")
             .param("von", "08:30")
             .param("bis", "10:30")
             .param("isPraesenz", "true")
             .param("veranstaltungsId", "12")
+            .with(csrf())
         )
         .andExpect(status().isOk())
         .andExpect(view().name("klausurEintragung"));
@@ -77,12 +82,14 @@ public class KlausurControllerTest {
         1234L);
 
     mvc.perform(post("/klausuren")
+            .session(session)
             .param("fach", "Programmierung")
             .param("datum", "2022-03-18")
             .param("von", "08:30")
             .param("bis", "10:30")
             .param("isPraesenz", "true")
             .param("veranstaltungsId", "1234")
+            .with(csrf())
         )
         .andExpect(status().isOk())
         .andExpect(view().name("klausurErfolg"));
@@ -110,9 +117,57 @@ public class KlausurControllerTest {
     List<Klausur> klausuren = List.of(klausur1, klausur2);
     when(klausurService.alleKlausuren()).thenReturn(klausuren);
 
-    mvc.perform(get("/klausuranmeldung"))
+    mvc.perform(get("/klausuranmeldung")
+            .session(session))
         .andExpect(status().isOk())
         .andExpect(view().name("klausurAnmeldung"))
         .andExpect(model().attribute("klausuren", klausuren));
   }
+
+  @Test
+  @DisplayName("Ein Student kann sich zu einer existierenden Klausur anmelden und der"
+      + " Service wird aufgerufen")
+  void test_5() throws Exception {
+    Klausur klausur = new Klausur(1L,
+        "Programmierung",
+        LocalDate.of(2022, 3, 19),
+        LocalTime.of(8, 30),
+        LocalTime.of(10, 30),
+        true,
+        1234L);
+    when(klausurService.findKlausurById(1L)).thenReturn(klausur);
+
+    mvc.perform(post("/klausuranmeldung")
+            .param("klausurId", "1")
+            .session(session)
+            .with(csrf()))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(view().name("redirect:/"));
+    verify(studentService).klausurAnmelden(28324332L, "christianmeter", 1L);
+  }
+
+  @Test
+  @DisplayName("Ein Student kann sich nicht zu einer ungueltigen Klausur anmelden und der"
+      + " Service wird nicht aufgerufen")
+  void test_6() throws Exception {
+    mvc.perform(post("/klausuranmeldung")
+            .param("klausurId", "42")
+            .session(session)
+            .with(csrf()))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(view().name("redirect:/klausuranmeldung"));
+    verify(studentService, times(0))
+        .klausurAnmelden(28324332L, "christianmeter", 42L);
+  }
+
+  @Test
+  @DisplayName("Wenn keine klausurId uebergeben wird, passiert nichts")
+  void test_7() throws Exception {
+    mvc.perform(post("/klausuranmeldung")
+            .session(session)
+            .with(csrf()))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(view().name("redirect:/klausuranmeldung"));
+  }
+
 }

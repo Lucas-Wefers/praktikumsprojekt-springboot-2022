@@ -19,7 +19,7 @@ public class Urlaubstermin {
     this.bis = bis;
   }
 
-  Duration dauer() {
+  public Duration dauer() {
     return Duration.between(von, bis);
   }
 
