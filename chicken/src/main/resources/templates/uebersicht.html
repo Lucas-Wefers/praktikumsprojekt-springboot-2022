@@ -29,11 +29,11 @@
             <td th:text="${urlaub.getBis()}"></td>
             <td th:text="${urlaub.dauer().toMinutes()}"></td>
             <td>
-                <form method="post" th:action="@{/urlaubstornieren}" th:if="${urlaub.isStornierbar(heute)}">
+                <form method="post" th:action="@{/urlaubstornieren}" th:if="${student.isUrlaubsterminStornierbar(urlaub.getDatum(), heute)}">
                     <input type="hidden" th:value="${urlaub.getDatum()}" name="datum">
                     <input type="hidden" th:value="${urlaub.getVon()}" name="von">
                     <input type="hidden" th:value="${urlaub.getBis()}" name="bis">
-                    <button class="btn btn-primary" type="submit">Stornieren</button>
+                    <button class="btn btn-danger" type="submit">Stornieren</button>
                 </form>
             </td>
         </tr>
@@ -83,7 +83,7 @@
             <td>
                 <form method="post" th:action="@{/klausurstornieren}" th:if="${klausur.isStornierbar(heute)}">
                     <input type="hidden" th:value="${klausur.getId()}" name="klausurId">
-                    <button class="btn btn-primary" type="submit">Stornieren</button>
+                    <button class="btn btn-danger" type="submit">Stornieren</button>
                 </form>
             </td>
         </tr>

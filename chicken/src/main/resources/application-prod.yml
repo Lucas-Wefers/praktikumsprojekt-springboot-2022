@@ -1,0 +1,39 @@
+spring:
+  flyway:
+    schemas: chicken
+    create-schemas: true
+    url: jdbc:mariadb://db:3306/
+    user: root
+    password: ${mysqlpassword}
+  datasource:
+    url: jdbc:mariadb://db:3306/chicken
+    username: root
+    password: ${mysqlpassword}
+    driver-class-name: org.mariadb.jdbc.Driver
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${clientid}
+            client-secret: ${clientsecret}
+            authorization-grant-type: authorization_code
+            scope: user
+
+        provider:
+          github:
+            authorization-uri: https://github.com/login/oauth/authorize
+            token-uri: https://github.com/login/oauth/access_token
+
+gruppen:
+  organisatoren: ${organisatoren}
+  tutoren: ${tutoren}
+
+praktikumszeiten:
+  start:
+    datum: ${start}
+  ende:
+    datum: ${ende}
+
+server:
+  port: 8080

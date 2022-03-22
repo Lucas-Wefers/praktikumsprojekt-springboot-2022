@@ -1,8 +1,28 @@
 version: "3.8"
 services:
-  database:
-    image: mariadb
+  db:
+    image: mariadb:latest
     ports:
-      - "3312:3306"
+      - "3306:3306"
+    expose:
+      - 3306
     environment:
       - "MYSQL_ROOT_PASSWORD=${mysqlpassword}"
+  application:
+    build: .
+    command: sh -c "/wait && java -jar app.jar"
+    ports:
+      - "8080:8080"
+    environment:
+      - WAIT_HOSTS=db:3306
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=30
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+      - "spring_profiles_active=prod"
+      - "mysqlpassword=${mysqlpassword}"
+      - "clientid=${clientid}"
+      - "clientsecret=${clientsecret}"
+      - "start=${start}"
+      - "ende=${ende}"
+      - "organisatoren=${organisatoren}"
+      - "tutoren=${tutoren}"
