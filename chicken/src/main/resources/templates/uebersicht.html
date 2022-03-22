@@ -82,7 +82,7 @@
                     th:text="${klausur.berechneFreistellungsEndzeitpunkt()}"></span></td>
             <td>
                 <form method="post" th:action="@{/klausurstornieren}">
-                    <input type="hidden" th:value="${klausur.getId()}" name="id">
+                    <input type="hidden" th:value="${klausur.getId()}" name="klausurId">
                     <button class="btn btn-primary" type="submit">Stornieren</button>
                 </form>
             </td>

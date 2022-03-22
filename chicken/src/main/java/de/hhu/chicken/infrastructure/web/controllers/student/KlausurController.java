@@ -65,4 +65,14 @@ public class KlausurController {
 
     return "redirect:/";
   }
+
+  @PostMapping("/klausurstornieren")
+  public String klausurStornieren(@AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal,
+                                  Long klausurId) {
+    Long githubId = ((Integer) principal.getAttributes().get("id")).longValue();
+
+    studentService.klausurStornieren(githubId, klausurId);
+
+    return "redirect:/";
+  }
 }

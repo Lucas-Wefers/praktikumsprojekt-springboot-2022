@@ -170,4 +170,15 @@ public class KlausurControllerTest {
         .andExpect(view().name("redirect:/klausuranmeldung"));
   }
 
+  @Test
+  @DisplayName("Eine Klausur laesst sich stornieren und der Service wird aufgerufen")
+  void test_8() throws Exception {
+    mvc.perform(post("/klausurstornieren")
+            .param("klausurId", "1")
+            .session(session)
+            .with(csrf()))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(view().name("redirect:/"));
+    verify(studentService).klausurStornieren(28324332L,1L);
+  }
 }
