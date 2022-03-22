@@ -35,6 +35,10 @@ public class Urlaubstermin {
     return bis;
   }
 
+  public boolean isStornierbar(LocalDate heute) {
+    return heute.isBefore(datum);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {

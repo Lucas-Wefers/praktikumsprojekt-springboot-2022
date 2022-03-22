@@ -67,6 +67,10 @@ public class Klausur {
     return endzeitpunkt;
   }
 
+  public boolean isStornierbar(LocalDate heute) {
+    return heute.isBefore(datum);
+  }
+
   public Long getId() {
     return id;
   }

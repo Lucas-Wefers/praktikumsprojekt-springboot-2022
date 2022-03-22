@@ -89,6 +89,33 @@ public class KlausurTest {
     assertThat(endzeitpunkt).isEqualTo(LocalTime.of(13, 30));
   }
 
+  @Test
+  @DisplayName("Eine Klausur, die 3 Tage in der Zukunft liegt, ist stornierbar")
+  void test_9() {
+    Klausur klausur = beispielKlausur(8, 30, 14, false);
+    LocalDate heute = LocalDate.of(2022, 3, 9);
+
+    assertThat(klausur.isStornierbar(heute)).isTrue();
+  }
+
+  @Test
+  @DisplayName("Eine Klausur, die am gleichen Tag stattfindet, ist nicht stornierbar")
+  void test_10() {
+    Klausur klausur = beispielKlausur(8, 30, 14, false);
+    LocalDate heute = LocalDate.of(2022, 3, 12);
+
+    assertThat(klausur.isStornierbar(heute)).isFalse();
+  }
+
+  @Test
+  @DisplayName("Eine Klausur, die 2 Tage in der Vergangenheit liegt, ist nicht stornierbar")
+  void test_11() {
+    Klausur klausur = beispielKlausur(8, 30, 14, false);
+    LocalDate heute = LocalDate.of(2022, 3, 14);
+
+    assertThat(klausur.isStornierbar(heute)).isFalse();
+  }
+
   private Klausur beispielKlausur(int startStunde, int startMinute, int endStunde, boolean isPraesenz) {
     return new Klausur(1L,
         "Programmierung",
