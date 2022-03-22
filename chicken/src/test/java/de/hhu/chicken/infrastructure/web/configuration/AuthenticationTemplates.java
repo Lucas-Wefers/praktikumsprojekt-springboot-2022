@@ -51,6 +51,7 @@ public class AuthenticationTemplates {
     Map<String, Object> attributes = new HashMap<>();
     attributes.put("sub", name);
     attributes.put("id", 28324332);
+    attributes.put("login", "christianmeter");
     List<GrantedAuthority> authorities =
         buildAuthorities(attributes, roles);
     OAuth2User user = new DefaultOAuth2User(authorities, attributes, "sub");

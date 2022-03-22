@@ -25,4 +25,25 @@ public class UrlaubterminController {
   public String anmelden(UrlaubsterminForm urlaubsterminForm) {
     return "urlaubsterminAnmeldung";
   }
+
+  @PostMapping("/urlaubsanmeldung")
+  public String eintragen(@AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal,
+      @Valid UrlaubsterminForm urlaubstermin,
+      BindingResult bindingResult) {
+
+    if (bindingResult.hasErrors()) {
+      return "urlaubsterminAnmeldung";
+    }
+
+    Long githubId = ((Integer) principal.getAttributes().get("id")).longValue();
+    String handle = (String) principal.getAttributes().get("login");
+
+    studentService.urlaubsterminAnmelden(githubId,
+        handle,
+        urlaubstermin.getDatum(),
+        urlaubstermin.getVon(),
+        urlaubstermin.getBis());
+
+    return "redirect:/";
+  }
 }
