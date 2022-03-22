@@ -46,4 +46,17 @@ public class UrlaubterminController {
 
     return "redirect:/";
   }
+
+  @PostMapping("/urlaubstornieren")
+  public String urlaubStornieren(@AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal,
+                                 UrlaubsterminForm urlaubstermin) {
+    Long githubId = ((Integer) principal.getAttributes().get("id")).longValue();
+
+    studentService.urlaubsterminStornieren(githubId,
+        urlaubstermin.getDatum(),
+        urlaubstermin.getVon(),
+        urlaubstermin.getBis());
+
+    return "redirect:/";
+  }
 }

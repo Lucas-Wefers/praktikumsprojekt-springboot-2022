@@ -2,6 +2,7 @@ package de.hhu.chicken.infrastructure.web.controllers.student;
 
 import static de.hhu.chicken.infrastructure.web.configuration.AuthenticationTemplates.studentSession;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -67,5 +68,47 @@ public class UrlaubsterminControllerTest {
         LocalDate.of(2022, 3, 23),
         LocalTime.of(9, 30),
         LocalTime.of(13, 30));
+  }
+
+  @Test
+  @DisplayName("Ein ungueltiger Urlaubstermin wird nicht eingetragen, der  und es wird nicht " +
+      "weitergeleitet")
+  void test_3() throws Exception {
+    MockHttpSession session = studentSession();
+
+    mvc.perform(post("/urlaubsanmeldung")
+            .session(session)
+            .param("datum", "2022-03-23")
+            .param("von", "09:30")
+            .param("bis", "08:30")
+            .with(csrf())
+        )
+        .andExpect(status().isOk())
+        .andExpect(view().name("urlaubsterminAnmeldung"));
+    verify(studentService, times(0)).urlaubsterminAnmelden(28324332L,
+        "christianmeter",
+        LocalDate.of(2022, 3, 23),
+        LocalTime.of(9, 30),
+        LocalTime.of(8, 30));
+  }
+
+  @Test
+  @DisplayName("Ein Urlaubstermin ist stornierbar und der Service wird aufgerufen")
+  void test_4() throws Exception {
+    MockHttpSession session = studentSession();
+
+    mvc.perform(post("/urlaubstornieren")
+            .session(session)
+            .param("datum", "2022-03-23")
+            .param("von", "09:30")
+            .param("bis", "10:30")
+            .with(csrf())
+        )
+        .andExpect(status().is3xxRedirection())
+        .andExpect(view().name("redirect:/"));
+    verify(studentService).urlaubsterminStornieren(28324332L,
+        LocalDate.of(2022, 3, 23),
+        LocalTime.of(9, 30),
+        LocalTime.of(10, 30));
   }
 }

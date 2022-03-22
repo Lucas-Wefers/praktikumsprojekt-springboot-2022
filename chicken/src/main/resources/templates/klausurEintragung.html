@@ -26,7 +26,7 @@
       <label for="liveExam">Die Klausur findet in Präsenz statt.</label>
     </div>
     <div class="mb-3">
-      <label for="liveExam">Datum der Klausur (yyyy-mm-dd)</label>
+      <label for="dayOfExam">Datum der Klausur (yyyy-mm-dd)</label>
       <input type="date" id="dayOfExam" class="form-control" th:field="*{datum}">
       <div class="error" th:if="${#fields.hasErrors('datum')}">Geben Sie ein gültiges Datum ein!</div>
     </div>
@@ -41,11 +41,11 @@
       <div class="error" th:if="${#fields.hasErrors('bis')}">Gebe Sie eine gültige Uhrzeit ein!</div>
     </div>
     <div class="error" th:if="${#fields.hasErrors('praesenzKlausurZeitraum')}">
-      <div class="error" th:errors="{praesenzKlausurZeitraum}"></div>
+      <div class="error" th:errors="*{praesenzKlausurZeitraum}"></div>
     </div>
 
     <div class="error" th:if="${#fields.hasErrors('onlineKlausurZeitraum')}">
-      <div class="error" th:errors="{onlineKlausurZeitraum}"></div>
+      <div class="error" th:errors="*{onlineKlausurZeitraum}"></div>
     </div>
     <button class="btn btn-primary" type="submit">Eintragen</button>
   </form>
