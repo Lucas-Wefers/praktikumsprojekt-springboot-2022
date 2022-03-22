@@ -5,6 +5,7 @@ import de.hhu.chicken.infrastructure.web.forms.KlausurForm;
 import de.hhu.chicken.infrastructure.web.stereotypes.StudentOnly;
 import de.hhu.chicken.service.klausurservice.KlausurService;
 import de.hhu.chicken.service.studentservice.StudentService;
+import java.time.LocalDate;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -55,7 +56,7 @@ public class KlausurController {
 
     if (klausurId == null
         || klausurService.findKlausurById(klausurId) == null) {
-      return "redirect:/klausuranmeldung";
+      return "klausurAnmeldung";
     }
 
     Long githubId = ((Integer) principal.getAttributes().get("id")).longValue();
@@ -71,7 +72,7 @@ public class KlausurController {
                                   Long klausurId) {
     Long githubId = ((Integer) principal.getAttributes().get("id")).longValue();
 
-    studentService.klausurStornieren(githubId, klausurId);
+    studentService.klausurStornieren(githubId, klausurId, LocalDate.now());
 
     return "redirect:/";
   }

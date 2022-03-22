@@ -3,6 +3,7 @@ package de.hhu.chicken.infrastructure.web.controllers.student;
 import de.hhu.chicken.infrastructure.web.forms.UrlaubsterminForm;
 import de.hhu.chicken.infrastructure.web.stereotypes.StudentOnly;
 import de.hhu.chicken.service.studentservice.StudentService;
+import java.time.LocalDate;
 import javax.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
@@ -55,7 +56,8 @@ public class UrlaubterminController {
     studentService.urlaubsterminStornieren(githubId,
         urlaubstermin.getDatum(),
         urlaubstermin.getVon(),
-        urlaubstermin.getBis());
+        urlaubstermin.getBis(),
+        LocalDate.now());
 
     return "redirect:/";
   }

@@ -92,6 +92,10 @@ public class Student {
     }
   }
 
+  public boolean isUrlaubsterminStornierbar(LocalDate datum, LocalDate heute) {
+    return heute.isBefore(datum);
+  }
+
   public void storniereKlausur(Long klausurId) {
     klausurReferenzen.remove(new KlausurReferenz(klausurId));
   }

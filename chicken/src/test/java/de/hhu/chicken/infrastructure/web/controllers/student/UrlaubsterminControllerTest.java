@@ -24,7 +24,6 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest
-@AutoConfigureMockMvc(addFilters = true)
 public class UrlaubsterminControllerTest {
 
   @Autowired
@@ -109,6 +108,7 @@ public class UrlaubsterminControllerTest {
     verify(studentService).urlaubsterminStornieren(28324332L,
         LocalDate.of(2022, 3, 23),
         LocalTime.of(9, 30),
-        LocalTime.of(10, 30));
+        LocalTime.of(10, 30),
+        LocalDate.now());
   }
 }

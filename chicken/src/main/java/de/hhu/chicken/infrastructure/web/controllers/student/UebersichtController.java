@@ -4,6 +4,7 @@ import de.hhu.chicken.domain.klausur.Klausur;
 import de.hhu.chicken.domain.student.Student;
 import de.hhu.chicken.infrastructure.web.stereotypes.StudentOnly;
 import de.hhu.chicken.service.studentservice.StudentService;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
@@ -29,6 +30,7 @@ public class UebersichtController {
     Student student = studentService.findStudentByGithubId(githubId);
     List<Klausur> klausuren = studentService.alleAngemeldetenKlausuren(githubId);
 
+    model.addAttribute("heute", LocalDate.now());
     model.addAttribute("student", student);
     model.addAttribute("klausuren", klausuren);
 

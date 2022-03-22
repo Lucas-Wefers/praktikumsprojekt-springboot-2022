@@ -64,17 +64,22 @@ public class StudentService {
     studentRepository.studentSpeichern(student);
   }
 
-  public void klausurStornieren(Long githubId, Long klausurId) {
+  public void klausurStornieren(Long githubId, Long klausurId, LocalDate heute) {
     Student student = studentRepository.findStudentByGithubId(githubId);
-    student.storniereKlausur(klausurId);
-    studentRepository.studentSpeichern(student);
+    Klausur klausurById = klausurRepository.findKlausurById(klausurId);
+    if (klausurById.isStornierbar(heute)) {
+      student.storniereKlausur(klausurId);
+      studentRepository.studentSpeichern(student);
+    }
   }
 
   public void urlaubsterminStornieren(Long githubId, LocalDate datum, LocalTime von,
-                                      LocalTime bis) {
+                                      LocalTime bis, LocalDate heute) {
     Student student = studentRepository.findStudentByGithubId(githubId);
-    student.storniereUrlaub(datum, von, bis);
-    studentRepository.studentSpeichern(student);
+    if (student.isUrlaubsterminStornierbar(datum, heute)) {
+      student.storniereUrlaub(datum, von, bis);
+      studentRepository.studentSpeichern(student);
+    }
   }
 
   public Student findStudentByGithubId(Long githubId) {

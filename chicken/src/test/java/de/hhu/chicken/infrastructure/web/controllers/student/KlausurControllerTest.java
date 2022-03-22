@@ -1,6 +1,7 @@
 package de.hhu.chicken.infrastructure.web.controllers.student;
 
 import static de.hhu.chicken.infrastructure.web.configuration.AuthenticationTemplates.studentSession;
+import static de.hhu.chicken.templates.KlausurTemplates.beispielklausur;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -154,8 +155,8 @@ public class KlausurControllerTest {
             .param("klausurId", "42")
             .session(session)
             .with(csrf()))
-        .andExpect(status().is3xxRedirection())
-        .andExpect(view().name("redirect:/klausuranmeldung"));
+        .andExpect(status().isOk())
+        .andExpect(view().name("klausurAnmeldung"));
     verify(studentService, times(0))
         .klausurAnmelden(28324332L, "christianmeter", 42L);
   }
@@ -166,19 +167,22 @@ public class KlausurControllerTest {
     mvc.perform(post("/klausuranmeldung")
             .session(session)
             .with(csrf()))
-        .andExpect(status().is3xxRedirection())
-        .andExpect(view().name("redirect:/klausuranmeldung"));
+        .andExpect(status().isOk())
+        .andExpect(view().name("klausurAnmeldung"));
   }
 
   @Test
   @DisplayName("Eine Klausur laesst sich stornieren und der Service wird aufgerufen")
   void test_8() throws Exception {
+    when(klausurService.findKlausurById(1L)).thenReturn(beispielklausur());
     mvc.perform(post("/klausurstornieren")
             .param("klausurId", "1")
             .session(session)
             .with(csrf()))
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/"));
-    verify(studentService).klausurStornieren(28324332L,1L);
+    verify(studentService).klausurStornieren(28324332L,
+        1L,
+        LocalDate.now());
   }
 }

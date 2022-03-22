@@ -73,27 +73,30 @@ public class StudentStornierungTest {
   @Test
   @DisplayName("Ein Urlaub, der 3 Tage in der Zukunft liegt, ist stornierbar")
   void test_5() {
-    Urlaubstermin urlaubstermin = urlaubsterminTemplate(10, 30, 11, 30);
+    Student student = studentMitEinemUrlaubstermin(9, 30, 10, 30);
     LocalDate heute = LocalDate.of(2022, 2, 12);
 
-    assertThat(urlaubstermin.isStornierbar(heute)).isTrue();
+    assertThat(student.isUrlaubsterminStornierbar(LocalDate.of(2022, 2, 15),
+        heute)).isTrue();
   }
 
   @Test
   @DisplayName("Ein Urlaub, der am gleichen Tag stattfindet, ist nicht stornierbar")
   void test_6() {
-    Urlaubstermin urlaubstermin = urlaubsterminTemplate(10, 30, 11, 30);
+    Student student = studentMitEinemUrlaubstermin(9, 30, 10, 30);
     LocalDate heute = LocalDate.of(2022, 2, 15);
 
-    assertThat(urlaubstermin.isStornierbar(heute)).isFalse();
+    assertThat(student.isUrlaubsterminStornierbar(LocalDate.of(2022, 2, 15),
+        heute)).isFalse();
   }
 
   @Test
   @DisplayName("Ein Urlaub, der 2 Tage in der Vergangenheit liegt, ist nicht stornierbar")
   void test_7() {
-    Urlaubstermin urlaubstermin = urlaubsterminTemplate(10, 30, 11, 30);
+    Student student = studentMitEinemUrlaubstermin(9, 30, 10, 30);
     LocalDate heute = LocalDate.of(2022, 2, 17);
 
-    assertThat(urlaubstermin.isStornierbar(heute)).isFalse();
+    assertThat(student.isUrlaubsterminStornierbar(LocalDate.of(2022, 2, 15),
+        heute)).isFalse();
   }
 }

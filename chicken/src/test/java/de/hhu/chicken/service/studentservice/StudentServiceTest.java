@@ -210,7 +210,9 @@ public class StudentServiceTest {
     when(klausurRepository.findKlausurById(1L)).thenReturn(beispielklausur());
     studentService.klausurAnmelden(githubId, handle, 1L);
 
-    studentService.klausurStornieren(githubId, 1L);
+    studentService.klausurStornieren(githubId,
+        1L,
+        LocalDate.of(2022, 3, 16));
 
     verify(studentRepository, times(2)).studentSpeichern(student);
     assertThat(student.getKlausurReferenzen()).isEmpty();
@@ -227,7 +229,8 @@ public class StudentServiceTest {
     studentService.urlaubsterminStornieren(githubId,
         LocalDate.of(2022, 3, 17),
         LocalTime.of(9, 30),
-        LocalTime.of(13, 30));
+        LocalTime.of(13, 30),
+        LocalDate.of(2022, 3, 16));
 
     verify(studentRepository, times(2)).studentSpeichern(student);
     assertThat(student.getUrlaubstermine()).isEmpty();
