@@ -2,6 +2,7 @@ package de.hhu.chicken.service.studentservice;
 
 import de.hhu.chicken.domain.klausur.Klausur;
 import de.hhu.chicken.domain.student.Student;
+import de.hhu.chicken.service.logger.UrlaubsterminLogger;
 import de.hhu.chicken.service.repositories.KlausurRepository;
 import de.hhu.chicken.service.repositories.StudentRepository;
 import java.time.LocalDate;
@@ -14,11 +15,14 @@ public class StudentService {
 
   private final StudentRepository studentRepository;
   private final KlausurRepository klausurRepository;
+  private final UrlaubsterminLogger urlaubsterminLogger;
 
   public StudentService(StudentRepository studentRepository,
-                        KlausurRepository klausurRepository) {
+                        KlausurRepository klausurRepository,
+                        UrlaubsterminLogger urlaubsterminLogger) {
     this.studentRepository = studentRepository;
     this.klausurRepository = klausurRepository;
+    this.urlaubsterminLogger = urlaubsterminLogger;
   }
 
   public void klausurAnmelden(Long githubId, String handle, Long klausurId) {
@@ -54,14 +58,19 @@ public class StudentService {
     for (Klausur klausur : ueberschneideneKlausuren) {
       student.storniereKlausur(klausur.getId());
     }
-    student.fuegeUrlaubsterminHinzu(datum, von, bis, istKlausurTag);
+    boolean urlaubWurdeHinzugefuegt = student.fuegeUrlaubsterminHinzu(datum, von, bis, istKlausurTag);
     for (Klausur klausur : ueberschneideneKlausuren) {
       student.fuegeKlausurHinzu(klausur.getId(),
           klausur.getDatum(),
           klausur.berechneFreistellungsStartzeitpunkt(),
           klausur.berechneFreistellungsEndzeitpunkt());
     }
-    studentRepository.studentSpeichern(student);
+    if (urlaubWurdeHinzugefuegt) {
+      studentRepository.studentSpeichern(student);
+      String logNachricht = "Der Student " + handle + " hat für den " + datum +
+          " einen Urlaub von " + von + " bis " + bis + " gebucht.";
+      urlaubsterminLogger.eintragen(logNachricht);
+    }
   }
 
   public void klausurStornieren(Long githubId, Long klausurId, LocalDate heute) {
@@ -78,6 +87,9 @@ public class StudentService {
     Student student = studentRepository.findStudentByGithubId(githubId);
     if (student.isUrlaubsterminStornierbar(datum, heute)) {
       student.storniereUrlaub(datum, von, bis);
+      String logNachricht = "Der Student " + student.getHandle() + " hat den Urlaub am " + datum +
+          " von " + von + " bis " + bis + " storniert.";
+      urlaubsterminLogger.eintragen(logNachricht);
       studentRepository.studentSpeichern(student);
     }
   }

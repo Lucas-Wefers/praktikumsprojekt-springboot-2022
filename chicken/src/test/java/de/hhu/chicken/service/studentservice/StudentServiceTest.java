@@ -13,6 +13,7 @@ import static org.mockito.Mockito.when;
 import de.hhu.chicken.domain.klausur.Klausur;
 import de.hhu.chicken.domain.student.Student;
 import de.hhu.chicken.domain.student.Urlaubstermin;
+import de.hhu.chicken.service.logger.UrlaubsterminLogger;
 import de.hhu.chicken.service.repositories.KlausurRepository;
 import de.hhu.chicken.service.repositories.StudentRepository;
 import java.time.LocalDate;
@@ -26,8 +27,9 @@ public class StudentServiceTest {
   // ------------------------------- arrange -------------------------------
   private final StudentRepository studentRepository = mock(StudentRepository.class);
   private final KlausurRepository klausurRepository = mock(KlausurRepository.class);
+  private final UrlaubsterminLogger urlaubsterminLogger = mock(UrlaubsterminLogger.class);
   private final StudentService studentService =
-      new StudentService(studentRepository, klausurRepository);
+      new StudentService(studentRepository, klausurRepository, urlaubsterminLogger);
   private static final String handle = "jens";
   private final Long githubId = 14529531L;
 
@@ -270,5 +272,40 @@ public class StudentServiceTest {
     List<Klausur> klausuren = studentService.alleAngemeldetenKlausuren(githubId);
 
     assertThat(klausuren).isEmpty();
+  }
+
+  @Test
+  @DisplayName("Beim Eintragen eines Urlaubs, wird der Urlaubsterminlogger aufgerufen")
+  void test_15() {
+    Student student = new Student(githubId, handle);
+    when(studentRepository.findStudentByGithubId(githubId)).thenReturn(student);
+    String logNachricht = "Der Student " + handle + " hat für den " +
+        LocalDate.of(2022, 3, 17) +
+    " einen Urlaub von " + LocalTime.of(11, 0) + " bis " +
+        LocalTime.of(13, 30) + " gebucht.";
+
+    urlaubsterminAnmelden(17, 11, 0, 13, 30);
+
+    verify(urlaubsterminLogger).eintragen(logNachricht);
+  }
+
+  @Test
+  @DisplayName("Beim Stornieren eines Urlaubs, wird der Urlaubsterminlogger aufgerufen")
+  void test_16() {
+    Student student = new Student(githubId, handle);
+    when(studentRepository.findStudentByGithubId(githubId)).thenReturn(student);
+    String logNachricht = "Der Student " + student.getHandle() + " hat den Urlaub am " +
+        LocalDate.of(2022, 3, 17) +
+        " von " + LocalTime.of(11, 0) + " bis " +
+        LocalTime.of(13, 30) + " storniert.";
+
+    urlaubsterminAnmelden(17, 11, 0, 13, 30);
+    studentService.urlaubsterminStornieren(githubId,
+        LocalDate.of(2022, 3, 17),
+        LocalTime.of(11, 0),
+        LocalTime.of(13, 30),
+        LocalDate.of(2022, 3, 16));
+
+    verify(urlaubsterminLogger).eintragen(logNachricht);
   }
 }

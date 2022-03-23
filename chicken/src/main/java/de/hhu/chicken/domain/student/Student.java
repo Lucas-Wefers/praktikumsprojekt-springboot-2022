@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 @AggregateRoot
 public class Student {
 
-
   private final GithubId githubId;
   private final GithubHandle handle;
   private List<KlausurReferenz> klausurReferenzen = new ArrayList<>();
@@ -54,10 +53,10 @@ public class Student {
         urlaubstermineMitSelbemDatum);
   }
 
-  public void fuegeUrlaubsterminHinzu(LocalDate datum, LocalTime von, LocalTime bis,
+  public boolean fuegeUrlaubsterminHinzu(LocalDate datum, LocalTime von, LocalTime bis,
                                       boolean istKlausurtag) {
     if (berechneResturlaub() == 0) {
-      return;
+      return false;
     }
 
     List<Urlaubstermin> alleUrlaubsTermine = new ArrayList<>(urlaubstermine);
@@ -89,7 +88,9 @@ public class Student {
 
     if (istValiderUrlaub(istKlausurtag, alleUrlaubsTermine, termineAmSelbemTag)) {
       urlaubstermine = alleUrlaubsTermine;
+      return true;
     }
+    return false;
   }
 
   public boolean isUrlaubsterminStornierbar(LocalDate datum, LocalDate heute) {
