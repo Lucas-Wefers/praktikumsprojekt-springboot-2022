@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import de.hhu.chicken.configuration.PraktikumsUhrzeitConfiguration;
 import de.hhu.chicken.service.klausurservice.KlausurService;
 import de.hhu.chicken.service.studentservice.StudentService;
 import java.time.LocalDate;
@@ -21,9 +22,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest
+@ActiveProfiles("test")
 public class UrlaubsterminControllerTest {
 
   @Autowired
@@ -34,6 +37,9 @@ public class UrlaubsterminControllerTest {
 
   @MockBean
   StudentService studentService;
+
+  @MockBean
+  PraktikumsUhrzeitConfiguration uhrzeitConfiguration;
 
   @Test
   @DisplayName("Die richtige Seite fuer das Eintragen von Urlaubsterminen wird aufgerufen und ist "

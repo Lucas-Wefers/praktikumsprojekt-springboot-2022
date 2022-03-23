@@ -1,5 +1,6 @@
 package de.hhu.chicken.infrastructure.web.controllers.student;
 
+import de.hhu.chicken.configuration.PraktikumsUhrzeitConfiguration;
 import de.hhu.chicken.domain.klausur.Klausur;
 import de.hhu.chicken.domain.student.Student;
 import de.hhu.chicken.infrastructure.web.stereotypes.StudentOnly;
@@ -17,9 +18,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class UebersichtController {
 
   private final StudentService studentService;
+  private final PraktikumsUhrzeitConfiguration uhrzeitConfiguration;
 
-  public UebersichtController(StudentService studentService) {
+  public UebersichtController(StudentService studentService,
+                              PraktikumsUhrzeitConfiguration uhrzeitConfiguration) {
     this.studentService = studentService;
+    this.uhrzeitConfiguration = uhrzeitConfiguration;
   }
 
   @GetMapping("/")
@@ -31,6 +35,8 @@ public class UebersichtController {
     List<Klausur> klausuren = studentService.alleAngemeldetenKlausuren(githubId);
 
     model.addAttribute("heute", LocalDate.now());
+    model.addAttribute("startuhrzeit", uhrzeitConfiguration.getPraktikumsStartuhrzeit());
+    model.addAttribute("enduhrzeit", uhrzeitConfiguration.getPraktikumsEnduhrzeit());
     model.addAttribute("student", student);
     model.addAttribute("klausuren", klausuren);
 

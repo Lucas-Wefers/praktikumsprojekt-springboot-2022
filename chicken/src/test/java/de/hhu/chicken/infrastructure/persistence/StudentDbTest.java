@@ -46,8 +46,8 @@ public class StudentDbTest {
     Klausur klausur = beispielklausur();
     student.fuegeKlausurHinzu(klausur.getId(),
         klausur.getDatum(),
-        klausur.berechneFreistellungsStartzeitpunkt(),
-        klausur.berechneFreistellungsEndzeitpunkt());
+        klausur.berechneFreistellungsStartzeitpunkt(LocalTime.of(9, 30)),
+        klausur.berechneFreistellungsEndzeitpunkt(LocalTime.of(13, 30)));
     studentRepository.studentSpeichern(student);
 
     Student studentByGithubId = studentRepository.findStudentByGithubId(12345678L);
@@ -65,7 +65,9 @@ public class StudentDbTest {
     student.fuegeUrlaubsterminHinzu(LocalDate.of(2022, 3, 22),
         LocalTime.of(9,30),
         LocalTime.of(13,30),
-        false);
+        false,
+        LocalTime.of(9, 30),
+        LocalTime.of(13, 30));
     studentRepository.studentSpeichern(student);
 
     Student studentByGithubId = studentRepository.findStudentByGithubId(12345678L);
@@ -101,8 +103,8 @@ public class StudentDbTest {
     Klausur klausur = beispielklausur();
     studentByGithubId.fuegeKlausurHinzu(klausur.getId(),
         klausur.getDatum(),
-        klausur.berechneFreistellungsStartzeitpunkt(),
-        klausur.berechneFreistellungsEndzeitpunkt());
+        klausur.berechneFreistellungsStartzeitpunkt(LocalTime.of(9, 30)),
+        klausur.berechneFreistellungsEndzeitpunkt(LocalTime.of(13, 30)));
     studentRepository.studentSpeichern(studentByGithubId);
 
     Student studentByGithubIdUpdated = studentRepository.findStudentByGithubId(23123187L);

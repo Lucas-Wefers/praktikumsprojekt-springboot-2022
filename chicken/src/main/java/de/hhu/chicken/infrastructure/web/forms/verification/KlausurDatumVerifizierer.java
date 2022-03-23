@@ -12,11 +12,11 @@ public class KlausurDatumVerifizierer implements ConstraintValidator<IsValidDatu
 
   @Value("${praktikumszeiten.start.datum}")
   @DateTimeFormat(pattern = "yyyy-MM-dd")
-  LocalDate startDatum;
+  private LocalDate startDatum;
 
   @Value("${praktikumszeiten.ende.datum}")
   @DateTimeFormat(pattern = "yyyy-MM-dd")
-  LocalDate endeDatum;
+  private LocalDate endeDatum;
 
   @Override
   public boolean isValid(LocalDate value, ConstraintValidatorContext context) {

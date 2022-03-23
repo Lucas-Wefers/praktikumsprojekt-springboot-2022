@@ -8,11 +8,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import de.hhu.chicken.configuration.PraktikumsUhrzeitConfiguration;
 import de.hhu.chicken.domain.klausur.Klausur;
 import de.hhu.chicken.domain.student.Student;
 import de.hhu.chicken.service.klausurservice.KlausurService;
 import de.hhu.chicken.service.studentservice.StudentService;
+import java.time.LocalTime;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +36,17 @@ public class UebersichtControllerTest {
   @MockBean
   StudentService studentService;
 
+  @MockBean
+  PraktikumsUhrzeitConfiguration uhrzeitConfiguration;
+
   @Test
   @DisplayName("Die richtige Seite fuer das Eintragen von Urlaubsterminen wird aufgerufen und ist "
       + "erreichbar")
   void test_1() throws Exception {
+    when(uhrzeitConfiguration.getPraktikumsStartuhrzeit())
+        .thenReturn(LocalTime.of(9, 30));
+    when(uhrzeitConfiguration.getPraktikumsEnduhrzeit())
+        .thenReturn(LocalTime.of(13, 30));
     MockHttpSession session = studentSession();
     Student student = new Student(28324332L, "christianmeter");
     List<Klausur> klausurenVomStudenten = zweiBeispielklausuren();

@@ -13,12 +13,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import de.hhu.chicken.configuration.PraktikumsUhrzeitConfiguration;
 import de.hhu.chicken.domain.klausur.Klausur;
 import de.hhu.chicken.service.klausurservice.KlausurService;
 import de.hhu.chicken.service.studentservice.StudentService;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,18 @@ public class KlausurControllerTest {
   @MockBean
   StudentService studentService;
 
+  @MockBean
+  PraktikumsUhrzeitConfiguration uhrzeitConfiguration;
+
   private static final MockHttpSession session = studentSession();
+
+  @BeforeEach
+  void setup() {
+    when(uhrzeitConfiguration.getPraktikumsStartuhrzeit())
+        .thenReturn(LocalTime.of(9, 30));
+    when(uhrzeitConfiguration.getPraktikumsEnduhrzeit())
+        .thenReturn(LocalTime.of(13, 30));
+  }
 
   @Test
   @DisplayName("Die richtige Seite fuer das Eintragen von Klausuren wird aufgerufen und ist "

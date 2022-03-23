@@ -10,7 +10,9 @@ public class StudentTemplates {
     student.fuegeUrlaubsterminHinzu(urlaubstermin.getDatum(),
         urlaubstermin.getVon(),
         urlaubstermin.getBis(),
-        istKlausurtag);
+        istKlausurtag,
+        LocalTime.of(9, 30),
+        LocalTime.of(13, 30));
   }
 
   static Urlaubstermin urlaubsterminTemplate(int hVon, int minVon, int hBis, int minBis) {

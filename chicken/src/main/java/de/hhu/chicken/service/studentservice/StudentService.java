@@ -1,5 +1,6 @@
 package de.hhu.chicken.service.studentservice;
 
+import de.hhu.chicken.configuration.PraktikumsUhrzeitConfiguration;
 import de.hhu.chicken.domain.klausur.Klausur;
 import de.hhu.chicken.domain.student.Student;
 import de.hhu.chicken.service.logger.UrlaubsterminLogger;
@@ -16,13 +17,16 @@ public class StudentService {
   private final StudentRepository studentRepository;
   private final KlausurRepository klausurRepository;
   private final UrlaubsterminLogger urlaubsterminLogger;
+  private final PraktikumsUhrzeitConfiguration uhrzeitConfiguration;
 
   public StudentService(StudentRepository studentRepository,
                         KlausurRepository klausurRepository,
-                        UrlaubsterminLogger urlaubsterminLogger) {
+                        UrlaubsterminLogger urlaubsterminLogger,
+                        PraktikumsUhrzeitConfiguration uhrzeitConfiguration) {
     this.studentRepository = studentRepository;
     this.klausurRepository = klausurRepository;
     this.urlaubsterminLogger = urlaubsterminLogger;
+    this.uhrzeitConfiguration = uhrzeitConfiguration;
   }
 
   public void klausurAnmelden(Long githubId, String handle, Long klausurId) {
@@ -33,12 +37,15 @@ public class StudentService {
     Klausur klausur = klausurRepository.findKlausurById(klausurId);
     student.fuegeKlausurHinzu(klausurId,
         klausur.getDatum(),
-        klausur.berechneFreistellungsStartzeitpunkt(),
-        klausur.berechneFreistellungsEndzeitpunkt());
+        klausur.berechneFreistellungsStartzeitpunkt(
+            uhrzeitConfiguration.getPraktikumsStartuhrzeit()),
+        klausur.berechneFreistellungsEndzeitpunkt(
+            uhrzeitConfiguration.getPraktikumsEnduhrzeit()));
     studentRepository.studentSpeichern(student);
   }
 
-  public void urlaubsterminAnmelden(Long githubId, String handle, LocalDate datum, LocalTime von, LocalTime bis) {
+  public void urlaubsterminAnmelden(Long githubId, String handle, LocalDate datum, LocalTime von,
+                                    LocalTime bis) {
     Student student = studentRepository.findStudentByGithubId(githubId);
     if (student == null) {
       student = new Student(githubId, handle);
@@ -51,19 +58,26 @@ public class StudentService {
 
     boolean istKlausurTag = !klausurenAmGleichenTag.isEmpty();
     List<Klausur> ueberschneideneKlausuren = klausurenAmGleichenTag.stream()
-        .filter(x -> von.isBefore(x.berechneFreistellungsEndzeitpunkt()))
-        .filter(x -> x.berechneFreistellungsStartzeitpunkt().isBefore(bis))
+        .filter(x -> von.isBefore(x.berechneFreistellungsEndzeitpunkt(
+            uhrzeitConfiguration.getPraktikumsEnduhrzeit())))
+        .filter(x -> x.berechneFreistellungsStartzeitpunkt(
+            uhrzeitConfiguration.getPraktikumsStartuhrzeit()).isBefore(bis))
         .toList();
 
     for (Klausur klausur : ueberschneideneKlausuren) {
       student.storniereKlausur(klausur.getId());
     }
-    boolean urlaubWurdeHinzugefuegt = student.fuegeUrlaubsterminHinzu(datum, von, bis, istKlausurTag);
+    boolean urlaubWurdeHinzugefuegt =
+        student.fuegeUrlaubsterminHinzu(datum, von, bis, istKlausurTag,
+            uhrzeitConfiguration.getPraktikumsStartuhrzeit(),
+            uhrzeitConfiguration.getPraktikumsEnduhrzeit());
     for (Klausur klausur : ueberschneideneKlausuren) {
       student.fuegeKlausurHinzu(klausur.getId(),
           klausur.getDatum(),
-          klausur.berechneFreistellungsStartzeitpunkt(),
-          klausur.berechneFreistellungsEndzeitpunkt());
+          klausur.berechneFreistellungsStartzeitpunkt(
+              uhrzeitConfiguration.getPraktikumsStartuhrzeit()),
+          klausur.berechneFreistellungsEndzeitpunkt(
+              uhrzeitConfiguration.getPraktikumsEnduhrzeit()));
     }
     if (urlaubWurdeHinzugefuegt) {
       studentRepository.studentSpeichern(student);

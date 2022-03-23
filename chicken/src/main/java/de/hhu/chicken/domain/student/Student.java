@@ -54,7 +54,8 @@ public class Student {
   }
 
   public boolean fuegeUrlaubsterminHinzu(LocalDate datum, LocalTime von, LocalTime bis,
-                                      boolean istKlausurtag) {
+                                         boolean istKlausurtag, LocalTime startUhrzeit,
+                                         LocalTime endUhrzeit) {
     if (berechneResturlaub() == 0) {
       return false;
     }
@@ -86,7 +87,8 @@ public class Student {
     alleUrlaubsTermine.removeAll(ueberschneidendeTermine);
     alleUrlaubsTermine.add(vereinigt);
 
-    if (istValiderUrlaub(istKlausurtag, alleUrlaubsTermine, termineAmSelbemTag)) {
+    if (istValiderUrlaub(istKlausurtag, alleUrlaubsTermine, termineAmSelbemTag,
+        startUhrzeit, endUhrzeit)) {
       urlaubstermine = alleUrlaubsTermine;
       return true;
     }
@@ -106,16 +108,14 @@ public class Student {
   }
 
   private boolean istValiderUrlaub(boolean istKlausurtag, List<Urlaubstermin> alleUrlaubsTermine,
-                                   List<Urlaubstermin> termineAmSelbemTag) {
+                                   List<Urlaubstermin> termineAmSelbemTag,
+                                   LocalTime startUhrzeit, LocalTime endUhrzeit) {
     return (istKlausurtag
-        ||
-        hatEinenUrlaubsblockDerDenGanzenTagDauert(termineAmSelbemTag)
-        ||
-        hatEinenUrlaubsblockDerKuerzerAlsZweiStundenIst(termineAmSelbemTag)
-        ||
-        hatZweiUrlaubsbloeckeWobeiEinerAmAnfangUndEinerAmEndeIst(termineAmSelbemTag))
-        &&
-        esIstGenugUrlaubszeitVorhanden(alleUrlaubsTermine);
+        || hatEinenUrlaubsblockDerDenGanzenTagDauert(termineAmSelbemTag)
+        || hatEinenUrlaubsblockDerKuerzerAlsZweiStundenIst(termineAmSelbemTag)
+        || hatZweiUrlaubsbloeckeWobeiEinerAmAnfangUndEinerAmEndeIst(termineAmSelbemTag,
+        startUhrzeit, endUhrzeit))
+        && esIstGenugUrlaubszeitVorhanden(alleUrlaubsTermine);
   }
 
   private boolean esIstGenugUrlaubszeitVorhanden(List<Urlaubstermin> alleUrlaubsTermine) {
@@ -123,17 +123,18 @@ public class Student {
   }
 
   private boolean hatZweiUrlaubsbloeckeWobeiEinerAmAnfangUndEinerAmEndeIst(
-      List<Urlaubstermin> termineAmSelbemTag) {
+      List<Urlaubstermin> termineAmSelbemTag, LocalTime startUhrzeit,
+      LocalTime endUhrzeit) {
     return termineAmSelbemTag.stream().mapToInt(t -> (int) t.dauer().toMinutes()).sum() <= 150
         && termineAmSelbemTag.size() == 2
         && termineAmSelbemTag
         .stream()
         .anyMatch(t -> t.getVon()
-            .equals(LocalTime.of(9, 30)))
+            .equals(startUhrzeit))
         && termineAmSelbemTag
         .stream()
         .anyMatch(t -> t.getBis()
-            .equals(LocalTime.of(13, 30)));
+            .equals(endUhrzeit));
   }
 
   private boolean hatEinenUrlaubsblockDerKuerzerAlsZweiStundenIst(

@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import java.time.LocalTime;
 import java.util.List;
 import javax.validation.ConstraintValidatorContext;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +14,12 @@ public class UrlaubsterminZeitraumVerifiziererTest {
 
   private static final UrlaubsterminZeitraumVerifizierer
       verifizierer = new UrlaubsterminZeitraumVerifizierer();
+
+  @BeforeAll
+  static void setup() {
+    verifizierer.setStart(LocalTime.of(9, 30));
+    verifizierer.setEnde(LocalTime.of(13, 30));
+  }
 
   @Test
   @DisplayName("Der Startzeitpunkt liegt nach dem Endzeitpunkt und es wird false zurueckgegeben")

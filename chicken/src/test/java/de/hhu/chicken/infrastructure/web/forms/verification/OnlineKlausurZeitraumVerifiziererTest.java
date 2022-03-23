@@ -3,9 +3,11 @@ package de.hhu.chicken.infrastructure.web.forms.verification;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import javax.validation.ConstraintValidatorContext;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +15,12 @@ public class OnlineKlausurZeitraumVerifiziererTest {
 
   private static final OnlineKlausurZeitraumVerifizierer
       verifizierer = new OnlineKlausurZeitraumVerifizierer();
+
+  @BeforeAll
+  static void setup() {
+    verifizierer.setStart(LocalTime.of(9, 30));
+    verifizierer.setEnde(LocalTime.of(13, 30));
+  }
 
   @Test
   @DisplayName("Eine Online-Klausur die um 8:30 endet ist ausserhalb des Zeitraums")

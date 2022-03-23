@@ -20,9 +20,6 @@ public class Klausur {
   private final Klausurart klausurart;
   private final VeranstaltungsId veranstaltungsId;
 
-  private final LocalTime praktikumStart = LocalTime.of(9, 30);
-  private final LocalTime praktikumEnde = LocalTime.of(13, 30);
-
   public Klausur(Long id, String fach, LocalDate datum, LocalTime von, LocalTime bis,
                  boolean isPraesenz, Long veranstaltungsId) {
     this.id = id;
@@ -34,7 +31,7 @@ public class Klausur {
     this.veranstaltungsId = new VeranstaltungsId(veranstaltungsId);
   }
 
-  public LocalTime berechneFreistellungsStartzeitpunkt() {
+  public LocalTime berechneFreistellungsStartzeitpunkt(LocalTime praktikumStart) {
     LocalTime freistellungsStartzeitpunkt = von;
 
     if (klausurart == PRAESENZ) {
@@ -53,7 +50,7 @@ public class Klausur {
     return freistellungsStartzeitpunkt;
   }
 
-  public LocalTime berechneFreistellungsEndzeitpunkt() {
+  public LocalTime berechneFreistellungsEndzeitpunkt(LocalTime praktikumEnde) {
     LocalTime endzeitpunkt = bis;
 
     if (klausurart == PRAESENZ) {

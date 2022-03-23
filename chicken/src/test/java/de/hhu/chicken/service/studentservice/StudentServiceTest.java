@@ -10,6 +10,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import de.hhu.chicken.configuration.PraktikumsUhrzeitConfiguration;
 import de.hhu.chicken.domain.klausur.Klausur;
 import de.hhu.chicken.domain.student.Student;
 import de.hhu.chicken.domain.student.Urlaubstermin;
@@ -19,6 +20,8 @@ import de.hhu.chicken.service.repositories.StudentRepository;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,10 +31,21 @@ public class StudentServiceTest {
   private final StudentRepository studentRepository = mock(StudentRepository.class);
   private final KlausurRepository klausurRepository = mock(KlausurRepository.class);
   private final UrlaubsterminLogger urlaubsterminLogger = mock(UrlaubsterminLogger.class);
+  private final PraktikumsUhrzeitConfiguration uhrzeitConfiguration =
+      mock(PraktikumsUhrzeitConfiguration.class);
   private final StudentService studentService =
-      new StudentService(studentRepository, klausurRepository, urlaubsterminLogger);
+      new StudentService(studentRepository, klausurRepository, urlaubsterminLogger,
+          uhrzeitConfiguration);
   private static final String handle = "jens";
   private final Long githubId = 14529531L;
+
+  @BeforeEach
+  void setup() {
+    when(uhrzeitConfiguration.getPraktikumsStartuhrzeit())
+        .thenReturn(LocalTime.of(9, 30));
+    when(uhrzeitConfiguration.getPraktikumsEnduhrzeit())
+        .thenReturn(LocalTime.of(13, 30));
+  }
 
   private void assertThatUrlaubstermineSindGleich(Urlaubstermin urlaubstermin, int klausurTag,
                                                   int hVon,
@@ -44,8 +58,8 @@ public class StudentServiceTest {
   private void fuegeKlausurHinzu(Student student, Klausur klausur) {
     student.fuegeKlausurHinzu(klausur.getId(),
         klausur.getDatum(),
-        klausur.berechneFreistellungsStartzeitpunkt(),
-        klausur.berechneFreistellungsEndzeitpunkt());
+        klausur.berechneFreistellungsStartzeitpunkt(LocalTime.of(9, 30)),
+        klausur.berechneFreistellungsEndzeitpunkt(LocalTime.of(13, 30)));
   }
 
   private void urlaubsterminAnmelden(int klausurTag, int hVon, int minVon, int hBis, int minBis) {
