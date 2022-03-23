@@ -22,7 +22,3 @@ services:
       - "mysqlpassword=${mysqlpassword}"
       - "clientid=${clientid}"
       - "clientsecret=${clientsecret}"
-      - "start=${start}"
-      - "ende=${ende}"
-      - "organisatoren=${organisatoren}"
-      - "tutoren=${tutoren}"

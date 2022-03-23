@@ -31,6 +31,8 @@ gruppen:
 
 praktikumszeiten:
   start:
+    uhrzeit: "09:30"
     datum: "2022-03-08"
   ende:
+    uhrzeit: "13:30"
     datum: "2022-03-30"
