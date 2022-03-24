@@ -1,0 +1,14 @@
+@startuml
+
+node Application<<Chicken>>
+package Nutzer {
+    :Student:
+    :Tutor:
+    :Organisator:
+}
+
+[Student] --> [Application]
+[Tutor] --> [Application]
+[Organisator] --> [Application]
+
+@enduml
