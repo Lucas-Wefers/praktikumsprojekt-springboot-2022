@@ -1,0 +1,39 @@
+@startuml
+package student {
+    class Urlaubstermin {
+      - LocalDate datum
+      - LocalTime von
+      - LocalTime bis
+    }
+
+    class Student <<AggregateRoot>> {
+      - GithubId githubId
+      - GithubHandle handle
+      - List<KlausurReferenz> klausurtermine
+      - List<Urlaubstermin> urlaubstermine
+      + double berechneResturlaub()
+      + void fuegeKlausurterminHinzu()
+      + void fuegeUrlaubsterminHinzu()
+      + void storniereKlausur()
+      + void storniereUrlaubstermin()
+      + boolean isUrlaubsterminStornierbar()
+    }
+
+    class KlausurReferenz <<Record>> {
+      - Long klausurId
+    }
+
+    class GithubId <<Record>> {
+      - Long id
+    }
+
+    class GithubHandle <<Record>> {
+      - String handle
+    }
+
+    Student --o Urlaubstermin
+    Student --o KlausurReferenz
+    Student --> GithubHandle
+    Student --> GithubId
+  }
+@enduml

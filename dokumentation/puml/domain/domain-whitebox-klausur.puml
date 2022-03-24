@@ -1,0 +1,27 @@
+@startuml
+package klausur {
+    enum Klausurart {
+      ONLINE
+      PRAESENZ
+    }
+
+    class VeranstaltungsId <<Record>> {
+      Long id
+    }
+
+    class Klausur {
+      - Long id
+      - String fach
+      - LocalDate datum
+      - LocalTime von
+      - LocalTime bis
+      - Klausurart klausurart
+      - VeranstaltungsId veranstaltungsId
+      + LocalTime berechneFreistellungsStartzeitpunkt()
+      + LocalTime berechneFreistellungsEndzeitpunkt()
+      + boolean istStornierbar()
+    }
+    Klausur --> Klausurart
+    Klausur --> VeranstaltungsId
+  }
+@enduml

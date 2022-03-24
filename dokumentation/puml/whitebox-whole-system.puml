@@ -1,0 +1,20 @@
+@startuml
+rectangle Anwendung <<Chicken>> {
+node service <<layer>>
+node infrastructure <<layer>>
+node domain <<layer>>
+collections configuration
+
+service --> domain
+service --> configuration
+infrastructure --> service
+infrastructure --> domain
+
+}
+
+database database
+cloud web
+
+infrastructure --> web
+infrastructure --> database
+@enduml
