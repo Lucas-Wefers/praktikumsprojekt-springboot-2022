@@ -1,22 +1,34 @@
 [[section-system-scope-and-context]]
 == Kontextabgrenzung
 
-
-
 === Fachlicher Kontext
 
+image:../images/fachlicher-kontext.png[Fachlicher Kontext, 500]
 
+* Studenten
+** können global im System Klausuren eintragen
+** sind in der Lage sich für Klausuren anzumelden und die Anmeldung zu stornieren
+** dürfen sich für Urlaubstermine anmelden
+** können ihre angemeldeten Urlaubstermine und Klausuren einsehen
 
-**<Diagramm und/oder Tabelle>**
+* Organisatoren
+** -
 
-**<optional: Erläuterung der externen fachlichen Schnittstellen>**
+* Tutoren
+** -
 
 === Technischer Kontext
 
+image:../images/technischer-kontext.png[Fachlicher Kontext, 500]
 
+* Internet
+** über das Internet werden die Formulardaten für die jeweiligen Anwendungsfälle entgegengenommen
 
-**<Diagramm oder Tabelle>**
+* GitHubOAuth2
+** authentifiziert die Nutzer
 
-**<optional: Erläuterung der externen technischen Schnittstellen>**
+* Datenbank
+** persistiert die Aggregate Student und Klausur
 
-**<Mapping fachliche auf technische Schnittstellen>**
+* LSF
+** wird zur Verifizierung der Veranstaltungs-ID verwendet

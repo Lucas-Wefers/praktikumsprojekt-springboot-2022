@@ -1,0 +1,14 @@
+@startuml
+
+node Application<<Chicken>>
+database Database<<MariaDb>>
+cloud LSF
+cloud Internet
+queue GitHubOAuth2
+
+Application <--> Database :Student, Klausur
+Application --> GitHubOAuth2 :Authentifizierung
+Application --> LSF :Verifizierung
+Internet --> Application :Form Input
+
+@enduml
