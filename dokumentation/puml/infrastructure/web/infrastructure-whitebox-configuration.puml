@@ -1,0 +1,22 @@
+@startuml
+
+package configuration {
+    class MethodSecurityConfiguration {
+      @Configuration
+      @EnableGlobalMethodSecurityd
+    }
+
+    class SecurityConfiguration {
+      # SessionAuthenticationStrategy sessionAuthenticationStrategy()
+      + OAuth2AuthorizedClientManager authorizedClientManager()
+    }
+
+    class WebSecurityConfiguration {
+      - List<String> organisatoren
+      - List<String> tutoren
+      # void configure()
+      - OAuth2UserService createUserService()
+    }
+}
+
+@enduml

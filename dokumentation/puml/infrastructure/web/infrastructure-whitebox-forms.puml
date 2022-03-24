@@ -1,0 +1,109 @@
+@startuml
+
+package forms {
+    package stereotypes {
+      annotation IsValidDatum {
+        @Documented
+        @Constraint
+        @Target
+        @Retention
+      }
+
+      annotation IsValidId {
+        @Documented
+        @Constraint
+        @Target
+        @Retention
+      }
+
+      annotation IsValidOnlineKlausurZeitraum {
+        @Documented
+        @Constraint
+        @Target
+        @Retention
+      }
+
+      annotation IsValidPraesenzKlausurZeitraum {
+        @Documented
+        @Constraint
+        @Target
+        @Retention
+      }
+
+      annotation IsValidUrlaubsterminZeitraum {
+        @Documented
+        @Constraint
+        @Target
+        @Retention
+      }
+
+      annotation IsVielfacheVon15Minuten {
+        @Documented
+        @Constraint
+        @Target
+        @Retention
+      }
+    }
+
+    package verification {
+      class UrlaubsterminZeitraumVerifizierer {
+        + boolean isValid()
+      }
+
+      class IsVielfachevon15MinutenVerifizierer {
+        + boolean isValid()
+      }
+
+      class DatumVerifizierer {
+        + boolean isValid()
+      }
+
+      class KlausurVeranstaltungsIdVerifizierer {
+        + boolean isValid()
+      }
+
+      class OnlineKlausurZeitraumVerifizierer {
+        + boolean isValid()
+      }
+
+      class PraesenzKlausurZeitraumVerifizierer {
+        + boolean isValid()
+      }
+    }
+
+    class KlausurForm {
+      - String fach
+      - LocalDate datum
+      - LocalTime von
+      - LocalTime bis
+      - Boolean isPraesenz
+      - Long veranstaltungsId
+      + List<LocalTime> getPraesenzKlausurZeitraum()
+      + List<LocalTime> getOnlineKlausurZeitraum()
+    }
+
+    class UrlaubsterminForm {
+      - LocalDate datum
+      - LocalTime von
+      - LocalTime bis
+      + List<LocalTime> getUrlaubsterminZeitraum()
+    }
+
+    UrlaubsterminForm --> UrlaubsterminZeitraumVerifizierer
+    UrlaubsterminForm --> IsVielfachevon15MinutenVerifizierer
+    UrlaubsterminForm --> DatumVerifizierer
+
+    KlausurForm --> DatumVerifizierer
+    KlausurForm --> KlausurVeranstaltungsIdVerifizierer
+    KlausurForm --> PraesenzKlausurZeitraumVerifizierer
+    KlausurForm --> OnlineKlausurZeitraumVerifizierer
+
+    DatumVerifizierer --* IsValidDatum
+    KlausurVeranstaltungsIdVerifizierer --* IsValidId
+    OnlineKlausurZeitraumVerifizierer --* IsValidOnlineKlausurZeitraum
+    PraesenzKlausurZeitraumVerifizierer --* IsValidPraesenzKlausurZeitraum
+    IsVielfachevon15MinutenVerifizierer --* IsVielfacheVon15Minuten
+    UrlaubsterminZeitraumVerifizierer --* IsValidUrlaubsterminZeitraum
+}
+
+@enduml

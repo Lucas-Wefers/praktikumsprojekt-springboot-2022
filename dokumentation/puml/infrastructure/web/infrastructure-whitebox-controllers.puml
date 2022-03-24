@@ -1,0 +1,41 @@
+@startuml
+
+package controllers {
+  package organisator {
+    class OrganisatorController {
+      + String index()
+    }
+  }
+
+  package tutor {
+    class TutorController {
+      + String index()
+    }
+  }
+
+  package student {
+    class KlausurController {
+      - KlausurService klausurService
+      - StudentService studentService
+      + String klausuren()
+      + String klausurEintragen()
+      + String klausurAnmelden()
+      + String klausurStornieren()
+    }
+
+    class UebersichtController {
+      - StudentService studentService
+      - PraktikumsUhrzeitConfiguration uhrzeitConfig
+      + String index()
+    }
+
+    class UrlaubsterminController {
+      - StudentService studentService
+      + String urlaubsterminAnmelden()
+      + String urlaubsterminEintragen()
+      + String urlaubsterminStornieren()
+    }
+  }
+}
+
+@enduml
