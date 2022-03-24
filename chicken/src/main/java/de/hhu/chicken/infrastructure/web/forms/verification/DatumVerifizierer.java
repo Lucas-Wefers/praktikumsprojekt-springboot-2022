@@ -1,6 +1,6 @@
 package de.hhu.chicken.infrastructure.web.forms.verification;
 
-import de.hhu.chicken.infrastructure.web.forms.verification.stereotypes.IsValidDatum;
+import de.hhu.chicken.infrastructure.web.forms.stereotypes.IsValidDatum;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import javax.validation.ConstraintValidator;
@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class KlausurDatumVerifizierer implements ConstraintValidator<IsValidDatum, LocalDate> {
+public class DatumVerifizierer implements ConstraintValidator<IsValidDatum, LocalDate> {
 
   @Value("${praktikumszeiten.start.datum}")
   @DateTimeFormat(pattern = "yyyy-MM-dd")

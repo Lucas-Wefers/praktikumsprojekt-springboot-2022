@@ -152,7 +152,7 @@ public class KlausurControllerTest {
     when(klausurService.findKlausurById(1L)).thenReturn(klausur);
 
     mvc.perform(post("/klausuranmeldung")
-            .param("klausurId", "1")
+            .param("id", "1")
             .session(session)
             .with(csrf()))
         .andExpect(status().is3xxRedirection())
@@ -165,7 +165,7 @@ public class KlausurControllerTest {
       + " Service wird nicht aufgerufen")
   void test_6() throws Exception {
     mvc.perform(post("/klausuranmeldung")
-            .param("klausurId", "42")
+            .param("id", "42")
             .session(session)
             .with(csrf()))
         .andExpect(status().isOk())
@@ -175,7 +175,7 @@ public class KlausurControllerTest {
   }
 
   @Test
-  @DisplayName("Wenn keine klausurId uebergeben wird, passiert nichts")
+  @DisplayName("Wenn keine id uebergeben wird, passiert nichts")
   void test_7() throws Exception {
     mvc.perform(post("/klausuranmeldung")
             .session(session)
@@ -189,7 +189,7 @@ public class KlausurControllerTest {
   void test_8() throws Exception {
     when(klausurService.findKlausurById(1L)).thenReturn(beispielklausur());
     mvc.perform(post("/klausurstornieren")
-            .param("klausurId", "1")
+            .param("id", "1")
             .session(session)
             .with(csrf()))
         .andExpect(status().is3xxRedirection())

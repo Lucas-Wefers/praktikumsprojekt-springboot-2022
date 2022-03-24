@@ -1,6 +1,6 @@
 package de.hhu.chicken.infrastructure.web.forms.verification;
 
-import de.hhu.chicken.infrastructure.web.forms.verification.stereotypes.IsVielfacheVon15Minuten;
+import de.hhu.chicken.infrastructure.web.forms.stereotypes.IsVielfacheVon15Minuten;
 import java.time.LocalTime;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

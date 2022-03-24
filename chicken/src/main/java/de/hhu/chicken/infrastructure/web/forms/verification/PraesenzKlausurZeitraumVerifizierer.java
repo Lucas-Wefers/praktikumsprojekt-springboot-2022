@@ -1,6 +1,6 @@
 package de.hhu.chicken.infrastructure.web.forms.verification;
 
-import de.hhu.chicken.infrastructure.web.forms.verification.stereotypes.IsValidPraesenzKlausurZeitraum;
+import de.hhu.chicken.infrastructure.web.forms.stereotypes.IsValidPraesenzKlausurZeitraum;
 import java.time.LocalTime;
 import java.util.List;
 import javax.validation.ConstraintValidator;

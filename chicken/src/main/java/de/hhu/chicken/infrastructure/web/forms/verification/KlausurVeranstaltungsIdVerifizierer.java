@@ -1,6 +1,6 @@
 package de.hhu.chicken.infrastructure.web.forms.verification;
 
-import de.hhu.chicken.infrastructure.web.forms.verification.stereotypes.IsValidId;
+import de.hhu.chicken.infrastructure.web.forms.stereotypes.IsValidId;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.springframework.web.reactive.function.client.WebClient;

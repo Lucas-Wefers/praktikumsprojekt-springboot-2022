@@ -9,9 +9,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class KlausurDatumVerifiziererTest {
+public class DatumVerifiziererTest {
 
-  private static final KlausurDatumVerifizierer verifizierer = new KlausurDatumVerifizierer();
+  private static final DatumVerifizierer verifizierer = new DatumVerifizierer();
 
   @BeforeAll
   static void setup() {

@@ -1,10 +1,10 @@
 package de.hhu.chicken.infrastructure.web.forms;
 
 import de.hhu.chicken.domain.klausur.Klausur;
-import de.hhu.chicken.infrastructure.web.forms.verification.stereotypes.IsValidDatum;
-import de.hhu.chicken.infrastructure.web.forms.verification.stereotypes.IsValidId;
-import de.hhu.chicken.infrastructure.web.forms.verification.stereotypes.IsValidOnlineKlausurZeitraum;
-import de.hhu.chicken.infrastructure.web.forms.verification.stereotypes.IsValidPraesenzKlausurZeitraum;
+import de.hhu.chicken.infrastructure.web.forms.stereotypes.IsValidDatum;
+import de.hhu.chicken.infrastructure.web.forms.stereotypes.IsValidId;
+import de.hhu.chicken.infrastructure.web.forms.stereotypes.IsValidOnlineKlausurZeitraum;
+import de.hhu.chicken.infrastructure.web.forms.stereotypes.IsValidPraesenzKlausurZeitraum;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -15,26 +15,26 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class KlausurForm {
 
   @NotEmpty
-  String fach;
+  private String fach;
 
   @NotNull
   @IsValidDatum
   @DateTimeFormat(pattern = "yyyy-MM-dd")
-  LocalDate datum;
+  private LocalDate datum;
 
   @NotNull
   @DateTimeFormat(pattern = "HH:mm")
-  LocalTime von;
+  private LocalTime von;
 
   @NotNull
   @DateTimeFormat(pattern = "HH:mm")
-  LocalTime bis;
+  private LocalTime bis;
 
-  Boolean isPraesenz;
+  private Boolean isPraesenz;
 
   @NotNull
   @IsValidId
-  Long veranstaltungsId;
+  private Long veranstaltungsId;
 
   @IsValidPraesenzKlausurZeitraum
   private List<LocalTime> praesenzKlausurZeitraum;

@@ -35,7 +35,7 @@ public class KlausurController {
   }
 
   @PostMapping("/klausuren")
-  public String eintragen(@Valid KlausurForm klausurForm, BindingResult bindingResult) {
+  public String klausurEintragen(@Valid KlausurForm klausurForm, BindingResult bindingResult) {
     if (bindingResult.hasErrors()) {
       return "klausurEintragung";
     }
@@ -44,35 +44,35 @@ public class KlausurController {
   }
 
   @GetMapping("/klausuranmeldung")
-  public String anmelden(Model model) {
+  public String klausurAnmelden(Model model) {
     List<Klausur> klausuren = klausurService.alleKlausuren();
     model.addAttribute("klausuren", klausuren);
     return "klausurAnmeldung";
   }
 
   @PostMapping("/klausuranmeldung")
-  public String anmelden(@AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal,
-                         Long klausurId) {
+  public String klausurAnmelden(@AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal,
+                                Long id) {
 
-    if (klausurId == null
-        || klausurService.findKlausurById(klausurId) == null) {
+    if (id == null
+        || klausurService.findKlausurById(id) == null) {
       return "klausurAnmeldung";
     }
 
     Long githubId = ((Integer) principal.getAttributes().get("id")).longValue();
     String handle = (String) principal.getAttributes().get("login");
 
-    studentService.klausurAnmelden(githubId, handle, klausurId);
+    studentService.klausurAnmelden(githubId, handle, id);
 
     return "redirect:/";
   }
 
   @PostMapping("/klausurstornieren")
-  public String klausurStornieren(@AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal,
-                                  Long klausurId) {
+  public String klausurstornieren(@AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal,
+                                  Long id) {
     Long githubId = ((Integer) principal.getAttributes().get("id")).longValue();
 
-    studentService.klausurStornieren(githubId, klausurId, LocalDate.now());
+    studentService.klausurStornieren(githubId, id, LocalDate.now());
 
     return "redirect:/";
   }

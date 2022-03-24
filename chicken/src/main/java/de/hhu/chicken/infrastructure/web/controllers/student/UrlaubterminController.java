@@ -23,12 +23,13 @@ public class UrlaubterminController {
   }
 
   @GetMapping("/urlaubsanmeldung")
-  public String anmelden(UrlaubsterminForm urlaubsterminForm) {
+  public String urlaubsterminAnmelden(UrlaubsterminForm urlaubsterminForm) {
     return "urlaubsterminAnmeldung";
   }
 
   @PostMapping("/urlaubsanmeldung")
-  public String eintragen(@AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal,
+  public String urlaubsterminEintragen(
+      @AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal,
       @Valid UrlaubsterminForm urlaubstermin,
       BindingResult bindingResult) {
 
@@ -49,8 +50,9 @@ public class UrlaubterminController {
   }
 
   @PostMapping("/urlaubstornieren")
-  public String urlaubStornieren(@AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal,
-                                 UrlaubsterminForm urlaubstermin) {
+  public String urlaubsterminStornieren(
+      @AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal,
+      UrlaubsterminForm urlaubstermin) {
     Long githubId = ((Integer) principal.getAttributes().get("id")).longValue();
 
     studentService.urlaubsterminStornieren(githubId,

@@ -1,6 +1,6 @@
 package de.hhu.chicken.infrastructure.web.forms.verification;
 
-import de.hhu.chicken.infrastructure.web.forms.verification.stereotypes.IsValidUrlaubsterminZeitraum;
+import de.hhu.chicken.infrastructure.web.forms.stereotypes.IsValidUrlaubsterminZeitraum;
 import java.time.LocalTime;
 import java.util.List;
 import javax.validation.ConstraintValidator;

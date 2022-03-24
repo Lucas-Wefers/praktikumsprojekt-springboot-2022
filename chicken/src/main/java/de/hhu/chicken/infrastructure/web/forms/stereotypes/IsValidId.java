@@ -1,4 +1,4 @@
-package de.hhu.chicken.infrastructure.web.forms.verification.stereotypes;
+package de.hhu.chicken.infrastructure.web.forms.stereotypes;
 
 import de.hhu.chicken.infrastructure.web.forms.verification.KlausurVeranstaltungsIdVerifizierer;
 import java.lang.annotation.Documented;

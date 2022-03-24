@@ -1,13 +1,12 @@
 package de.hhu.chicken.infrastructure.web.forms.verification;
 
-import de.hhu.chicken.infrastructure.web.forms.verification.stereotypes.IsValidOnlineKlausurZeitraum;
+import de.hhu.chicken.infrastructure.web.forms.stereotypes.IsValidOnlineKlausurZeitraum;
 import java.time.LocalTime;
 import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
 
 public class OnlineKlausurZeitraumVerifizierer implements
     ConstraintValidator<IsValidOnlineKlausurZeitraum, List<LocalTime>> {
