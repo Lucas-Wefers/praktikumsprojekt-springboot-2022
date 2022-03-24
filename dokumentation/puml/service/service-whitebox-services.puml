@@ -1,0 +1,51 @@
+@startuml
+package service {
+  package studentenservice {
+    class StudentService {
+      - StudentRepository studentRepo
+      - KlausurRepository klausurRepo
+      - UrlaubsterminLogger logger
+      - PraktikumsUhrzeitConfiguration config
+      + void klausurAnmelden()
+      + void urlaubsterminAnmelden()
+      + void klausurStornieren()
+      + void urlaubsterminStornieren()
+      + Student findStudentByGithubId()
+      + List<Klausur> alleAngemeldetenKlausuren()
+    }
+  }
+
+  package klausurservice {
+    class KlausurService {
+      - KlausurRepository repo
+      + void klausurSpeichern()
+      + List<Klausur> alleKlausuren()
+      + Klausur findKlausurById()
+    }
+  }
+
+  package repositories {
+    interface KlausurRepository {
+      List<Klausur> alleKlausuren()
+      Klausur klausurSpeichern()
+      Klausur findKlausurById()
+    }
+
+    interface StudentRepository {
+      Student findStudentByGithubId()
+      void studentSpeichern()
+    }
+  }
+
+  package logger {
+    interface UrlaubsterminLogger {
+        void eintragen()
+    }
+  }
+
+  KlausurService --> KlausurRepository
+  StudentService --> StudentRepository
+  StudentService --> KlausurRepository
+  StudentService --> UrlaubsterminLogger
+}
+@enduml

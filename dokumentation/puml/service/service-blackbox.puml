@@ -1,0 +1,12 @@
+@startuml
+package service{
+    package klausurservice {
+    }
+    package studentservice {
+    }
+    package logger {
+    }
+    package repositories {
+    }
+}
+@enduml
