@@ -1,0 +1,10 @@
+@startuml
+package infrastructure {
+    package logger {
+    }
+    package persistence {
+    }
+    package web {
+    }
+}
+@enduml

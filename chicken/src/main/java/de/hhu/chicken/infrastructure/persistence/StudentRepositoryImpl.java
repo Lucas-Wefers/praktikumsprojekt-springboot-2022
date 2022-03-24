@@ -19,7 +19,7 @@ public class StudentRepositoryImpl implements StudentRepository {
   private Student studentDtoToStudent(StudentDto studentDto) {
     return new Student(studentDto.getGithubId(), studentDto.getHandle(),
         studentDto.getKlausurReferenzen().stream()
-            .map(KlausurReferenzDto::id)
+            .map(KlausurReferenzDto::klausurId)
             .toList(),
         studentDto.getUrlaubstermine());
   }

@@ -1,0 +1,8 @@
+@startuml
+package logger {
+    class UrlaubsterminLoggerImpl implements UrlaubsterminLogger {
+        - File logfile
+        + void eintragen()
+    }
+}
+@enduml

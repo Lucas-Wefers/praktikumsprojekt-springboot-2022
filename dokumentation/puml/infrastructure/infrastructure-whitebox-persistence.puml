@@ -1,0 +1,54 @@
+@startuml
+package persistenz {
+    package dao {
+      interface KlausurDao extends CrudRepository {
+        List<KlausurDto> findAll()
+        Optional<KlausurDto> findById()
+      }
+
+      interface StudentDao extends CrudRepository {}
+    }
+
+    class KlausurRepositoryImpl {
+      - KlausurDao klausurDao
+      + List<Klausur> alleKlausuren()
+      + Klausur klausurSpeichern()
+      + Klausur findKlausurById()
+    }
+
+    class StudentRepositoryImpl {
+      - StudentDao studentDao
+      + void studentSpeichern()
+      + Student findStudentByGithubId()
+    }
+
+    package dto {
+      class KlausurDto <<Record>> {
+        - Long id
+        - String fach
+        - LocalDate datum
+        - LocalTime von
+        - LocalTime bis
+        - boolean isPraesenz
+        - Long veranstaltungsId
+      }
+
+      class StudentDto {
+        - Long githubId
+        - String handle
+        - List<KlausurReferenzDto> klausurReferenzen
+        - List<Urlaubstermin> urlaubstermine
+      }
+
+      class KlausurReferenzDto <<Record>> {
+        - Long klausurId
+      }
+    }
+
+    StudentRepositoryImpl --> StudentDao
+    KlausurRepositoryImpl --> KlausurDao
+    StudentDao --> StudentDto
+    KlausurDao --> KlausurDto
+    StudentDto --> KlausurReferenzDto
+}
+@enduml
