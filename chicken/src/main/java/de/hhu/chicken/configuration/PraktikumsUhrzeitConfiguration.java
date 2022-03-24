@@ -11,10 +11,10 @@ public class PraktikumsUhrzeitConfiguration {
   private LocalTime praktikumsStartuhrzeit;
   private LocalTime praktikumsEnduhrzeit;
 
-  public PraktikumsUhrzeitConfiguration(@Value("${praktikumszeiten.start.uhrzeit}") LocalTime praktikumsStartuhrzeit,
-                                        @Value("${praktikumszeiten.ende.uhrzeit}") LocalTime praktikumsEnduhrzeit) {
-    this.praktikumsStartuhrzeit = praktikumsStartuhrzeit;
-    this.praktikumsEnduhrzeit = praktikumsEnduhrzeit;
+  public PraktikumsUhrzeitConfiguration(@Value("${praktikumszeiten.start.uhrzeit}") String praktikumsStartuhrzeit,
+                                        @Value("${praktikumszeiten.ende.uhrzeit}") String praktikumsEnduhrzeit) {
+    this.praktikumsStartuhrzeit = LocalTime.parse(praktikumsStartuhrzeit);
+    this.praktikumsEnduhrzeit = LocalTime.parse(praktikumsEnduhrzeit);
   }
 
   public LocalTime getPraktikumsStartuhrzeit() {

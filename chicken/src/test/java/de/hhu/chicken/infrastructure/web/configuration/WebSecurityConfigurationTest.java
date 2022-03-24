@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import de.hhu.chicken.service.repositories.KlausurRepository;
+import de.hhu.chicken.service.repositories.StudentRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class WebSecurityConfigurationTest {
 
   @MockBean
   KlausurRepository klausurRepository;
+
+  @MockBean
+  StudentRepository studentRepository;
 
   @Test
   @DisplayName("Uneingeloggter Nutzer wird auf GitHub redirected")
