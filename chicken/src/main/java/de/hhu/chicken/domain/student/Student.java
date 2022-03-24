@@ -175,7 +175,7 @@ public class Student {
 
   private boolean containsKlausurReferenz(Long klausurReferenz) {
     return klausurReferenzen.stream()
-        .anyMatch(x -> x.id().equals(klausurReferenz));
+        .anyMatch(x -> x.klausurId().equals(klausurReferenz));
   }
 
   private List<Urlaubstermin> getUrlaubstermineMitSelbemDatum(LocalDate datum) {
@@ -208,7 +208,7 @@ public class Student {
 
   public List<Long> getKlausurReferenzen() {
     return klausurReferenzen.stream()
-        .map(KlausurReferenz::id)
+        .map(KlausurReferenz::klausurId)
         .toList();
   }
 
