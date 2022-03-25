@@ -11,7 +11,7 @@ Es müssen die Umgebungsvariablen `CLIENT_ID` und `CLIENT_SECRET` gesetzt sein.
 Die Entwicklungsdatendank muss im Ordner `./chicken` mithilfe des Befehls `docker-compose -f docker-compose-dev.yml` gestartet werden. 
 Anschließend lässt sich die Anwendung im Order `./chicken` mit dem Befehl `./gradlew bootRun` starten.
 
-Die Konfiguration der Anwendung kann im in der `application.yaml` angepasst werden.
+Die Konfiguration der Anwendung kann in der `application.yaml` angepasst werden.
 
 ## Anleitung zur Konfiguration (Deployment)
 

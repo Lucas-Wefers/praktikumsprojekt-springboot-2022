@@ -22,12 +22,12 @@ public class UrlaubterminController {
     this.studentService = studentService;
   }
 
-  @GetMapping("/urlaubsanmeldung")
+  @GetMapping("/urlaubsterminanmeldung")
   public String urlaubsterminAnmelden(UrlaubsterminForm urlaubsterminForm) {
     return "urlaubsterminAnmeldung";
   }
 
-  @PostMapping("/urlaubsanmeldung")
+  @PostMapping("/urlaubsterminanmeldung")
   public String urlaubsterminEintragen(
       @AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal,
       @Valid UrlaubsterminForm urlaubstermin,
@@ -49,7 +49,7 @@ public class UrlaubterminController {
     return "redirect:/";
   }
 
-  @PostMapping("/urlaubstornieren")
+  @PostMapping("/urlaubsterminstornieren")
   public String urlaubsterminStornieren(
       @AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal,
       UrlaubsterminForm urlaubstermin) {

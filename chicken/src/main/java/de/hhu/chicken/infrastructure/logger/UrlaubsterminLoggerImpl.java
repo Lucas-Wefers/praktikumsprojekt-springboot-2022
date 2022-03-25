@@ -20,15 +20,15 @@ public class UrlaubsterminLoggerImpl implements UrlaubsterminLogger {
 
   private final File logFile;
 
-  public UrlaubsterminLoggerImpl() throws IOException {
+  public UrlaubsterminLoggerImpl() {
     logFile = new File("urlaubslog.txt");
   }
 
   @Override
   public void eintragen(String logNachricht) {
     try {
-      FileOutputStream fileStream = new FileOutputStream(logFile);
-      Writer writer = new OutputStreamWriter(fileStream, "UTF-8");
+      FileOutputStream fileStream = new FileOutputStream(logFile, true);
+      Writer writer = new OutputStreamWriter(fileStream, StandardCharsets.UTF_8);
       BufferedWriter bufferedWriter = new BufferedWriter(writer);
       LocalDateTime currentTime = LocalDateTime.now();
       DateTimeFormatter uhrzeitFormat = DateTimeFormatter.ofPattern("HH:mm:ss");

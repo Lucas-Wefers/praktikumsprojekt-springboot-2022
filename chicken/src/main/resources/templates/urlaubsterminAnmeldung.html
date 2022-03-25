@@ -10,7 +10,7 @@
 <body>
 <div class="container">
   <h1>Urlaub anmelden</h1>
-  <form th:action="@{/urlaubsanmeldung}" th:object="${urlaubsterminForm}" method="post">
+  <form th:action="@{/urlaubsterminanmeldung}" th:object="${urlaubsterminForm}" method="post">
     <div class="mb-3 mt-4">
       <label for="datum">Datum (Im Format yyyy-mm-dd)</label>
       <input type="date" id="datum" class="form-control" th:field="*{datum}">

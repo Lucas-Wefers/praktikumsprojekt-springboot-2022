@@ -47,7 +47,7 @@ public class UrlaubsterminControllerTest {
   void test_1() throws Exception {
     MockHttpSession session = studentSession();
 
-    mvc.perform(get("/urlaubsanmeldung")
+    mvc.perform(get("/urlaubsterminanmeldung")
             .session(session))
         .andExpect(status().isOk())
         .andExpect(view().name("urlaubsterminAnmeldung"));
@@ -59,7 +59,7 @@ public class UrlaubsterminControllerTest {
   void test_2() throws Exception {
     MockHttpSession session = studentSession();
 
-    mvc.perform(post("/urlaubsanmeldung")
+    mvc.perform(post("/urlaubsterminanmeldung")
             .session(session)
             .param("datum", "2022-03-23")
             .param("von", "09:30")
@@ -81,7 +81,7 @@ public class UrlaubsterminControllerTest {
   void test_3() throws Exception {
     MockHttpSession session = studentSession();
 
-    mvc.perform(post("/urlaubsanmeldung")
+    mvc.perform(post("/urlaubsterminanmeldung")
             .session(session)
             .param("datum", "2022-03-23")
             .param("von", "09:30")
@@ -102,7 +102,7 @@ public class UrlaubsterminControllerTest {
   void test_4() throws Exception {
     MockHttpSession session = studentSession();
 
-    mvc.perform(post("/urlaubstornieren")
+    mvc.perform(post("/urlaubsterminstornieren")
             .session(session)
             .param("datum", "2022-03-23")
             .param("von", "09:30")

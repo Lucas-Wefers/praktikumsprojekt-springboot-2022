@@ -5,13 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
-    <title>Urlaubsübersicht</title>
+    <title>PP2 Urlaubsübersicht</title>
 </head>
 <body>
 <div class="container border rounded mt-4">
     <h1>Übersicht: Freistellungen</h1>
 
-    <h2>Urlaubszeiten</h2>
+    <h2>Urlaubstermine</h2>
     <table class="table">
         <thead>
         <tr>
@@ -23,18 +23,18 @@
         </tr>
         </thead>
         <tbody th:if="${student != null}">
-        <tr th:each="urlaub : ${student.getUrlaubstermine()}">
-            <td th:text="${urlaub.getDatum()}"></td>
-            <td th:text="${urlaub.getVon()}"></td>
-            <td th:text="${urlaub.getBis()}"></td>
-            <td th:text="${urlaub.dauer().toMinutes()}"></td>
+        <tr th:each="urlaubstermin : ${student.getUrlaubstermine()}">
+            <td th:text="${urlaubstermin.getDatum()}"></td>
+            <td th:text="${urlaubstermin.getVon()}"></td>
+            <td th:text="${urlaubstermin.getBis()}"></td>
+            <td th:text="${urlaubstermin.dauer().toMinutes()}"></td>
             <td>
-                <div aria-label="Urlaubstermin ist nicht stornierbar" th:if="${!student.isUrlaubsterminStornierbar(urlaub.getDatum(), heute)}">
+                <div aria-label="Urlaubstermin ist nicht stornierbar" th:if="${!student.isUrlaubsterminStornierbar(urlaubstermin.getDatum(), heute)}">
                 </div>
-                <form method="post" th:action="@{/urlaubstornieren}" th:if="${student.isUrlaubsterminStornierbar(urlaub.getDatum(), heute)}">
-                    <input type="hidden" th:value="${urlaub.getDatum()}" name="datum">
-                    <input type="hidden" th:value="${urlaub.getVon()}" name="von">
-                    <input type="hidden" th:value="${urlaub.getBis()}" name="bis">
+                <form method="post" th:action="@{/urlaubsterminstornieren}" th:if="${student.isUrlaubsterminStornierbar(urlaubstermin.getDatum(), heute)}">
+                    <input type="hidden" th:value="${urlaubstermin.getDatum()}" name="datum">
+                    <input type="hidden" th:value="${urlaubstermin.getVon()}" name="von">
+                    <input type="hidden" th:value="${urlaubstermin.getBis()}" name="bis">
                     <button class="btn btn-danger" type="submit">Stornieren</button>
                 </form>
             </td>
@@ -95,7 +95,7 @@
     </table>
     <div class="text-center mt-4 mb-4">
         <a aria-label="Zur Klausuranmeldung" class="btn btn-primary" th:href="@{/klausuranmeldung}">Klausuranmeldung</a>
-        <a aria-label="Zur Urlaubsterminanmeldung" class="btn btn-primary" th:href="@{/urlaubsanmeldung}">Urlaubsterminanmeldung</a>
+        <a aria-label="Zur Urlaubsterminanmeldung" class="btn btn-primary" th:href="@{/urlaubsterminanmeldung}">Urlaubsterminanmeldung</a>
     </div>
 </div>
 </body>
