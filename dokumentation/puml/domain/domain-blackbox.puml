@@ -1,10 +1,10 @@
 @startuml
 package domain {
-package klausur {
-}
-package student {
-}
-package stereotypes {
-}
+  package klausur {
+  }
+  package student {
+  }
+  package stereotypes {
+  }
 }
 @enduml

@@ -5,83 +5,144 @@
 
 === Whitebox Gesamtsystem
 
+image:../images/whitebox-whole-system.png[Fachlicher Kontext, 500]
 
+Eine Übersicht über die in den Lösungsstrategien beschriebene Onion-Architektur
 
-_**<Übersichtsdiagramm>**_
+==== Domain
 
-Begründung:: _<Erläuternder Text>_
+===== Überblick
 
-Enthaltene Bausteine:: _<Beschreibung der enthaltenen Bausteine (Blackboxen)>_
+image:../images/domain-blackbox.png[Fachlicher Kontext]
 
-Wichtige Schnittstellen:: _<Beschreibung wichtiger Schnittstellen>_
+* Stereotypes
+** In der Domäne benutzte Annotationen (AggregateRoot und ValueObject), welche für bestimmte ArchUnit-Regeln verwendet werden.
 
+* Student
+** Student Aggregat, in welchem die Urlaubstermine eines Studenten und Referenzen auf die angemeldeten Klausuren verwaltet.
 
+* Klausur
+** Klausur Aggregat, welches eine global im System angelegte Klausur beschreibt.
 
-==== <Name Blackbox 1>
+===== Klausur Aggregat
 
+image:../images/domain-whitebox-klausur.png[Fachlicher Kontext]
 
+* Klausur
+** Aggregate Root einer Klausur, mit welchem sich die Freistellungszeiträume berechnen lassen.
+* Klausurart
+** Stellt die Art der Klausur da (Online oder Präsenz). Dient zur Berechnung der Freistellungszeiträume.
+* VeranstaltungsId
+** Die ID der Veranstaltung aus dem Lsf.
 
-_<Zweck/Verantwortung>_
+===== Student Aggregat
 
-_<Schnittstelle(n)>_
+image:../images/domain-whitebox-student.png[Fachlicher Kontext]
 
-_<(Optional) Qualitäts-/Leistungsmerkmale>_
+* Student
+** Aggregate Root des Studenten, welche die Logik für die Urlaubs- und Klausuranmeldung enthält.
+* Urlaubstermin
+** Stellt einen einzigen Urlaubstermin dar. (z. B. Urlaub am Freitag von 9:30 bis 10:30 Uhr)
+* KlausurReferenz
+** Dient als Referenz auf das Klausuraggregat. Stellt dabei eine angemeldete Klausur dar.
+* GithubId
+** Die Github-ID des Studenten, über welche man einen Studenten eindeutig identifizieren kann. (auch bei Änderungen des Handles)
+* GithubHandle
+** Der momentane Github-Handle des Studenten.
 
-_<(Optional) Ablageort/Datei(en)>_
+==== Service
 
-_<(Optional) Erfüllte Anforderungen>_
+===== Überblick
 
-_<(optional) Offene Punkte/Probleme/Risiken>_
+image:../images/service-blackbox.png[Fachlicher Kontext]
 
-==== <Name Blackbox 2>
+* Repositories
+** Die Interfaces, welche in der Infrastruktur-Schicht implementiert werden, und für den Datenbankzugriff zuständig sind.
+* Logger
+** Die Interfaces, welche in der Infrastruktur-Schicht implementiert werden, und für das Loggen der Urlaubsterminanmeldungen und Stornierungen zuständig ist.
+* Studentservice
+** Bietet Methoden um einen bestimmten Studenten für Urlaubstermine oder Klausuren anzumelden. Übernimmt außerdem die Logik dafür, dass sich der Urlaub anpasst, wenn man in dem Zeitraum des Urlaubstermins bereits für Klausuren angemeldet ist.
+* Klausurservice
+** Bietet Methoden für das globale Eintragen einer Klausur und das Laden bestimmter Klausuren im System.
 
-_<Blackbox-Template>_
+===== Whitebox der Serviceschicht
 
-==== <Name Blackbox n>
+image:../images/service-whitebox-services.png[Fachlicher Kontext]
 
-_<Blackbox-Template>_
+==== Infrastructure
 
+===== Überblick
 
-==== <Name Schnittstelle 1>
+image:../images/infrastructure-blackbox.png[Fachlicher Kontext]
 
-...
+* Web
+** Implementierung der Web-Schnittstelle der Anwendung. (Spring Web + Thymeleaf)
+* Persistence
+** Adapter für die Datenbankanbindung. (Spring Data JDBC)
+* Logger
+** Adapter für das Loggen der Urlaubstermine. (schreibt das Log in eine lokale Textdatei)
 
-==== <Name Schnittstelle m>
+===== Web
 
-=== Ebene 2
+====== Controller
 
+image:../images/infrastructure-whitebox-controllers.png[Fachlicher Kontext]
 
+* Student
+** UebersichtController
+*** Hier wird die Übersichtsseite für den Studenten ausgeliefert, indem der Student und die angemeldeten Klausuren aus dem jeweiligen Service geladen und dem Model übergeben werden.
+** KlausurController
+*** Bietet Routen für die Eintragung, Anmeldung und Stornierung von Klausuren.
+** UrlaubsterminController
+*** Bietet Routen für die Anmeldung und Stornierung von Urlaubsterminen.
 
-==== Whitebox _<Baustein 1>_
+====== Forms
 
+image:../images/infrastructure-whitebox-forms.png[Fachlicher Kontext]
 
+* UrlaubsterminForm
+** Datencontainer für den Forminput eines Urlaubstermins.
+** Hier wird verifiziert, ob die Daten gültig sind.
+*** 15 Minuten Takt des Urlaubs
+*** End- liegt nach Startuhrzeit
+*** Liegt innerhalb des Praktikumszeitraums
 
-_<Whitebox-Template>_
+* KlausurForm
+** Datencontainer für den Forminput einer Klausur.
+** Hier wird verifiziert, ob die Daten gültig sind.
+*** End- liegt nach Startuhrzeit
+*** Liegt innerhalb des Praktikumszeitraums
+*** VeranstaltungsId ist gültig -> Veranstaltung ist im Lsf vorhanden
 
-==== Whitebox _<Baustein 2>_
+* Annotations
+** Hier liegen die Annotationen für die Verifizierung der Daten.
+** Dafür werden eigene Spring Validation Annotationen verwendet.
+* Verification
+** Logik für die Verifizierung der Daten.
 
-_<Whitebox-Template>_
+====== Configuration
 
-...
+image:../images/infrastructure-whitebox-configuration.png[Fachlicher Kontext]
 
-==== Whitebox _<Baustein m>_
+Hier wird Spring Security Configuriert. Dabei gibt es eine strikte Rollenzuteilung -> siehe Entwurfsentscheidungen
 
-_<Whitebox-Template>_
+===== Persistence
 
-=== Ebene 3
+image:../images/infrastructure-whitebox-persistence.png[Fachlicher Kontext]
 
+* Dto
+** Datencontainer für das Speichern und Laden der jeweiligen Aggregate.
+* Dao
+** Verwendet CrudRepositorys zum Speichern der Aggregate -> Spring Data JDBC.
+* StudentRepositoryImpl
+** Implementierung des Repositorys aus der Serviceschicht, mithilfe des StudentDto Dao's.
+* KlausurRepositoryImpl
+** Implementierung des Repositorys aus der Serviceschicht, mithilfe des KlausurDto Dao's.
 
+===== Logger
 
-==== Whitebox <_Baustein x.1_>
+image:../images/infrastructure-whitebox-logger.png[Fachlicher Kontext]
 
-
-
-_<Whitebox-Template>_
-
-==== Whitebox <_Baustein x.2_>
-
-_<Whitebox-Template>_
-
-==== Whitebox <_Baustein y.1_>
-
-_<Whitebox-Template>_
+* UrlaubsterminLoggerImpl
+** Bietet eine Methode, um eine Nachricht in der lokalen Logdatei einzutragen.
+** Speichert dabei das Datum und die Uhrzeit zu der die Nachricht geloggt wird.

@@ -3,7 +3,7 @@
 //
 // ====================================
 
-= image:arc42-logo.png[arc42] Template
+= image:images/arc42-logo.png[arc42] Template
 // toc-title definition MUST follow document title without blank line!
 :toc-title: Inhaltsverzeichnis
 
@@ -47,17 +47,5 @@ include::src/04_solution_strategy.adoc[]
 include::src/05_building_block_view.adoc[]
 
 <<<<
-// 4. Laufzeitsicht
-include::src/06_runtime_view.adoc[]
-
-<<<<
-// 5. Verteilungssicht
-include::src/07_deployment_view.adoc[]
-
-<<<<
-// 6. Entscheidungen
+// 4. Entscheidungen
 include::src/09_architecture_decisions.adoc[]
-
-<<<<
-// 7. Glossar
-include::src/12_glossary.adoc[]
