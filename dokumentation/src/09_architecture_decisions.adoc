@@ -1,5 +1,25 @@
 [[section-design-decisions]]
 == Architekturentscheidungen
 
+=== Allgemeine Designentscheidungen
+
+- Wir haben die Anwendung auf Deutsch verfasst, um der Ubiquitous Language gerecht zu werden
+
+- Um unsere Commit-Nachrichten einheitlich zu halten, haben wir uns dazu entschieden, diese auf Englisch zu verfassen, alle Begriffe klein und in Camel Case zu schreiben. Die Fachbegriffe gehören zur Ubiquitous Language und sind demnach auf Deutsch.
+
+- Die Namen der HTML-Dateien haben wir in Camel Case geschrieben, um die Lesbarkeit zu verbessern
+
+- Praktikumszeiten von z.B. 22:00 - 2:00 Uhr (Übergang in den nächsten Tag) werden von unserer Anwendung nicht berücksichtigt, da wir diese als unrealistisch betrachten.
+
+- Die Verifizierung der Formulardaten wird in der Infrastrukturschicht realisiert. Somit wird gewährleistet, dass in der Domäne nur mit validen Objekten gearbeitet wird.
+
+=== Bewusste Abweichungen der Architekturregeln
+
+- In der Serviceschicht haben wir die @Service Annotation verwendet, weil uns dies die Verwendung von Bean Injection ermöglicht.
+
+- Bei der Umsetzung der Konfiguration der Praktikumsuhrzeit werden zum Teil die Architekturregeln verletzt, da sie außerhalb der Verantwortung der Onion-Architektur liegt.
+
+- Um den Zugriff auf die Urlaubstermine im Aggregat Student zu vereinfachen, haben wir uns dazu entschieden, das Werteobjekt Urlaubstermin public zu machen. Damit die Konsistenz im Aggregat sichergestellt ist, ist der Konstruktor vom Urlaubstermin paket-lokal.
+
 
 
