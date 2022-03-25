@@ -19,34 +19,35 @@ image:../images/domain-blackbox.png[Fachlicher Kontext]
 ** In der Domäne benutzte Annotationen (AggregateRoot und ValueObject), welche für bestimmte ArchUnit-Regeln verwendet werden.
 
 * Student
-** Student Aggregat, in welchem die Urlaubstermine eines Studenten und Referenzen auf die angemeldeten Klausuren verwaltet.
+** Student Aggregat, in welchem die Urlaubstermine eines Studenten und Referenzen auf die angemeldeten Klausuren verwaltet werden.
+** Die Github-ID ist hier das identitätsstiftende Attribut und das Github-Handle wird zusätzlich gespeichert, da es variabel ist.
 
 * Klausur
-** Klausur Aggregat, welches eine global im System angelegte Klausur beschreibt.
+** Klausur Aggregat, welches eine im System angelegte Klausur beschreibt.
 
 ===== Klausur Aggregat
 
 image:../images/domain-whitebox-klausur.png[Fachlicher Kontext]
 
 * Klausur
-** Aggregate Root einer Klausur, mit welchem sich die Freistellungszeiträume berechnen lassen.
+** Aggregate Root der Klausur, mit welchem sich die Freistellungszeiträume berechnen lassen.
 * Klausurart
-** Stellt die Art der Klausur da (Online oder Präsenz). Dient zur Berechnung der Freistellungszeiträume.
+** Stellt die Art der Klausur dar (Online oder Präsenz). Dient zur Berechnung der Freistellungszeiträume.
 * VeranstaltungsId
-** Die ID der Veranstaltung aus dem Lsf.
+** Die ID der Veranstaltung aus dem LSF.
 
 ===== Student Aggregat
 
 image:../images/domain-whitebox-student.png[Fachlicher Kontext]
 
 * Student
-** Aggregate Root des Studenten, welche die Logik für die Urlaubs- und Klausuranmeldung enthält.
+** Aggregate Root des Studenten, welche die Logik für die Urlaubs- und Klausurverwaltung enthält.
 * Urlaubstermin
-** Stellt einen einzigen Urlaubstermin dar. (z. B. Urlaub am Freitag von 9:30 bis 10:30 Uhr)
+** Stellt einen einzigen Urlaubstermin dar (z. B. Urlaub am Freitag von 9:30 bis 10:30 Uhr).
 * KlausurReferenz
 ** Dient als Referenz auf das Klausuraggregat. Stellt dabei eine angemeldete Klausur dar.
 * GithubId
-** Die Github-ID des Studenten, über welche man einen Studenten eindeutig identifizieren kann. (auch bei Änderungen des Handles)
+** Die Github-ID des Studenten, über welche man einen Studenten eindeutig identifizieren kann (auch bei Änderungen des Handles).
 * GithubHandle
 ** Der momentane Github-Handle des Studenten.
 
@@ -59,11 +60,11 @@ image:../images/service-blackbox.png[Fachlicher Kontext]
 * Repositories
 ** Die Interfaces, welche in der Infrastruktur-Schicht implementiert werden, und für den Datenbankzugriff zuständig sind.
 * Logger
-** Die Interfaces, welche in der Infrastruktur-Schicht implementiert werden, und für das Loggen der Urlaubsterminanmeldungen und Stornierungen zuständig ist.
+** Die Interfaces, welche in der Infrastruktur-Schicht implementiert werden, und für das Loggen der Urlaubsterminanmeldungen und Stornierungen zuständig sind.
 * Studentservice
-** Bietet Methoden um einen bestimmten Studenten für Urlaubstermine oder Klausuren anzumelden. Übernimmt außerdem die Logik dafür, dass sich der Urlaub anpasst, wenn man in dem Zeitraum des Urlaubstermins bereits für Klausuren angemeldet ist.
+** Bietet Methoden an, um Urlaubstermine und Klausuren eines Studenten zu verwalten. Übernimmt außerdem die Logik dafür, dass der Urlaub anpasst wird, wenn man in dem Zeitraum des Urlaubstermins bereits für Klausuren angemeldet ist.
 * Klausurservice
-** Bietet Methoden für das globale Eintragen einer Klausur und das Laden bestimmter Klausuren im System.
+** Bietet Methoden für das Eintragen einer Klausur und das Laden bestimmter Klausuren im System an.
 
 ===== Whitebox der Serviceschicht
 
@@ -112,7 +113,7 @@ image:../images/infrastructure-whitebox-forms.png[Fachlicher Kontext]
 ** Hier wird verifiziert, ob die Daten gültig sind.
 *** End- liegt nach Startuhrzeit
 *** Liegt innerhalb des Praktikumszeitraums
-*** VeranstaltungsId ist gültig -> Veranstaltung ist im Lsf vorhanden
+*** VeranstaltungsId ist gültig <--> Veranstaltung ist im LSF vorhanden
 
 * Annotations
 ** Hier liegen die Annotationen für die Verifizierung der Daten.
@@ -124,20 +125,20 @@ image:../images/infrastructure-whitebox-forms.png[Fachlicher Kontext]
 
 image:../images/infrastructure-whitebox-configuration.png[Fachlicher Kontext]
 
-Hier wird Spring Security Configuriert. Dabei gibt es eine strikte Rollenzuteilung -> siehe Entwurfsentscheidungen
+Hier wird Spring Security konfiguriert. Dabei gibt es eine strikte Rollenzuteilung -> siehe Entwurfsentscheidungen
 
 ===== Persistence
 
 image:../images/infrastructure-whitebox-persistence.png[Fachlicher Kontext]
 
-* Dto
+* DTO
 ** Datencontainer für das Speichern und Laden der jeweiligen Aggregate.
-* Dao
-** Verwendet CrudRepositorys zum Speichern der Aggregate -> Spring Data JDBC.
+* DAO
+** Verwendet CrudRepositorys zum Speichern der Aggregate (Spring Data JDBC).
 * StudentRepositoryImpl
-** Implementierung des Repositorys aus der Serviceschicht, mithilfe des StudentDto Dao's.
+** Implementierung des Repositorys aus der Serviceschicht, mithilfe des StudentDto DAOs.
 * KlausurRepositoryImpl
-** Implementierung des Repositorys aus der Serviceschicht, mithilfe des KlausurDto Dao's.
+** Implementierung des Repositorys aus der Serviceschicht, mithilfe des KlausurDto DAOs.
 
 ===== Logger
 
