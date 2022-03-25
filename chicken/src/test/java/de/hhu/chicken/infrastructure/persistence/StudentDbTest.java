@@ -37,8 +37,8 @@ public class StudentDbTest {
   }
 
   @Test
-  @DisplayName("Ein Student mit einer Klausur und der Github-Id 12345678L wird in die " +
-      "Datenbank gespeichert und wieder ausgelesen")
+  @DisplayName("Ein Student mit einer Klausur und der Github-Id 12345678L wird in die "
+      + "Datenbank gespeichert und wieder ausgelesen")
   void test_2() {
     Student student = new Student(12345678L, "jensbendisposto");
     Klausur klausur = beispielklausur();
@@ -55,8 +55,8 @@ public class StudentDbTest {
   }
 
   @Test
-  @DisplayName("Ein Student mit einem Urlaub und der Github-Id 12345678L wird in die " +
-      "Datenbank gespeichert und wieder ausgelesen")
+  @DisplayName("Ein Student mit einem Urlaub und der Github-Id 12345678L wird in die "
+      + "Datenbank gespeichert und wieder ausgelesen")
   void test_3() {
     Student student = new Student(12345678L, "jensbendisposto");
     student.fuegeUrlaubsterminHinzu(LocalDate.of(2022, 3, 22),
@@ -74,8 +74,8 @@ public class StudentDbTest {
   }
 
   @Test
-  @DisplayName("Zwei Studenten, mit den Github-Ids 12345678L und 23123187L werden in die " +
-      "Datenbank gespeichert und der zweite wird wieder ausgelesen")
+  @DisplayName("Zwei Studenten, mit den Github-Ids 12345678L und 23123187L werden in die "
+      + "Datenbank gespeichert und der zweite wird wieder ausgelesen")
   void test_4() {
     Student student = new Student(12345678L, "jensbendisposto");
     Student student2 = new Student(23123187L, "christianmeter");
@@ -88,8 +88,8 @@ public class StudentDbTest {
   }
 
   @Test
-  @DisplayName("Ein Student wird ausgelesen und ihm wird eine KLausur hinzugefuegt und " +
-      "anschliessend in der Datenbank gespeichert")
+  @DisplayName("Ein Student wird ausgelesen und ihm wird eine KLausur hinzugefuegt und "
+      + "anschliessend in der Datenbank gespeichert")
   void test_5() {
     Student student = new Student(23123187L, "christianmeter");
     studentRepository.studentSpeichern(student);

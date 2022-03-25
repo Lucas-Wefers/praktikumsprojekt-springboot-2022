@@ -41,7 +41,8 @@ public class StudentKlausurEinfuegenTest {
   }
 
   @Test
-  @DisplayName("Bei einer Klausur die nach dem Urlaubszeitraum liegt bleibt der Urlaub unveraendert")
+  @DisplayName("Bei einer Klausur die nach dem Urlaubszeitraum liegt"
+      + " bleibt der Urlaub unveraendert")
   void test_3() {
     Student student = studentMitEinemUrlaubstermin(9, 30, 10, 30);
 

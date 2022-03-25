@@ -47,11 +47,11 @@ public class StudentServiceTest {
   }
 
   private void assertThatUrlaubstermineSindGleich(Urlaubstermin urlaubstermin, int klausurTag,
-                                                  int hVon,
-                                                  int minVon, int hBis, int minBis) {
+                                                  int stundeVon,
+                                                  int minVon, int stundeBis, int minBis) {
     assertThat(urlaubstermin.getDatum()).isEqualTo(LocalDate.of(2022, 3, klausurTag));
-    assertThat(urlaubstermin.getVon()).isEqualTo(LocalTime.of(hVon, minVon));
-    assertThat(urlaubstermin.getBis()).isEqualTo(LocalTime.of(hBis, minBis));
+    assertThat(urlaubstermin.getVon()).isEqualTo(LocalTime.of(stundeVon, minVon));
+    assertThat(urlaubstermin.getBis()).isEqualTo(LocalTime.of(stundeBis, minBis));
   }
 
   private void fuegeKlausurHinzu(Student student, Klausur klausur) {
@@ -61,12 +61,13 @@ public class StudentServiceTest {
         klausur.berechneFreistellungsEndzeitpunkt(LocalTime.of(13, 30)));
   }
 
-  private void urlaubsterminAnmelden(int klausurTag, int hVon, int minVon, int hBis, int minBis) {
+  private void urlaubsterminAnmelden(int klausurTag, int stundeVon, int minVon, int stundeBis,
+                                     int minBis) {
     studentService.urlaubsterminAnmelden(githubId,
         handle,
         LocalDate.of(2022, 3, klausurTag),
-        LocalTime.of(hVon, minVon),
-        LocalTime.of(hBis, minBis));
+        LocalTime.of(stundeVon, minVon),
+        LocalTime.of(stundeBis, minBis));
   }
 
   @Test
@@ -106,7 +107,8 @@ public class StudentServiceTest {
     Urlaubstermin urlaubstermin = student.getUrlaubstermine().get(0);
     verify(studentRepository).studentSpeichern(student);
     assertThat(student.getUrlaubstermine()).hasSize(1);
-    assertThatUrlaubstermineSindGleich(urlaubstermin, 15, 9, 30, 13, 30);
+    assertThatUrlaubstermineSindGleich(
+        urlaubstermin, 15, 9, 30, 13, 30);
   }
 
   @Test
@@ -140,7 +142,8 @@ public class StudentServiceTest {
     verify(studentRepository).studentSpeichern(student);
     assertThat(student.getUrlaubstermine()).hasSize(1);
     Urlaubstermin urlaubstermin = student.getUrlaubstermine().get(0);
-    assertThatUrlaubstermineSindGleich(urlaubstermin, 17, 11, 30, 13, 30);
+    assertThatUrlaubstermineSindGleich(
+        urlaubstermin, 17, 11, 30, 13, 30);
   }
 
   @Test
@@ -158,7 +161,8 @@ public class StudentServiceTest {
     verify(studentRepository).studentSpeichern(student);
     assertThat(student.getUrlaubstermine()).hasSize(1);
     Urlaubstermin urlaubstermin = student.getUrlaubstermine().get(0);
-    assertThatUrlaubstermineSindGleich(urlaubstermin, 17, 9, 30, 10, 0);
+    assertThatUrlaubstermineSindGleich(
+        urlaubstermin, 17, 9, 30, 10, 0);
   }
 
   @Test
@@ -177,8 +181,10 @@ public class StudentServiceTest {
     assertThat(student.getUrlaubstermine()).hasSize(2);
     Urlaubstermin urlaubstermin = student.getUrlaubstermine().get(0);
     Urlaubstermin urlaubstermin2 = student.getUrlaubstermine().get(1);
-    assertThatUrlaubstermineSindGleich(urlaubstermin, 17, 9, 30, 10, 0);
-    assertThatUrlaubstermineSindGleich(urlaubstermin2, 17, 11, 30, 13, 30);
+    assertThatUrlaubstermineSindGleich(
+        urlaubstermin, 17, 9, 30, 10, 0);
+    assertThatUrlaubstermineSindGleich(
+        urlaubstermin2, 17, 11, 30, 13, 30);
   }
 
   @Test
@@ -200,9 +206,12 @@ public class StudentServiceTest {
     Urlaubstermin urlaubstermin = student.getUrlaubstermine().get(0);
     Urlaubstermin urlaubstermin2 = student.getUrlaubstermine().get(1);
     Urlaubstermin urlaubstermin3 = student.getUrlaubstermine().get(2);
-    assertThatUrlaubstermineSindGleich(urlaubstermin, 17, 9, 30, 10, 0);
-    assertThatUrlaubstermineSindGleich(urlaubstermin2, 17, 11, 30, 11, 45);
-    assertThatUrlaubstermineSindGleich(urlaubstermin3, 17, 13, 0, 13, 30);
+    assertThatUrlaubstermineSindGleich(
+        urlaubstermin, 17, 9, 30, 10, 0);
+    assertThatUrlaubstermineSindGleich(
+        urlaubstermin2, 17, 11, 30, 11, 45);
+    assertThatUrlaubstermineSindGleich(
+        urlaubstermin3, 17, 13, 0, 13, 30);
   }
 
   @Test
@@ -293,10 +302,10 @@ public class StudentServiceTest {
   void test_15() {
     Student student = new Student(githubId, handle);
     when(studentRepository.findStudentByGithubId(githubId)).thenReturn(student);
-    String logNachricht = "Der Student " + handle + " hat für den " +
-        LocalDate.of(2022, 3, 17) +
-        " einen Urlaub von " + LocalTime.of(11, 0) + " bis " +
-        LocalTime.of(13, 30) + " gebucht.";
+    String logNachricht = "Der Student " + handle + " hat für den "
+        + LocalDate.of(2022, 3, 17)
+        + " einen Urlaub von " + LocalTime.of(11, 0) + " bis "
+        + LocalTime.of(13, 30) + " gebucht.";
 
     urlaubsterminAnmelden(17, 11, 0, 13, 30);
 
@@ -308,10 +317,10 @@ public class StudentServiceTest {
   void test_16() {
     Student student = new Student(githubId, handle);
     when(studentRepository.findStudentByGithubId(githubId)).thenReturn(student);
-    String logNachricht = "Der Student " + student.getHandle() + " hat den Urlaub am " +
-        LocalDate.of(2022, 3, 17) +
-        " von " + LocalTime.of(11, 0) + " bis " +
-        LocalTime.of(13, 30) + " storniert.";
+    String logNachricht = "Der Student " + student.getHandle() + " hat den Urlaub am "
+        + LocalDate.of(2022, 3, 17)
+        + " von " + LocalTime.of(11, 0) + " bis "
+        + LocalTime.of(13, 30) + " storniert.";
 
     urlaubsterminAnmelden(17, 11, 0, 13, 30);
     studentService.urlaubsterminStornieren(githubId,

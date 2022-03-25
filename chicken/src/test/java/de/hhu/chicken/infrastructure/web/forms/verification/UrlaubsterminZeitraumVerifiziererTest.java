@@ -58,8 +58,8 @@ public class UrlaubsterminZeitraumVerifiziererTest {
   }
 
   @Test
-  @DisplayName("Beide Zeitpunkte liegen ausserhalb der Praktikumszeit und es wird false " +
-      "zurueckgegeben")
+  @DisplayName("Beide Zeitpunkte liegen ausserhalb der Praktikumszeit und es wird false "
+      + "zurueckgegeben")
   void test_4() {
     LocalTime von = LocalTime.of(3, 30);
     LocalTime bis = LocalTime.of(14, 30);

@@ -15,10 +15,10 @@ public class StudentTemplates {
         LocalTime.of(13, 30));
   }
 
-  static Urlaubstermin urlaubsterminTemplate(int hVon, int minVon, int hBis, int minBis) {
+  static Urlaubstermin urlaubsterminTemplate(int stundeVon, int minVon, int stundeBis, int minBis) {
     return new Urlaubstermin(LocalDate.of(2022, 2, 15),
-        LocalTime.of(hVon, minVon),
-        LocalTime.of(hBis, minBis));
+        LocalTime.of(stundeVon, minVon),
+        LocalTime.of(stundeBis, minBis));
   }
 
   static Student studentMitMehrerenUrlaubsterminen() {
@@ -35,10 +35,11 @@ public class StudentTemplates {
     return student;
   }
 
-  static Student studentMitEinemUrlaubstermin(int hVon, int minVon, int hBis, int minBis) {
+  static Student studentMitEinemUrlaubstermin(int stundeVon,
+                                              int minVon, int stundeBis, int minBis) {
     Student student = new Student(14529531L, "jensbendisposto");
 
-    Urlaubstermin urlaubstermin = urlaubsterminTemplate(hVon, minVon, hBis, minBis);
+    Urlaubstermin urlaubstermin = urlaubsterminTemplate(stundeVon, minVon, stundeBis, minBis);
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, true);
 

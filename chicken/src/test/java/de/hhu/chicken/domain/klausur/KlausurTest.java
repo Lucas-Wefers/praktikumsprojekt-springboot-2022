@@ -14,7 +14,8 @@ public class KlausurTest {
   void test_1() {
     Klausur klausur = beispielKlausur(10, 30, 11, true);
 
-    LocalTime startzeitpunkt = klausur.berechneFreistellungsStartzeitpunkt(LocalTime.of(9, 30));
+    LocalTime startzeitpunkt =
+        klausur.berechneFreistellungsStartzeitpunkt(LocalTime.of(9, 30));
 
     assertThat(startzeitpunkt).isEqualTo(LocalTime.of(9, 30));
   }
@@ -24,7 +25,8 @@ public class KlausurTest {
   void test_2() {
     Klausur klausur = beispielKlausur(9, 30, 11, true);
 
-    LocalTime startzeitpunkt = klausur.berechneFreistellungsStartzeitpunkt(LocalTime.of(9, 30));
+    LocalTime startzeitpunkt =
+        klausur.berechneFreistellungsStartzeitpunkt(LocalTime.of(9, 30));
 
     assertThat(startzeitpunkt).isEqualTo(LocalTime.of(9, 30));
   }
@@ -34,7 +36,8 @@ public class KlausurTest {
   void test_3() {
     Klausur klausur = beispielKlausur(10, 30, 11, false);
 
-    LocalTime startzeitpunkt = klausur.berechneFreistellungsStartzeitpunkt(LocalTime.of(9, 30));
+    LocalTime startzeitpunkt =
+        klausur.berechneFreistellungsStartzeitpunkt(LocalTime.of(9, 30));
 
     assertThat(startzeitpunkt).isEqualTo(LocalTime.of(10, 0));
   }
@@ -44,7 +47,8 @@ public class KlausurTest {
   void test_4() {
     Klausur klausur = beispielKlausur(8, 45, 11, false);
 
-    LocalTime startzeitpunkt = klausur.berechneFreistellungsStartzeitpunkt(LocalTime.of(9, 30));
+    LocalTime startzeitpunkt =
+        klausur.berechneFreistellungsStartzeitpunkt(LocalTime.of(9, 30));
 
     assertThat(startzeitpunkt).isEqualTo(LocalTime.of(9, 30));
   }
@@ -54,7 +58,8 @@ public class KlausurTest {
   void test_5() {
     Klausur klausur = beispielKlausur(8, 30, 10, true);
 
-    LocalTime endzeitpunkt = klausur.berechneFreistellungsEndzeitpunkt(LocalTime.of(13, 30));
+    LocalTime endzeitpunkt =
+        klausur.berechneFreistellungsEndzeitpunkt(LocalTime.of(13, 30));
 
     assertThat(endzeitpunkt).isEqualTo(LocalTime.of(12, 30));
   }
@@ -64,7 +69,8 @@ public class KlausurTest {
   void test_6() {
     Klausur klausur = beispielKlausur(8, 30, 12, true);
 
-    LocalTime endzeitpunkt = klausur.berechneFreistellungsEndzeitpunkt(LocalTime.of(13, 30));
+    LocalTime endzeitpunkt =
+        klausur.berechneFreistellungsEndzeitpunkt(LocalTime.of(13, 30));
 
     assertThat(endzeitpunkt).isEqualTo(LocalTime.of(13, 30));
   }
@@ -74,7 +80,8 @@ public class KlausurTest {
   void test_7() {
     Klausur klausur = beispielKlausur(8, 30, 12, false);
 
-    LocalTime endzeitpunkt = klausur.berechneFreistellungsEndzeitpunkt(LocalTime.of(13, 30));
+    LocalTime endzeitpunkt =
+        klausur.berechneFreistellungsEndzeitpunkt(LocalTime.of(13, 30));
 
     assertThat(endzeitpunkt).isEqualTo(LocalTime.of(12, 30));
   }
@@ -84,7 +91,8 @@ public class KlausurTest {
   void test_8() {
     Klausur klausur = beispielKlausur(8, 30, 14, false);
 
-    LocalTime endzeitpunkt = klausur.berechneFreistellungsEndzeitpunkt(LocalTime.of(13, 30));
+    LocalTime endzeitpunkt =
+        klausur.berechneFreistellungsEndzeitpunkt(LocalTime.of(13, 30));
 
     assertThat(endzeitpunkt).isEqualTo(LocalTime.of(13, 30));
   }

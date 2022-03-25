@@ -74,8 +74,8 @@ public class UrlaubsterminControllerTest {
   }
 
   @Test
-  @DisplayName("Ein ungueltiger Urlaubstermin wird nicht eingetragen, der  und es wird nicht " +
-      "weitergeleitet")
+  @DisplayName("Ein ungueltiger Urlaubstermin wird nicht eingetragen, der  und es wird nicht "
+      + "weitergeleitet")
   void test_3() throws Exception {
     MockHttpSession session = studentSession();
 

@@ -109,7 +109,8 @@ public class StudentUrlaubsterminEinfuegenTest {
   }
 
   @Test
-  @DisplayName("Am Anfang 1h Urlaubsblock, mittendrin 1h Urlaubsblock, wird nur der 1. hinzugefuegt")
+  @DisplayName("Am Anfang 1h Urlaubsblock, mittendrin 1h Urlaubsblock, "
+      + "wird nur der 1. hinzugefuegt")
   void test_8() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 10, 30);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(11, 30, 12, 30);
@@ -169,8 +170,8 @@ public class StudentUrlaubsterminEinfuegenTest {
   }
 
   @Test
-  @DisplayName("Bei drei 30min Urlaubsbloecken mittendrin, werden an einem Klausurtag alle " +
-      "hinzugefuegt")
+  @DisplayName("Bei drei 30min Urlaubsbloecken mittendrin, werden an einem Klausurtag alle "
+      + "hinzugefuegt")
   void test_12() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(10, 30, 11, 0);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(12, 0, 12, 30);
@@ -221,8 +222,8 @@ public class StudentUrlaubsterminEinfuegenTest {
   }
 
   @Test
-  @DisplayName("Bei zwei direkt aufeinanderfolgenden 1h Urlaubsterminen, werden diese zu einem " +
-      "2h Urlaubstermin vereinigt (andere Reihenfolge)")
+  @DisplayName("Bei zwei direkt aufeinanderfolgenden 1h Urlaubsterminen, werden diese zu einem "
+      + "2h Urlaubstermin vereinigt (andere Reihenfolge)")
   void test_15() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 10, 30);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(8, 30, 9, 30);
@@ -237,8 +238,8 @@ public class StudentUrlaubsterminEinfuegenTest {
   }
 
   @Test
-  @DisplayName("Bei zwei ueberlappenden 1h Urlaubsterminen, werden diese zu einem " +
-      "2h Urlaubstermin vereinigt")
+  @DisplayName("Bei zwei ueberlappenden 1h Urlaubsterminen, werden diese zu einem "
+      + "2h Urlaubstermin vereinigt")
   void test_16() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 10, 30);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(10, 0, 11, 0);
@@ -253,8 +254,8 @@ public class StudentUrlaubsterminEinfuegenTest {
   }
 
   @Test
-  @DisplayName("Bei zwei ueberlappenden 1h Urlaubsterminen, werden diese zu einem " +
-      "2h Urlaubstermin vereinigt (andere Reihenfolge)")
+  @DisplayName("Bei zwei ueberlappenden 1h Urlaubsterminen, werden diese zu einem "
+      + "2h Urlaubstermin vereinigt (andere Reihenfolge)")
   void test_17() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(10, 0, 11, 0);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(9, 30, 10, 30);
@@ -269,8 +270,8 @@ public class StudentUrlaubsterminEinfuegenTest {
   }
 
   @Test
-  @DisplayName("Bei drei ueberlappenden Urlaubsterminen, werden diese zu einem " +
-      "Urlaubstermin vereingt")
+  @DisplayName("Bei drei ueberlappenden Urlaubsterminen, werden diese zu einem "
+      + "Urlaubstermin vereingt")
   void test_18() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(10, 0, 11, 0);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(11, 0, 12, 30);
@@ -294,7 +295,6 @@ public class StudentUrlaubsterminEinfuegenTest {
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(11, 15, 11, 45);
     Urlaubstermin urlaubstermin3 = urlaubsterminTemplate(12, 0, 13, 0);
     Urlaubstermin urlaubstermin4 = urlaubsterminTemplate(9, 30, 13, 30);
-
     Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, true);

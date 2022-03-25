@@ -81,8 +81,8 @@ public class StudentService {
     }
     if (urlaubWurdeHinzugefuegt) {
       studentRepository.studentSpeichern(student);
-      String logNachricht = "Der Student " + handle + " hat für den " + datum +
-          " einen Urlaub von " + von + " bis " + bis + " gebucht.";
+      String logNachricht = "Der Student " + handle + " hat für den " + datum
+          + " einen Urlaub von " + von + " bis " + bis + " gebucht.";
       urlaubsterminLogger.eintragen(logNachricht);
     }
   }
@@ -101,8 +101,8 @@ public class StudentService {
     Student student = studentRepository.findStudentByGithubId(githubId);
     if (student.isUrlaubsterminStornierbar(datum, heute)) {
       student.storniereUrlaub(datum, von, bis);
-      String logNachricht = "Der Student " + student.getHandle() + " hat den Urlaub am " + datum +
-          " von " + von + " bis " + bis + " storniert.";
+      String logNachricht = "Der Student " + student.getHandle() + " hat den Urlaub am " + datum
+          + " von " + von + " bis " + bis + " storniert.";
       urlaubsterminLogger.eintragen(logNachricht);
       studentRepository.studentSpeichern(student);
     }
