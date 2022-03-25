@@ -18,7 +18,7 @@ public class StudentRepositoryTest {
 
   private final StudentDao studentDao = mock(StudentDao.class);
   private final StudentRepository repo = new StudentRepositoryImpl(studentDao);
-  private final String handle = "jensbendisposto";
+  private static final String handle = "jensbendisposto";
 
   @Test
   @DisplayName("Beim Speichern eines vorhandenen Studenten wird die save Methode im Dao aufgerufen")
