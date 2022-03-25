@@ -16,10 +16,6 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 
 public class AuthenticationTemplates {
 
-  public static MockHttpSession somebody() {
-    return createSession("somebody");
-  }
-
   public static MockHttpSession studentSession() {
     return createSession("SebastianStudent", "ROLE_STUDENT");
   }

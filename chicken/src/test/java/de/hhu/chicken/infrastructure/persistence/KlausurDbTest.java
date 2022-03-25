@@ -20,7 +20,7 @@ import org.springframework.test.context.jdbc.Sql;
 public class KlausurDbTest {
 
   @Autowired
-  KlausurRepository db;
+  private KlausurRepository db;
 
   @Test
   @DisplayName("In der leeren Datenbank gibt es keine Klausuren")

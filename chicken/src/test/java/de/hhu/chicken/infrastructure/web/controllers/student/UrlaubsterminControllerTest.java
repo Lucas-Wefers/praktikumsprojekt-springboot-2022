@@ -28,16 +28,16 @@ import org.springframework.test.web.servlet.MockMvc;
 public class UrlaubsterminControllerTest {
 
   @Autowired
-  MockMvc mvc;
+  private MockMvc mvc;
 
   @MockBean
-  KlausurService klausurService;
+  private KlausurService klausurService;
 
   @MockBean
-  StudentService studentService;
+  private StudentService studentService;
 
   @MockBean
-  PraktikumsUhrzeitConfiguration uhrzeitConfiguration;
+  private PraktikumsUhrzeitConfiguration uhrzeitConfiguration;
 
   @Test
   @DisplayName("Die richtige Seite fuer das Eintragen von Urlaubsterminen wird aufgerufen und ist "

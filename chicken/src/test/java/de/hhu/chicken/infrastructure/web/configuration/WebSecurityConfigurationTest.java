@@ -23,13 +23,13 @@ import org.springframework.test.web.servlet.MockMvc;
 public class WebSecurityConfigurationTest {
 
   @Autowired
-  MockMvc mockMvc;
+  private MockMvc mockMvc;
 
   @MockBean
-  KlausurRepository klausurRepository;
+  private KlausurRepository klausurRepository;
 
   @MockBean
-  StudentRepository studentRepository;
+  private StudentRepository studentRepository;
 
   @Test
   @DisplayName("Uneingeloggter Nutzer wird auf GitHub redirected")

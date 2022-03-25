@@ -33,16 +33,16 @@ import org.springframework.test.web.servlet.MockMvc;
 public class KlausurControllerTest {
 
   @Autowired
-  MockMvc mvc;
+  private MockMvc mvc;
 
   @MockBean
-  KlausurService klausurService;
+  private KlausurService klausurService;
 
   @MockBean
-  StudentService studentService;
+  private StudentService studentService;
 
   @MockBean
-  PraktikumsUhrzeitConfiguration uhrzeitConfiguration;
+  private PraktikumsUhrzeitConfiguration uhrzeitConfiguration;
 
   private static final MockHttpSession session = studentSession();
 
@@ -114,20 +114,8 @@ public class KlausurControllerTest {
   @DisplayName("Die Klausuren werden an das Model weitergeleitet und die richtige Seite ist"
       + " erreichbar")
   void test_4() throws Exception {
-    Klausur klausur1 = new Klausur(1L,
-        "Programmierung",
-        LocalDate.of(2022, 3, 19),
-        LocalTime.of(8, 30),
-        LocalTime.of(10, 30),
-        true,
-        1234L);
-    Klausur klausur2 = new Klausur(2L,
-        "Programmierung 2",
-        LocalDate.of(2022, 3, 30),
-        LocalTime.of(8, 30),
-        LocalTime.of(10, 30),
-        true,
-        1234L);
+    Klausur klausur1 = erzeugeBeispielklausur(1L, 19);
+    Klausur klausur2 = erzeugeBeispielklausur(2L, 30);
     List<Klausur> klausuren = List.of(klausur1, klausur2);
     when(klausurService.alleKlausuren()).thenReturn(klausuren);
 
@@ -142,13 +130,7 @@ public class KlausurControllerTest {
   @DisplayName("Ein Student kann sich zu einer existierenden Klausur anmelden und der"
       + " Service wird aufgerufen")
   void test_5() throws Exception {
-    Klausur klausur = new Klausur(1L,
-        "Programmierung",
-        LocalDate.of(2022, 3, 19),
-        LocalTime.of(8, 30),
-        LocalTime.of(10, 30),
-        true,
-        1234L);
+    Klausur klausur = erzeugeBeispielklausur(1L, 19);
     when(klausurService.findKlausurById(1L)).thenReturn(klausur);
 
     mvc.perform(post("/klausuranmeldung")
@@ -197,5 +179,15 @@ public class KlausurControllerTest {
     verify(studentService).klausurStornieren(28324332L,
         1L,
         LocalDate.now());
+  }
+
+  private Klausur erzeugeBeispielklausur(long klausurId, int klausurTag) {
+    return new Klausur(klausurId,
+        "Programmierung",
+        LocalDate.of(2022, 3, klausurTag),
+        LocalTime.of(8, 30),
+        LocalTime.of(10, 30),
+        true,
+        1234L);
   }
 }

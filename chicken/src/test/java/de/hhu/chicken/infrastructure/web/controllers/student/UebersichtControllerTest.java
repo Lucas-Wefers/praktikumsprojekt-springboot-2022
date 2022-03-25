@@ -21,22 +21,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest
+@ActiveProfiles("test")
 public class UebersichtControllerTest {
 
   @Autowired
-  MockMvc mvc;
+  private MockMvc mvc;
 
   @MockBean
-  KlausurService klausurService;
+  private KlausurService klausurService;
 
   @MockBean
-  StudentService studentService;
+  private StudentService studentService;
 
   @MockBean
-  PraktikumsUhrzeitConfiguration uhrzeitConfiguration;
+  private PraktikumsUhrzeitConfiguration uhrzeitConfiguration;
 
   @Test
   @DisplayName("Die richtige Seite fuer das Eintragen von Urlaubsterminen wird aufgerufen und ist "
