@@ -16,11 +16,12 @@ import org.junit.jupiter.api.Test;
 
 public class KlausurServiceTest {
 
+  private final KlausurRepository repo = mock(KlausurRepository.class);
+  private final KlausurService service = new KlausurService(repo);
+
   @Test
   @DisplayName("Der Service ruft das Repository auf und gibt die richtigen Klausurtermine zurueck")
   void test_1() {
-    KlausurRepository repo = mock(KlausurRepository.class);
-    KlausurService service = new KlausurService(repo);
     List<Klausur> beispielklausuren = zweiBeispielklausuren();
     when(repo.alleKlausuren()).thenReturn(beispielklausuren);
 
@@ -33,8 +34,6 @@ public class KlausurServiceTest {
   @Test
   @DisplayName("Der Service ruft das Repository auf und speichert eine Klausur")
   void test_2() {
-    KlausurRepository repo = mock(KlausurRepository.class);
-    KlausurService service = new KlausurService(repo);
     Klausur beispielklausur = beispielklausur();
 
     service.klausurSpeichern(beispielklausur);
@@ -45,8 +44,6 @@ public class KlausurServiceTest {
   @Test
   @DisplayName("Der Service ruft das Repository auf und holt eine Klausur nach UUID")
   void test_3() {
-    KlausurRepository repo = mock(KlausurRepository.class);
-    KlausurService service = new KlausurService(repo);
     Klausur beispielklausur = beispielklausur();
     Long id = beispielklausur.getId();
     when(repo.findKlausurById(id)).thenReturn(beispielklausur);

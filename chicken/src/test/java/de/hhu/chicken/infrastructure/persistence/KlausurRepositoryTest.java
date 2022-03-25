@@ -20,11 +20,12 @@ import org.junit.jupiter.api.Test;
 
 public class KlausurRepositoryTest {
 
+  private final KlausurDao klausurDao = mock(KlausurDao.class);
+  private final KlausurRepository repo = new KlausurRepositoryImpl(klausurDao);
+
   @Test
   @DisplayName("Eine leere Datenbank enthaelt keine Klausuren")
   void test_1() {
-    KlausurDao klausurDao = mock(KlausurDao.class);
-    KlausurRepository repo = new KlausurRepositoryImpl(klausurDao);
     when(klausurDao.findAll()).thenReturn(List.of());
 
     List<Klausur> klausuren = repo.alleKlausuren();
@@ -36,8 +37,6 @@ public class KlausurRepositoryTest {
   @Test
   @DisplayName("In der Db sind 2 Klausuren und alle Klausuren werden aus der Db geladen")
   void test_2() {
-    KlausurDao klausurDao = mock(KlausurDao.class);
-    KlausurRepository repo = new KlausurRepositoryImpl(klausurDao);
     List<KlausurDto> klausurDtos = zweiBeispielklausurenDtos();
     when(klausurDao.findAll()).thenReturn(klausurDtos);
 
@@ -52,8 +51,6 @@ public class KlausurRepositoryTest {
   void test_3() {
     Klausur klausur = beispielklausur();
     KlausurDto klausurDto = beispielklausurDto();
-    KlausurDao klausurDao = mock(KlausurDao.class);
-    KlausurRepository repo = new KlausurRepositoryImpl(klausurDao);
     when(klausurDao.save(klausurDto)).thenReturn(klausurDto);
 
     repo.klausurSpeichern(klausur);
@@ -64,8 +61,6 @@ public class KlausurRepositoryTest {
   @Test
   @DisplayName("Beim Suchen einer nicht existierenden uuid wird null returned")
   void test_4() {
-    KlausurDao klausurDao = mock(KlausurDao.class);
-    KlausurRepository repo = new KlausurRepositoryImpl(klausurDao);
     Long id = 1L;
     when(klausurDao.findById(id)).thenReturn(Optional.empty());
 
@@ -78,8 +73,6 @@ public class KlausurRepositoryTest {
   @Test
   @DisplayName("Beim Suchen einer existierenden uuid wird eine Klausur returned")
   void test_5() {
-    KlausurDao klausurDao = mock(KlausurDao.class);
-    KlausurRepository repo = new KlausurRepositoryImpl(klausurDao);
     Klausur klausur = beispielklausur();
     KlausurDto klausurDto = beispielklausurDto();
     when(klausurDao.findById(klausur.getId())).thenReturn(Optional.of(klausurDto));
