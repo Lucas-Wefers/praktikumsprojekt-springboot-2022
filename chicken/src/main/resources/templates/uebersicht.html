@@ -19,7 +19,7 @@
             <th>von</th>
             <th>bis</th>
             <th>Zeit (min)</th>
-            <th aria-describedby="Für Urlaubsterminstornierung"></th>
+            <th aria-label="Für Urlaubsterminstornierung"></th>
         </tr>
         </thead>
         <tbody th:if="${student != null}">
@@ -29,7 +29,7 @@
             <td th:text="${urlaub.getBis()}"></td>
             <td th:text="${urlaub.dauer().toMinutes()}"></td>
             <td>
-                <div aria-describedby="Urlaubstermin ist nicht stornierbar" th:if="${!student.isUrlaubsterminStornierbar(urlaub.getDatum(), heute)}">
+                <div aria-label="Urlaubstermin ist nicht stornierbar" th:if="${!student.isUrlaubsterminStornierbar(urlaub.getDatum(), heute)}">
                 </div>
                 <form method="post" th:action="@{/urlaubstornieren}" th:if="${student.isUrlaubsterminStornierbar(urlaub.getDatum(), heute)}">
                     <input type="hidden" th:value="${urlaub.getDatum()}" name="datum">
@@ -71,7 +71,7 @@
             <th>Veranstaltung</th>
             <th>Klausurzeit</th>
             <th>Freistellung vom Praktikum</th>
-            <th aria-describedby="Für Klausurstornierung"></th>
+            <th aria-label="Für Klausurstornierung"></th>
         </tr>
         </thead>
         <tbody>
@@ -83,7 +83,7 @@
             <td><span th:text="${klausur.berechneFreistellungsStartzeitpunkt(startuhrzeit)}"></span> - <span
                     th:text="${klausur.berechneFreistellungsEndzeitpunkt(enduhrzeit)}"></span></td>
             <td>
-                <div aria-describedby="Klausur ist nicht stornierbar" th:if="${!klausur.isStornierbar(heute)}">
+                <div aria-label="Klausur ist nicht stornierbar" th:if="${!klausur.isStornierbar(heute)}">
                 </div>
                 <form method="post" th:action="@{/klausurstornieren}" th:if="${klausur.isStornierbar(heute)}">
                     <input type="hidden" th:value="${klausur.getId()}" name="id">
@@ -94,8 +94,8 @@
         </tbody>
     </table>
     <div class="text-center mt-4 mb-4">
-        <a aria-describedby="Zur Klausuranmeldung" class="btn btn-primary" th:href="@{/klausuranmeldung}">Klausuranmeldung</a>
-        <a aria-describedby="Zur Urlaubsterminanmeldung" class="btn btn-primary" th:href="@{/urlaubsanmeldung}">Urlaubsterminanmeldung</a>
+        <a aria-label="Zur Klausuranmeldung" class="btn btn-primary" th:href="@{/klausuranmeldung}">Klausuranmeldung</a>
+        <a aria-label="Zur Urlaubsterminanmeldung" class="btn btn-primary" th:href="@{/urlaubsanmeldung}">Urlaubsterminanmeldung</a>
     </div>
 </div>
 </body>

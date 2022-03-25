@@ -12,11 +12,11 @@
   <h1>Anmeldung zu einer Klausur</h1>
   <div class="formular mt-3">
     <p class="alert"><strong>Wenn die Klausur in der Auswahl noch nicht vorhanden ist, dann können Sie
-      sie <a aria-describedby="Zur Eintragung einer Klausur" th:href="@{/klausuren}">hier</a> anlegen.</strong></p>
+      sie <a aria-label="Zur Eintragung einer Klausur" th:href="@{/klausuren}">hier</a> anlegen.</strong></p>
 
     <form name="klausur_anmelden" method="post" th:action="@{/klausuranmeldung}">
-      <select aria-describedby="Auswahlfeld für Klausuren" class="form-control" name="id" id="klausur-select" >
-        <option disabled selected value="">Wählen Sie eine Klausur aus</option>
+      <select aria-label="Auswahlfeld für Klausuren" class="form-control" name="id" id="klausur-select" >
+        <option aria-hidden="true" disabled selected value="">Wählen Sie eine Klausur aus</option>
         <option th:each="klausur : ${klausuren}" th:text="${klausur.toString()}" th:value="${klausur.id}"
         >Rechnerarchitektur (25.03.2022, 08:30 - 11:30 Uhr)</option>
       </select>
@@ -27,17 +27,17 @@
         <br> Bis zum Tag vor der Klausur können Sie Ihre Teilnahme selber hier stornieren. Sollten Sie sich
         am Klausurtag entscheiden doch nicht mitzuschreiben, müssen Sie am Morgen der
         zuständigen Tutor:in Bescheid geben und das zusätzlich
-        in einer Mail an <a aria-describedby="Email der Organisatoren" href="mailto:propra@cs.hhu.de">propra@cs.hhu.de</a> mitteilen.
+        in einer Mail an <a aria-label="Email der Organisatoren" href="mailto:propra@cs.hhu.de">propra@cs.hhu.de</a> mitteilen.
         <strong>Natürlich müssen Sie dann auch am Praktikum teilnehmen.</strong> <br>
         Ggf. überprüfen wir die Teilnahme an der Klausur über die entsprechenden Teilnehmerlisten
       </p>
 
-      <button aria-describedby="Klausur eintragen" name="klausuranmeldung_abschicken" type="submit" class="btn btn-primary mt-2">Eintragen</button>
+      <button aria-label="Klausur eintragen" name="klausuranmeldung_abschicken" type="submit" class="btn btn-primary mt-2">Eintragen</button>
     </form>
   </div>
 
   <div class="mt-4 mb-4">
-    <a aria-describedby="Zurück zur Übersicht"class="btn btn-primary" th:href="@{/}">Zurück zur Übersicht</a>
+    <a aria-label="Zurück zur Übersicht"class="btn btn-primary" th:href="@{/}">Zurück zur Übersicht</a>
   </div>
 </div>
 </body>
