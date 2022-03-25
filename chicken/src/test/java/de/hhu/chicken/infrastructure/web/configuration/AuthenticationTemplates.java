@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 public class AuthenticationTemplates {
+
   public static MockHttpSession somebody() {
     return createSession("somebody");
   }
@@ -30,7 +31,6 @@ public class AuthenticationTemplates {
   public static MockHttpSession tutorSession() {
     return createSession("Loise Leader", "ROLE_TUTOR");
   }
-
 
   private static List<GrantedAuthority> buildAuthorities(Map<String, Object> attributes,
                                                          String[] roles) {

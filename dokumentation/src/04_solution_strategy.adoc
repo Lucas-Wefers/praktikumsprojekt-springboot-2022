@@ -16,7 +16,7 @@ image:../images/onion-architektur.png[Onion Architektur, 300]
 *** Studentenservice ist für die Anmeldung und Stornierung von Urlaubs- und Klausurterminen für einen jeweiligen Studenten zuständig.
 ** Infrastructure
 **** Drei Adapter (Logger, Persistence und Web)
-**** Logger ist für das Loggen der Urlaubsanmeldungen und Stornierungen zuständig
+**** Logger ist für das Loggen der Urlaubsterminanmeldungen und Stornierungen zuständig
 **** Persistence managed den Datenbankzugriff mithilfe von Spring Data JDBC
 **** Web bietet mithilfe von Spring Web und Spring Security eine Web-Schnittstelle für die Anwendung an (Controller + Frontend)
 ** Configuration

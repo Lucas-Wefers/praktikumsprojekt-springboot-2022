@@ -3,7 +3,6 @@ package de.hhu.chicken.infrastructure.web.forms.verification;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import javax.validation.ConstraintValidatorContext;

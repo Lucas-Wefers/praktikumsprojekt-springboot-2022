@@ -60,7 +60,6 @@ public class Student {
       return false;
     }
 
-    List<Urlaubstermin> alleUrlaubsTermine = new ArrayList<>(urlaubstermine);
     List<Urlaubstermin> termineAmSelbemTag = getUrlaubstermineMitSelbemDatum(datum);
     List<Urlaubstermin> ueberschneidendeTermine = termineAmSelbemTag
         .stream()
@@ -84,6 +83,7 @@ public class Student {
     termineAmSelbemTag.removeAll(ueberschneidendeTermine);
     termineAmSelbemTag.add(vereinigt);
 
+    List<Urlaubstermin> alleUrlaubsTermine = new ArrayList<>(urlaubstermine);
     alleUrlaubsTermine.removeAll(ueberschneidendeTermine);
     alleUrlaubsTermine.add(vereinigt);
 

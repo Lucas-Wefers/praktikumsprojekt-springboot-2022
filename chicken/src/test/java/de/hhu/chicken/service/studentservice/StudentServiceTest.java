@@ -20,7 +20,6 @@ import de.hhu.chicken.service.repositories.StudentRepository;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -266,7 +265,8 @@ public class StudentServiceTest {
   void test_13() {
     when(klausurRepository.findKlausurById(1L)).thenReturn(beispielklausur());
     when(klausurRepository.findKlausurById(2L)).thenReturn(beispielklausur3());
-    when(studentRepository.findStudentByGithubId(githubId)).thenReturn(new Student(githubId, handle));
+    when(studentRepository.findStudentByGithubId(githubId)).thenReturn(
+        new Student(githubId, handle));
     studentService.klausurAnmelden(githubId, handle, 1L);
     studentService.klausurAnmelden(githubId, handle, 2L);
 
@@ -295,7 +295,7 @@ public class StudentServiceTest {
     when(studentRepository.findStudentByGithubId(githubId)).thenReturn(student);
     String logNachricht = "Der Student " + handle + " hat für den " +
         LocalDate.of(2022, 3, 17) +
-    " einen Urlaub von " + LocalTime.of(11, 0) + " bis " +
+        " einen Urlaub von " + LocalTime.of(11, 0) + " bis " +
         LocalTime.of(13, 30) + " gebucht.";
 
     urlaubsterminAnmelden(17, 11, 0, 13, 30);

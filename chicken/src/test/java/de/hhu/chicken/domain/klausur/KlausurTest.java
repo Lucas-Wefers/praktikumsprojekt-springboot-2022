@@ -116,7 +116,8 @@ public class KlausurTest {
     assertThat(klausur.isStornierbar(heute)).isFalse();
   }
 
-  private Klausur beispielKlausur(int startStunde, int startMinute, int endStunde, boolean isPraesenz) {
+  private Klausur beispielKlausur(int startStunde, int startMinute, int endStunde,
+                                  boolean isPraesenz) {
     return new Klausur(1L,
         "Programmierung",
         LocalDate.of(2022, 3, 12),

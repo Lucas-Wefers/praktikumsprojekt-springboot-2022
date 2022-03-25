@@ -206,7 +206,7 @@ public class StudentUrlaubsterminEinfuegenTest {
 
   @Test
   @DisplayName("Bei zwei direkt aufeinanderfolgenden 1h Urlaubsterminen, werden diese zu einem "
-     + "2h Urlaubstermin vereinigt")
+      + "2h Urlaubstermin vereinigt")
   void test_14() {
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(9, 30, 10, 30);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(10, 30, 11, 30);
@@ -217,7 +217,7 @@ public class StudentUrlaubsterminEinfuegenTest {
 
     assertThat(student.getUrlaubstermine()).hasSize(1);
     assertThat(student.getUrlaubstermine())
-        .contains(urlaubsterminTemplate(9 , 30, 11, 30));
+        .contains(urlaubsterminTemplate(9, 30, 11, 30));
   }
 
   @Test
@@ -233,7 +233,7 @@ public class StudentUrlaubsterminEinfuegenTest {
 
     assertThat(student.getUrlaubstermine()).hasSize(1);
     assertThat(student.getUrlaubstermine())
-        .contains(urlaubsterminTemplate(8 , 30, 10, 30));
+        .contains(urlaubsterminTemplate(8, 30, 10, 30));
   }
 
   @Test
@@ -249,7 +249,7 @@ public class StudentUrlaubsterminEinfuegenTest {
 
     assertThat(student.getUrlaubstermine()).hasSize(1);
     assertThat(student.getUrlaubstermine())
-        .contains(urlaubsterminTemplate(9 , 30, 11, 0));
+        .contains(urlaubsterminTemplate(9, 30, 11, 0));
   }
 
   @Test
@@ -265,7 +265,7 @@ public class StudentUrlaubsterminEinfuegenTest {
 
     assertThat(student.getUrlaubstermine()).hasSize(1);
     assertThat(student.getUrlaubstermine())
-        .contains(urlaubsterminTemplate(9 , 30, 11, 0));
+        .contains(urlaubsterminTemplate(9, 30, 11, 0));
   }
 
   @Test
@@ -283,7 +283,7 @@ public class StudentUrlaubsterminEinfuegenTest {
 
     assertThat(student.getUrlaubstermine()).hasSize(1);
     assertThat(student.getUrlaubstermine())
-        .contains(urlaubsterminTemplate(10 , 0, 13, 0));
+        .contains(urlaubsterminTemplate(10, 0, 13, 0));
   }
 
   @Test
@@ -301,7 +301,6 @@ public class StudentUrlaubsterminEinfuegenTest {
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, true);
     fuegeUrlaubsterminHinzu(urlaubstermin3, student, true);
     fuegeUrlaubsterminHinzu(urlaubstermin4, student, true);
-
 
     assertThat(student.getUrlaubstermine()).hasSize(1);
     assertThat(student.getUrlaubstermine())

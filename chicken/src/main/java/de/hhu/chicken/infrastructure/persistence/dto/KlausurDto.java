@@ -2,7 +2,6 @@ package de.hhu.chicken.infrastructure.persistence.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -14,4 +13,5 @@ public record KlausurDto(@Id Long id,
                          LocalTime bis,
                          boolean isPraesenz,
                          Long veranstaltungsId) {
+
 }

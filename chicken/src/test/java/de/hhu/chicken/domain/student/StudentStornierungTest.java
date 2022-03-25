@@ -5,7 +5,6 @@ import static de.hhu.chicken.domain.student.StudentTemplates.studentMitMehrerenU
 import static de.hhu.chicken.domain.student.StudentTemplates.urlaubsterminTemplate;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.hhu.chicken.domain.klausur.Klausur;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import org.junit.jupiter.api.DisplayName;

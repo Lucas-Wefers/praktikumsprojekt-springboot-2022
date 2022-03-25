@@ -13,6 +13,8 @@
 
 - Die Verifizierung der Formulardaten wird in der Infrastrukturschicht realisiert. Somit wird gewährleistet, dass in der Domäne nur mit validen Objekten gearbeitet wird.
 
+- Urlaubstermine und Klausuren sind nachträglich anlegbar, weil bei Nichterscheinen oder zu langer Pause eines Studenten Resturlaub abgezogen werden muss. Oft werden in der Realität Urlaubstermine und Klausuren nachträglich eingetragen.
+
 === Bewusste Abweichungen der Architekturregeln
 
 - In der Serviceschicht haben wir die @Service Annotation verwendet, weil uns dies die Verwendung von Bean Injection ermöglicht.

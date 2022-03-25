@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @Configuration
 public class SecurityConfiguration {
 
-
   @Bean
   protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
     return new RegisterSessionAuthenticationStrategy(

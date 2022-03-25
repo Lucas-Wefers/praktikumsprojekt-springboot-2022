@@ -24,7 +24,7 @@ public class StudentBerechneResturlaubTest {
   @DisplayName("Resturlaub mit einer Urlaubslaenge von 30min betraegt 210min")
   void test_2() {
     Student student = new Student(14529531L, "jensbendisposto");
-    Urlaubstermin urlaubstermin = urlaubsterminTemplate(10,30,11,0);
+    Urlaubstermin urlaubstermin = urlaubsterminTemplate(10, 30, 11, 0);
     fuegeUrlaubsterminHinzu(urlaubstermin, student, false);
 
     int resturlaub = student.berechneResturlaub();

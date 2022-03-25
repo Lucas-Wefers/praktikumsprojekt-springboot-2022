@@ -112,7 +112,7 @@ public class KlausurControllerTest {
 
   @Test
   @DisplayName("Die Klausuren werden an das Model weitergeleitet und die richtige Seite ist"
-     + " erreichbar")
+      + " erreichbar")
   void test_4() throws Exception {
     Klausur klausur1 = new Klausur(1L,
         "Programmierung",

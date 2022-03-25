@@ -41,7 +41,7 @@ image:../images/domain-whitebox-klausur.png[Fachlicher Kontext]
 image:../images/domain-whitebox-student.png[Fachlicher Kontext]
 
 * Student
-** Aggregate Root des Studenten, welche die Logik für die Urlaubs- und Klausurverwaltung enthält.
+** Aggregate Root des Studenten, welche die Logik für die Urlaubstermin- und Klausurverwaltung enthält.
 * Urlaubstermin
 ** Stellt einen einzigen Urlaubstermin dar (z. B. Urlaub am Freitag von 9:30 bis 10:30 Uhr).
 * KlausurReferenz
@@ -62,7 +62,7 @@ image:../images/service-blackbox.png[Fachlicher Kontext]
 * Logger
 ** Die Interfaces, welche in der Infrastruktur-Schicht implementiert werden, und für das Loggen der Urlaubsterminanmeldungen und Stornierungen zuständig sind.
 * Studentservice
-** Bietet Methoden an, um Urlaubstermine und Klausuren eines Studenten zu verwalten. Übernimmt außerdem die Logik dafür, dass der Urlaub anpasst wird, wenn man in dem Zeitraum des Urlaubstermins bereits für Klausuren angemeldet ist.
+** Bietet Methoden an, um Urlaubstermine und Klausuren eines Studenten zu verwalten. Übernimmt außerdem die Logik dafür, dass der Urlaub angepasst wird, wenn man in dem Zeitraum des Urlaubstermins bereits für Klausuren angemeldet ist.
 * Klausurservice
 ** Bietet Methoden für das Eintragen einer Klausur und das Laden bestimmter Klausuren im System an.
 

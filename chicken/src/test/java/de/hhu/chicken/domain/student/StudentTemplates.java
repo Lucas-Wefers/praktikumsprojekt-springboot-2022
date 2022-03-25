@@ -6,7 +6,7 @@ import java.time.LocalTime;
 public class StudentTemplates {
 
   static void fuegeUrlaubsterminHinzu(Urlaubstermin urlaubstermin, Student student,
-                                       boolean istKlausurtag) {
+                                      boolean istKlausurtag) {
     student.fuegeUrlaubsterminHinzu(urlaubstermin.getDatum(),
         urlaubstermin.getVon(),
         urlaubstermin.getBis(),

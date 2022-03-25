@@ -1,11 +1,9 @@
 package de.hhu.chicken.infrastructure.persistence;
 
-import static de.hhu.chicken.templates.KlausurTemplates.beispielklausur;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import de.hhu.chicken.domain.klausur.Klausur;
 import de.hhu.chicken.service.repositories.KlausurRepository;
-import de.hhu.chicken.templates.KlausurTemplates;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;

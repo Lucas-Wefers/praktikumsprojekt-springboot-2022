@@ -11,7 +11,6 @@ import de.hhu.chicken.domain.klausur.Klausur;
 import de.hhu.chicken.service.klausurservice.KlausurService;
 import de.hhu.chicken.service.repositories.KlausurRepository;
 import java.util.List;
-import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -9,7 +9,6 @@ import de.hhu.chicken.service.repositories.KlausurRepository;
 import de.hhu.chicken.service.repositories.StudentRepository;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +62,8 @@ public class StudentDbTest {
     Student student = new Student(12345678L,
         "jensbendisposto");
     student.fuegeUrlaubsterminHinzu(LocalDate.of(2022, 3, 22),
-        LocalTime.of(9,30),
-        LocalTime.of(13,30),
+        LocalTime.of(9, 30),
+        LocalTime.of(13, 30),
         false,
         LocalTime.of(9, 30),
         LocalTime.of(13, 30));

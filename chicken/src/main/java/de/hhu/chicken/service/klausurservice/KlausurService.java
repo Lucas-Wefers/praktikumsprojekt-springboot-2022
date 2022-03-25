@@ -3,7 +3,6 @@ package de.hhu.chicken.service.klausurservice;
 import de.hhu.chicken.domain.klausur.Klausur;
 import de.hhu.chicken.service.repositories.KlausurRepository;
 import java.util.List;
-import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 @Service
