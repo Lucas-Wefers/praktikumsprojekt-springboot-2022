@@ -7,7 +7,7 @@ services:
     expose:
       - 3306
     environment:
-      - "MYSQL_ROOT_PASSWORD=${mysqlpassword}"
+      - "MYSQL_ROOT_PASSWORD=${MYSQLPASSWORD}"
   application:
     build: .
     command: sh -c "/wait && java -jar app.jar"
@@ -19,6 +19,12 @@ services:
       - WAIT_SLEEP_INTERVAL=30
       - WAIT_HOST_CONNECT_TIMEOUT=30
       - "spring_profiles_active=prod"
-      - "mysqlpassword=${mysqlpassword}"
-      - "clientid=${clientid}"
-      - "clientsecret=${clientsecret}"
+      - "MYSQLPASSWORD=${MYSQLPASSWORD}"
+      - "CLIENT_ID=${CLIENT_ID}"
+      - "CLIENT_SECRET=${CLIENT_SECRET}"
+      - "STARTDATUM=${STARTDATUM}"
+      - "STARTUHRZEIT=${STARTUHRZEIT}"
+      - "ENDDATUM=${ENDDATUM}"
+      - "ENDUHRZEIT=${ENDUHRZEIT}"
+      - "ORGANISATOREN=${ORGANISATOREN}"
+      - "TUTOREN=${TUTOREN}"

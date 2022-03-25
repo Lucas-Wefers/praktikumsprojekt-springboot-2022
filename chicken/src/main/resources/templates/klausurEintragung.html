@@ -14,12 +14,12 @@
     <div class="mb-3 mt-4">
       <label for="lectureName">Name der Veranstaltung</label>
       <input type="text" id="lectureName" class="form-control" th:field="*{fach}">
-      <div class="error" th:if="${#fields.hasErrors('fach')}">Geben Sie einen gültigen Veranstaltungsnamen ein!</div>
+      <div class="alert alert-danger" th:if="${#fields.hasErrors('fach')}">Geben Sie einen gültigen Veranstaltungsnamen ein!</div>
     </div>
     <div class="mb-3">
       <label for="lectureId">ID der Veranstaltung im LSF</label>
       <input type="text" id="lectureId" class="form-control" th:field="*{veranstaltungsId}">
-      <div class="error" th:if="${#fields.hasErrors('veranstaltungsId')}">Die ID konnte nicht im LSF gefunden werden!</div>
+      <div class="alert alert-danger" th:if="${#fields.hasErrors('veranstaltungsId')}">Die ID konnte nicht im LSF gefunden werden!</div>
     </div>
     <div class="mb-3">
       <input type="checkbox" id="liveExam" class="" name="isPraesenz" th:field="*{isPraesenz}">
@@ -28,24 +28,24 @@
     <div class="mb-3">
       <label for="dayOfExam">Datum der Klausur (yyyy-mm-dd)</label>
       <input type="date" id="dayOfExam" class="form-control" th:field="*{datum}">
-      <div class="error" th:if="${#fields.hasErrors('datum')}">Geben Sie ein gültiges Datum ein!</div>
+      <div class="alert alert-danger" th:if="${#fields.hasErrors('datum')}">Geben Sie ein gültiges Datum ein!</div>
     </div>
     <div class="mb-3">
       <label for="startTime">Klausurbeginn</label>
       <input type="time" id="startTime" class="form-control" th:field="*{von}">
-      <div class="error" th:if="${#fields.hasErrors('von')}">Gebe Sie eine gültige Uhrzeit ein!</div>
+      <div class="alert alert-danger" th:if="${#fields.hasErrors('von')}">Geben Sie eine gültige Uhrzeit ein!</div>
     </div>
     <div class="mb-3">
       <label for="endTime">Klausurende</label>
       <input type="time" id="endTime" class="form-control" th:field="*{bis}">
-      <div class="error" th:if="${#fields.hasErrors('bis')}">Gebe Sie eine gültige Uhrzeit ein!</div>
+      <div class="alert alert-danger" th:if="${#fields.hasErrors('bis')}">Geben Sie eine gültige Uhrzeit ein!</div>
     </div>
     <div class="error" th:if="${#fields.hasErrors('praesenzKlausurZeitraum')}">
-      <div class="error" th:errors="*{praesenzKlausurZeitraum}"></div>
+      <div class="alert alert-danger" th:errors="*{praesenzKlausurZeitraum}"></div>
     </div>
 
     <div class="error" th:if="${#fields.hasErrors('onlineKlausurZeitraum')}">
-      <div class="error" th:errors="*{onlineKlausurZeitraum}"></div>
+      <div class="alert alert-danger" th:errors="*{onlineKlausurZeitraum}"></div>
     </div>
     <button class="btn btn-primary" type="submit">Eintragen</button>
   </form>

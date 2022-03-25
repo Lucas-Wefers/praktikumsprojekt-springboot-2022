@@ -15,7 +15,7 @@
       sie <a th:href="@{/klausuren}">hier</a> anlegen.</strong></p>
 
     <form name="klausur_anmelden" method="post" th:action="@{/klausuranmeldung}">
-      <select class="form-control" name="klausurId" id="klausur-select" >
+      <select class="form-control" name="id" id="klausur-select" >
         <option disabled selected value="">Wählen Sie eine Klausur aus</option>
         <option th:each="klausur : ${klausuren}" th:text="${klausur.toString()}" th:value="${klausur.id}"
         >Rechnerarchitektur (25.03.2022, 08:30 - 11:30 Uhr)</option>
@@ -36,6 +36,9 @@
     </form>
   </div>
 
+  <div class="mt-4 mb-4">
+    <a class="btn btn-primary" th:href="@{/}">Zurück zur Übersicht</a>
+  </div>
 </div>
 </body>
 </html>

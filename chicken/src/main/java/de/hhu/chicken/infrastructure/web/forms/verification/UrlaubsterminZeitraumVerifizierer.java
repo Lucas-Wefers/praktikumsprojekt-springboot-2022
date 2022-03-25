@@ -21,6 +21,9 @@ public class UrlaubsterminZeitraumVerifizierer implements
 
   @Override
   public boolean isValid(List<LocalTime> zeitraum, ConstraintValidatorContext context) {
+    if (zeitraum == null) {
+      return true;
+    }
 
     LocalTime von = zeitraum.get(0);
     LocalTime bis = zeitraum.get(1);

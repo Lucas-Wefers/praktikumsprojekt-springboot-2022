@@ -4,19 +4,19 @@ spring:
     create-schemas: true
     url: jdbc:mariadb://localhost:3312/
     user: root
-    password: ${mysqlpassword}
+    password: thenotsosecretdevdbpassword
   datasource:
     url: jdbc:mariadb://localhost:3312/chicken
     username: root
-    password: ${mysqlpassword}
+    password: thenotsosecretdevdbpassword
     driver-class-name: org.mariadb.jdbc.Driver
   security:
     oauth2:
       client:
         registration:
           github:
-            client-id: ${clientid}
-            client-secret: ${clientsecret}
+            client-id: ${CLIENT_ID}
+            client-secret: ${CLIENT_SECRET}
             authorization-grant-type: authorization_code
             scope: user
 

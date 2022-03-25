@@ -5,4 +5,4 @@ services:
     ports:
       - "3312:3306"
     environment:
-      - "MYSQL_ROOT_PASSWORD=${mysqlpassword}"
+      - "MYSQL_ROOT_PASSWORD=thenotsosecretdevdbpassword"

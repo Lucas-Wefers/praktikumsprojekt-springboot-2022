@@ -4,19 +4,19 @@ spring:
     create-schemas: true
     url: jdbc:mariadb://db:3306/
     user: root
-    password: ${mysqlpassword}
+    password: ${MYSQLPASSWORD}
   datasource:
     url: jdbc:mariadb://db:3306/chicken
     username: root
-    password: ${mysqlpassword}
+    password: ${MYSQLPASSWORD}
     driver-class-name: org.mariadb.jdbc.Driver
   security:
     oauth2:
       client:
         registration:
           github:
-            client-id: ${clientid}
-            client-secret: ${clientsecret}
+            client-id: ${CLIENT_ID}
+            client-secret: ${CLIENT_SECRET}
             authorization-grant-type: authorization_code
             scope: user
 
@@ -26,14 +26,16 @@ spring:
             token-uri: https://github.com/login/oauth/access_token
 
 gruppen:
-  organisatoren: ${organisatoren}
-  tutoren: ${tutoren}
+  organisatoren: ${ORGANISATOREN}
+  tutoren: ${TUTOREN}
 
 praktikumszeiten:
   start:
-    datum: ${start}
+    datum: ${STARTDATUM}
+    uhrzeit: ${STARTUHRZEIT}
   ende:
-    datum: ${ende}
+    datum: ${ENDDATUM}
+    uhrzeit: ${ENDUHRZEIT}
 
 server:
   port: 8080
