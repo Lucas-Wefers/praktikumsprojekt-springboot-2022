@@ -26,17 +26,17 @@
       <label for="liveExam">Die Klausur findet in Präsenz statt.</label>
     </div>
     <div class="mb-3">
-      <label for="dayOfExam">Datum der Klausur (yyyy-mm-dd)</label>
+      <label for="dayOfExam">Datum der Klausur (Im Format yyyy-mm-dd)</label>
       <input type="date" id="dayOfExam" class="form-control" th:field="*{datum}">
       <div class="alert alert-danger" th:if="${#fields.hasErrors('datum')}">Geben Sie ein gültiges Datum ein!</div>
     </div>
     <div class="mb-3">
-      <label for="startTime">Klausurbeginn</label>
+      <label for="startTime">Klausurbeginn (Im Format HH:mm)</label>
       <input type="time" id="startTime" class="form-control" th:field="*{von}">
       <div class="alert alert-danger" th:if="${#fields.hasErrors('von')}">Geben Sie eine gültige Uhrzeit ein!</div>
     </div>
     <div class="mb-3">
-      <label for="endTime">Klausurende</label>
+      <label for="endTime">Klausurende (Im Format HH:mm)</label>
       <input type="time" id="endTime" class="form-control" th:field="*{bis}">
       <div class="alert alert-danger" th:if="${#fields.hasErrors('bis')}">Geben Sie eine gültige Uhrzeit ein!</div>
     </div>
@@ -47,7 +47,7 @@
     <div class="error" th:if="${#fields.hasErrors('onlineKlausurZeitraum')}">
       <div class="alert alert-danger" th:errors="*{onlineKlausurZeitraum}"></div>
     </div>
-    <button class="btn btn-primary" type="submit">Eintragen</button>
+    <button aria-describedby="Klausur eintragen" class="btn btn-primary" type="submit">Eintragen</button>
   </form>
 </div>
 </body>

@@ -12,17 +12,17 @@
   <h1>Urlaub anmelden</h1>
   <form th:action="@{/urlaubsanmeldung}" th:object="${urlaubsterminForm}" method="post">
     <div class="mb-3 mt-4">
-      <label for="datum">Datum (dd.mm.yyyy)</label>
+      <label for="datum">Datum (Im Format yyyy-mm-dd)</label>
       <input type="date" id="datum" class="form-control" th:field="*{datum}">
       <div class="alert alert-danger" th:if="${#fields.hasErrors('datum')}">Geben Sie ein gültiges Datum ein!</div>
     </div>
     <div class="mb-3">
-      <label for="von">Start (hh:mm)</label>
+      <label for="von">Start (Im Format hh:mm)</label>
       <input type="time" id="von" class="form-control" th:field="*{von}">
       <div class="alert alert-danger" th:if="${#fields.hasErrors('von')}">Geben Sie eine gültige Uhrzeit ein!</div>
     </div>
     <div class="mb-3">
-      <label for="bis">Ende (hh:mm)</label>
+      <label for="bis">Ende (Im Format hh:mm)</label>
       <input type="time" id="bis" class="form-control" th:field="*{bis}">
       <div class="alert alert-danger" th:if="${#fields.hasErrors('bis')}">Geben Sie eine gültige Uhrzeit ein!</div>
     </div>
@@ -31,7 +31,7 @@
       <div class="error" th:errors="*{urlaubsterminZeitraum}"></div>
     </div>
 
-    <button class="btn btn-primary" type="submit">Eintragen</button>
+    <button aria-describedby="Urlaubstermin eintragen" class="btn btn-primary" type="submit">Eintragen</button>
   </form>
   <div class="mt-4 mb-4">
     <a class="btn btn-primary" th:href="@{/}">Zurück zur Übersicht</a>
