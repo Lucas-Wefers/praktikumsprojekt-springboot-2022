@@ -49,3 +49,7 @@ include::src/05_building_block_view.adoc[]
 <<<<
 // 4. Entscheidungen
 include::src/09_architecture_decisions.adoc[]
+
+<<<<
+// 5. Qualitätsanforderungen
+include::src/10_quality_requirements.adoc[]

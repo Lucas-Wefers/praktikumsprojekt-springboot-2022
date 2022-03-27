@@ -5,7 +5,7 @@
 
 === Whitebox Gesamtsystem
 
-image:../images/whitebox-whole-system.png[Fachlicher Kontext, 500]
+image:../images/whitebox-whole-system.png[Whitebox Gesamtsystem, 500]
 
 Eine Übersicht über die in den Lösungsstrategien beschriebene Onion-Architektur
 
@@ -13,7 +13,7 @@ Eine Übersicht über die in den Lösungsstrategien beschriebene Onion-Architekt
 
 ===== Überblick
 
-image:../images/domain-blackbox.png[Fachlicher Kontext]
+image:../images/domain-blackbox.png[]
 
 * Stereotypes
 ** In der Domäne benutzte Annotationen (AggregateRoot und ValueObject), welche für bestimmte ArchUnit-Regeln verwendet werden.
@@ -27,7 +27,7 @@ image:../images/domain-blackbox.png[Fachlicher Kontext]
 
 ===== Klausur Aggregat
 
-image:../images/domain-whitebox-klausur.png[Fachlicher Kontext]
+image:../images/domain-whitebox-klausur.png[]
 
 * Klausur
 ** Aggregate Root der Klausur, mit welchem sich die Freistellungszeiträume berechnen lassen.
@@ -38,7 +38,7 @@ image:../images/domain-whitebox-klausur.png[Fachlicher Kontext]
 
 ===== Student Aggregat
 
-image:../images/domain-whitebox-student.png[Fachlicher Kontext]
+image:../images/domain-whitebox-student.png[]
 
 * Student
 ** Aggregate Root des Studenten, welche die Logik für die Urlaubstermin- und Klausurverwaltung enthält.
@@ -55,7 +55,7 @@ image:../images/domain-whitebox-student.png[Fachlicher Kontext]
 
 ===== Überblick
 
-image:../images/service-blackbox.png[Fachlicher Kontext]
+image:../images/service-blackbox.png[]
 
 * Repositories
 ** Die Interfaces, welche in der Infrastruktur-Schicht implementiert werden, und für den Datenbankzugriff zuständig sind.
@@ -68,13 +68,13 @@ image:../images/service-blackbox.png[Fachlicher Kontext]
 
 ===== Whitebox der Serviceschicht
 
-image:../images/service-whitebox-services.png[Fachlicher Kontext]
+image:../images/service-whitebox-services.png[]
 
 ==== Infrastructure
 
 ===== Überblick
 
-image:../images/infrastructure-blackbox.png[Fachlicher Kontext]
+image:../images/infrastructure-blackbox.png[]
 
 * Web
 ** Implementierung der Web-Schnittstelle der Anwendung. (Spring Web + Thymeleaf)
@@ -99,7 +99,7 @@ image:../images/infrastructure-whitebox-controllers.png[Fachlicher Kontext]
 
 ====== Forms
 
-image:../images/infrastructure-whitebox-forms.png[Fachlicher Kontext]
+image:../images/infrastructure-whitebox-forms.png[]
 
 * UrlaubsterminForm
 ** Datencontainer für den Forminput eines Urlaubstermins.
@@ -129,7 +129,7 @@ Hier wird Spring Security konfiguriert. Dabei gibt es eine strikte Rollenzuteilu
 
 ===== Persistence
 
-image:../images/infrastructure-whitebox-persistence.png[Fachlicher Kontext]
+image:../images/infrastructure-whitebox-persistence.png[]
 
 * DTO
 ** Datencontainer für das Speichern und Laden der jeweiligen Aggregate.
@@ -142,7 +142,7 @@ image:../images/infrastructure-whitebox-persistence.png[Fachlicher Kontext]
 
 ===== Logger
 
-image:../images/infrastructure-whitebox-logger.png[Fachlicher Kontext]
+image:../images/infrastructure-whitebox-logger.png[]
 
 * UrlaubsterminLoggerImpl
 ** Bietet eine Methode, um eine Nachricht in der lokalen Logdatei einzutragen.

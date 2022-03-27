@@ -19,7 +19,7 @@ image:../images/fachlicher-kontext.png[Fachlicher Kontext, 500]
 
 === Technischer Kontext
 
-image:../images/technischer-kontext.png[Fachlicher Kontext, 500]
+image:../images/technischer-kontext.png[Technischer Kontext, 500]
 
 * Internet
 ** über das Internet werden die Formulardaten für die jeweiligen Anwendungsfälle entgegengenommen

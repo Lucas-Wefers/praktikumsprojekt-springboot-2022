@@ -15,6 +15,8 @@
 
 - Urlaubstermine und Klausuren sind nachträglich anlegbar, weil bei Nichterscheinen oder zu langer Pause eines Studenten Resturlaub abgezogen werden muss. Oft werden in der Realität Urlaubstermine und Klausuren nachträglich eingetragen.
 
+- Für das Test-Arrangement werden teilweise Instanzvariablen verwendet, da dies die Lesbarkeit der Tests verbessert und Boilerplate-Code vermieden wird.
+
 === Bewusste Abweichungen der Architekturregeln
 
 - In der Serviceschicht haben wir die @Service Annotation verwendet, weil uns dies die Verwendung von Bean Injection ermöglicht.

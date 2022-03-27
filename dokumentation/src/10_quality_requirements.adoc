@@ -1,16 +1,61 @@
 [[section-quality-scenarios]]
 == Qualitätsanforderungen
 
+=== Wartbarkeit
 
+[cols="e,2e" options="header"]
+|===
+|Begriff |Erläuterung
 
-.Weiterführende Informationen
+|Onion-Architektur
+|Klare Struktur der Implementierung, Übersicht, Erweiterbarkeit und Austauschbarkeit durch Adapter
 
-Siehe https://docs.arc42.org/section-10/[Qualitätsanforderungen] in der online-Dokumentation (auf Englisch!).
+|Modularität
+|Verwendung von Adaptern und Dependency Inversion
 
-=== Qualitätsbaum
+|Testbarkeit
+|Die Komponenten der Onion Architektur werden unabhängig voneinander getestet
 
+|Modifizierbarkeit
+|Durch die hohe Testabdeckung können bei Modifikationen Fehler schnell erkannt werden. Durch Verwendung von Schnittstellen und Einhaltung der SOLID Prinzipien wird die Modifizierbarkeit verbessert
 
+|===
 
-=== Qualitätsszenarien
+=== Security
+
+[cols="e,2e" options="header"]
+|===
+|Begriff |Erläuterung
+
+|Authentifizierung
+|Durch die Verwendung von Github OAuth2 haben unberechtigte Nutzer keinen Zugriff auf das Programm
+
+|Autorisierung
+|Durch die Rollenverteilung haben die jeweiligen Gruppen nur Zugriff auf die ihnen zugewiesenen Bereiche
+
+|Unbestreitbarkeit
+|Durch Anlegen von Logs, werden Handlungen und Ereignisse dokumentiert, sodass diese später nicht widerlegt werden können
+
+|Rechenschaftspflicht
+|Durch das Log sind Handlungen auf die jeweiligen Studenten zurückführbar
+
+|===
+
+=== Benutzerfreundlichkeit
+
+[cols="e,2e" options="header"]
+|===
+|Begriff |Erläuterung
+
+| Bedienbarkeit
+| Für den Nutzer ist die Anwendung übersichtlich und einfach zu bedienen.
+
+| Ästhetik
+| Die Anwendung wurde mit Bootstrap umgesetzt, welches ein einfaches und modernes Design ermöglicht
+
+| Zugänglichkeit
+| Durch Befolgen der ARIA-Regeln wird auch sehgestörten Nutzern eine einfache Verwendung der Anwendung ermöglicht
+
+|===
 
 
