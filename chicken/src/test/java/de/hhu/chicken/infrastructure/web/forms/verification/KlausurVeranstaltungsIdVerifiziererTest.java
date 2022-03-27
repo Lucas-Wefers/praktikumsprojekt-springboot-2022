@@ -17,11 +17,11 @@ public class KlausurVeranstaltungsIdVerifiziererTest {
 
   private static final KlausurVeranstaltungsIdVerifizierer
       verifizierer = new KlausurVeranstaltungsIdVerifizierer();
-  private static final WireMockServer wireMockServer = new WireMockServer(options().port(8080));
+  private static final WireMockServer wireMockServer = new WireMockServer(options().port(8888));
 
   @BeforeAll
   static void setup() {
-    verifizierer.setLsfDomain("http://localhost:8080/");
+    verifizierer.setLsfDomain("http://localhost:8888/");
     verifizierer.setLsfUri("/{value}");
 
     wireMockServer.start();

@@ -28,7 +28,7 @@
     </div>
 
     <div class="error" th:if="${#fields.hasErrors('urlaubsterminZeitraum')}">
-      <div class="error" th:errors="*{urlaubsterminZeitraum}"></div>
+      <div class="alert alert-danger" th:errors="*{urlaubsterminZeitraum}"></div>
     </div>
 
     <button aria-label="Urlaubstermin eintragen" class="btn btn-primary" type="submit">Eintragen</button>
