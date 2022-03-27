@@ -18,3 +18,7 @@ praktikumszeiten:
   ende:
     uhrzeit: "13:30"
     datum: "2022-03-30"
+
+lsf:
+  domain: "https://lsf.hhu.de/"
+  uri: "qisserver/rds?state=verpublish&status=init&vmfile=no&publishid={value}&moduleCall=webInfo&publishConfFile=webInfo&publishSubDir=veranstaltung"

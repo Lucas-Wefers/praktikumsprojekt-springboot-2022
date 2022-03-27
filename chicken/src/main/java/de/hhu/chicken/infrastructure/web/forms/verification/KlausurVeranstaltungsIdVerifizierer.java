@@ -3,19 +3,24 @@ package de.hhu.chicken.infrastructure.web.forms.verification;
 import de.hhu.chicken.infrastructure.web.forms.stereotypes.IsValidId;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.reactive.function.client.WebClient;
 
 public class KlausurVeranstaltungsIdVerifizierer implements ConstraintValidator<IsValidId, Long> {
 
+  @Value("${lsf.domain}")
+  private String lsfDomain;
+
+  @Value("${lsf.uri}")
+  private String lsfUri;
+
   @Override
   public boolean isValid(Long value, ConstraintValidatorContext context) {
-    WebClient client = WebClient.create("https://lsf.hhu.de/");
+    WebClient client = WebClient.create(lsfDomain);
     String lsfSite = client
         .get()
         .uri(
-            "qisserver/rds?state=verpublish&status=init&vmfile=no&"
-                + "publishid={value}"
-                + "&moduleCall=webInfo&publishConfFile=webInfo&publishSubDir=veranstaltung",
+            lsfUri,
             value)
         .retrieve()
         .bodyToMono(String.class)
@@ -24,5 +29,13 @@ public class KlausurVeranstaltungsIdVerifizierer implements ConstraintValidator<
       return false;
     }
     return lsfSite.contains("Veranstaltungsart");
+  }
+
+  public void setLsfDomain(String lsfDomain) {
+    this.lsfDomain = lsfDomain;
+  }
+
+  public void setLsfUri(String lsfUri) {
+    this.lsfUri = lsfUri;
   }
 }

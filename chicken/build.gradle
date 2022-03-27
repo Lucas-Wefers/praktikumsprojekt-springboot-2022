@@ -42,6 +42,7 @@ dependencies {
     testImplementation 'com.tngtech.archunit:archunit-junit5:0.22.0'
     testImplementation 'org.assertj:assertj-core:3.22.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.0.0'
+    testImplementation 'com.github.tomakehurst:wiremock:2.27.2'
 }
 
 tasks.named('test') {

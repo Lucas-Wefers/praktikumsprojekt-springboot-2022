@@ -39,3 +39,7 @@ praktikumszeiten:
 
 server:
   port: 8080
+
+lsf:
+  domain: "https://lsf.hhu.de/"
+  uri: "qisserver/rds?state=verpublish&status=init&vmfile=no&publishid={value}&moduleCall=webInfo&publishConfFile=webInfo&publishSubDir=veranstaltung"

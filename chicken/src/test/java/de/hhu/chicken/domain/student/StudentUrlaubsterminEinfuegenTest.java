@@ -291,11 +291,11 @@ public class StudentUrlaubsterminEinfuegenTest {
   @DisplayName("Bei mehreren Urlaubsterminen und einem ganztaegigen Urlaubstermin"
       + ", werden diese zu einem ganztaegigen Urlaubstermin vereingt")
   void test_19() {
+    Student student = new Student(14529531L, "Jens");
     Urlaubstermin urlaubstermin = urlaubsterminTemplate(10, 0, 11, 0);
     Urlaubstermin urlaubstermin2 = urlaubsterminTemplate(11, 15, 11, 45);
     Urlaubstermin urlaubstermin3 = urlaubsterminTemplate(12, 0, 13, 0);
     Urlaubstermin urlaubstermin4 = urlaubsterminTemplate(9, 30, 13, 30);
-    Student student = new Student(14529531L, "Jens");
 
     fuegeUrlaubsterminHinzu(urlaubstermin, student, true);
     fuegeUrlaubsterminHinzu(urlaubstermin2, student, true);
