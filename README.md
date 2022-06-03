@@ -1,3 +1,5 @@
+:information_source: **Praktikumsprojekt zur Veranstaltung "Softwareentwicklung im Team". Entwickelt gemeinsam mit [@deyirao](https://github.com/deyirao) [@AleGra1](https://github.com/AleGra1) [@thrNoah](https://github.com/thrNoah)** :information_source:
+
 # Chicken - Anwendung zur Urlaubs- und Klausurverwaltung
 
 :warning: **Zum Starten der Anwendung muss Docker und Docker-Compose installiert sein** :warning:
